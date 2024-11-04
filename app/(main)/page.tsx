@@ -1,8 +1,12 @@
-import Image from "next/image";
+import { FC } from 'react';
+import { LandingWidget } from '@/widgets/landingWidget/ui';
 
-export default function Home() {
-  return (
-    <div>
-    </div>
-  );
-}
+const Home: FC = () => {
+	return (
+		<div>
+			<LandingWidget />
+		</div>
+	);
+};
+
+export default Home;
