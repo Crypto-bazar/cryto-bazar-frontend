@@ -1,9 +1,16 @@
 import { FC } from 'react';
+import { ProductType } from 'entities/product/types';
 
-const Product: FC = () => {
+type Props = {
+  value: ProductType
+}
+
+const Product: FC<Props> = ({value}) => {
   return (
-    <div>
-      <p>Prod</p>
+    <div className='max-w-[350px] rounded-[15px] bg-primary-orange'>
+      <p>{value.name}</p>
+      <p>{value.description}</p>
+      <p>{value.ownerUsername}</p>
     </div>
   );
 };
