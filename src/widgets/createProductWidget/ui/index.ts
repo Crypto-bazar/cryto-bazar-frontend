@@ -1,0 +1,1 @@
+export { CreateProductWidget } from "./component"
