@@ -7,7 +7,7 @@ const ProductWidget: FC = async () => {
 
   return (
     <div className=''>
-      {data.map((value, index) => (
+      {data.length > 0 && data.map((value, index) => (
        <Product key={index} value={value}/>
       ))}
     </div>

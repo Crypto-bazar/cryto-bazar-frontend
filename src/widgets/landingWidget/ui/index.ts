@@ -1,1 +1,1 @@
-export { LandingWidget } from './LandingWidget';
+export { LandingWidget } from './landingWidget';

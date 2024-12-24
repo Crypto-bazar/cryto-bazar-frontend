@@ -5,10 +5,11 @@ const userApi = {
   getProducts: async (): Promise<ProductType[]> => {
     try {
       const response: AxiosResponse<ProductType[]> = await axios.get(`${process.env.NEXT_PUBLIC_API}/product`);
+
       return response.data;
     } catch (e) {
       console.error(e);
-      throw e;
+      return []
     }
   },
 };
