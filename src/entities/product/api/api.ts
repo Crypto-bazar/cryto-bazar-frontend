@@ -4,7 +4,7 @@ import { ProductType } from '../types';
 const userApi = {
   getProducts: async (): Promise<ProductType[]> => {
     try {
-      const response: AxiosResponse<ProductType[]> = await axios.get(`${process.env.NEXT_PUBLIC_API}/product`);
+      const response: AxiosResponse<ProductType[]> = await axios.get(`${process.env.NEXT_PUBLIC_API}/advertisements`);
 
       return response.data;
     } catch (e) {

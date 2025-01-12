@@ -1,9 +1,9 @@
 type ProductType = {
-	name: string,
-	description: string,
-	ownerId: number,
-	amount: number,
-	ownerUsername: string
-}
+  name: string;
+  description: string;
+  owner: string;
+  amount: number;
+  photo: string;
+};
 
-export type { ProductType }
+export type { ProductType };
