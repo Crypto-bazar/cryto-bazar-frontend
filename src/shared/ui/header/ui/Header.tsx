@@ -47,7 +47,7 @@ const Header: FC<PropsWithChildren> = ({ children }) => {
               </li>
               <li>
                 <Link
-                  href='/'
+                  href='/auth'
                   className='rounded-lg px-4 py-2.5 font-medium text-gray-800 transition-all duration-200 hover:bg-primary-peach hover:shadow-lg'
                 >
                   Авторизоваться
