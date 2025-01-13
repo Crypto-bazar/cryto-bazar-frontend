@@ -1,8 +1,9 @@
 'use client';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { AuthFormValues } from '../model/types';
+import { AuthFormValues, LOGIN_REGEX, PASSWORD_REGEX } from '../model/types';
 import { authApi } from '../api/api';
+import Cookies from 'js-cookie';
 
 export const AuthForm: FC = () => {
   const {
@@ -13,7 +14,9 @@ export const AuthForm: FC = () => {
 
   const onSubmit = async (data: AuthFormValues) => {
     try {
-      await authApi.login(data);
+      const jwt = await authApi.login(data);
+      Cookies.set('token', jwt.token, { expires: 7 });
+      console.log('Token saved:', jwt.token);
     } catch (error) {
       console.error('Ошибка авторизации:', error);
     }
@@ -22,21 +25,21 @@ export const AuthForm: FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full max-w-md space-y-4'>
       <div>
-        <label htmlFor='email' className='block text-sm font-medium text-gray-700'>
-          Email
+        <label htmlFor='login' className='block text-sm font-medium text-gray-700'>
+          Логин
         </label>
         <input
-          {...register('email', {
-            required: 'Email обязателен',
+          {...register('login', {
+            required: 'Логин обязателен',
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Неверный формат email',
+              value: LOGIN_REGEX,
+              message: 'Введите корректный логин',
             },
           })}
-          type='email'
+          type='text'
           className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500'
         />
-        {errors.email && <p className='mt-1 text-sm text-red-600'>{errors.email.message}</p>}
+        {errors.login && <p className='mt-1 text-sm text-red-600'>{errors.login.message}</p>}
       </div>
 
       <div>
@@ -46,9 +49,9 @@ export const AuthForm: FC = () => {
         <input
           {...register('password', {
             required: 'Пароль обязателен',
-            minLength: {
-              value: 6,
-              message: 'Минимальная длина пароля 6 символов',
+            pattern: {
+              value: PASSWORD_REGEX,
+              message: 'Пароль должен содержать минимум 8 символов, включая буквы и цифры',
             },
           })}
           type='password'

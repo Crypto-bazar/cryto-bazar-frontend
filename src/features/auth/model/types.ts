@@ -1,13 +1,11 @@
 export interface AuthFormValues {
-  email: string;
+  login: string;
   password: string;
 }
 
 export interface AuthResponse {
-  accessToken: string;
-  user: {
-    id: number;
-    email: string;
-    username: string;
-  };
+  token: string;
 }
+
+export const LOGIN_REGEX = /^[A-Za-z0-9_-]{1,16}$/;
+export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
