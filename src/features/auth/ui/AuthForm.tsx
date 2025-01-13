@@ -1,4 +1,3 @@
-'use client';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthFormValues, LOGIN_REGEX, PASSWORD_REGEX } from '../model/types';
@@ -33,8 +32,8 @@ export const AuthForm: FC = () => {
             required: 'Логин обязателен',
             pattern: {
               value: LOGIN_REGEX,
-              message: 'Введите корректный логин',
-            },
+              message: 'Введите корректный логин'
+            }
           })}
           type='text'
           className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500'
@@ -51,8 +50,8 @@ export const AuthForm: FC = () => {
             required: 'Пароль обязателен',
             pattern: {
               value: PASSWORD_REGEX,
-              message: 'Пароль должен содержать минимум 8 символов, включая буквы и цифры',
-            },
+              message: 'Пароль должен содержать минимум 8 символов, включая буквы и цифры'
+            }
           })}
           type='password'
           className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500'
