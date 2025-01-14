@@ -13,7 +13,8 @@ export const AuthForm: FC = () => {
   } = useForm<AuthFormValues>();
 
   const onSubmit = async (data: AuthFormValues) => {
-    await authApi.login(data);
+    const response = await authApi.login(data);
+    Cookies.set('token', response.token);
   };
 
   return (

@@ -1,3 +1,4 @@
+'use client';
 import { axiosInstance } from '@/shared/api/axios';
 import { AuthFormValues, AuthResponse } from '../model/types';
 

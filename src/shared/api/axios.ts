@@ -7,12 +7,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  let token: string | undefined;
-
-  if (typeof window !== 'undefined') {
-    token = Cookies.get('token');
-  }
-
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

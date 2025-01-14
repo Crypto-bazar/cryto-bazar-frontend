@@ -1,3 +1,4 @@
+'use client'
 import { userApi } from '@/entities/product/api';
 import { FC } from 'react';
 import { Product } from 'entities/product/ui';
