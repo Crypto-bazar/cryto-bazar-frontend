@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthFormValues, LOGIN_REGEX, PASSWORD_REGEX } from '../model/types';
 import { authApi } from '../api/api';
-import Cookies from 'js-cookie';
 
 export const AuthForm: FC = () => {
   const {
@@ -13,8 +12,7 @@ export const AuthForm: FC = () => {
   } = useForm<AuthFormValues>();
 
   const onSubmit = async (data: AuthFormValues) => {
-    const response = await authApi.login(data);
-    Cookies.set('token', response.token);
+    await authApi.login(data);
   };
 
   return (

@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
 import { ProductType } from '../types';
-import { axiosInstance } from '@/shared/api/axios';
+import { axiosInstance } from 'shared/api/axios';
+import { AxiosResponse } from 'axios';
 
 const userApi = {
   getProducts: async (): Promise<ProductType[]> => {
