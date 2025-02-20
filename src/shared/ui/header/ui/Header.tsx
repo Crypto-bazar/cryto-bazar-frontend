@@ -15,7 +15,7 @@ const Header: FC<PropsWithChildren> = ({ children }) => {
     <>
       <header className='bg-primary-orange shadow-md'>
         <div className='mx-auto flex h-auto max-w-7xl flex-col items-center justify-between gap-4 p-4 md:h-20 md:flex-row md:gap-0'>
-          <div className='flex w-full items-center justify-between md:w-auto transition-all duration-300 ease-in-out'>
+          <div className='flex w-full items-center justify-between transition-all duration-300 ease-in-out md:w-auto'>
             <Link href='/' className='transition-transform hover:scale-105'>
               <Image width={50} height={50} src={LogoSVG} alt='logo' className='rounded-full' />
             </Link>

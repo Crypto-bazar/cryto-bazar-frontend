@@ -10,11 +10,9 @@ const CreateProduct: FC = () => {
         <input type='text' name='desc'></input>
         <label>Кол-во</label>
         <input type='number' name='amount'></input>
-				<button>Создать</button>
+        <button>Создать</button>
       </form>
     </div>
   );
 };
-
 export { CreateProduct };
- 
