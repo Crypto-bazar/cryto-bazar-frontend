@@ -7,7 +7,7 @@ const ProductWidget: FC = async () => {
 
   return (
     <div className='container mx-auto px-4 py-8'>
-      <h2 className='mb-6 text-2xl font-bold text-gray-800'>Products</h2>
+      <h1 className='mb-6 text-2xl font-bold text-gray-800'>Доска объявлений</h1>
       <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-4 md:gap-6 lg:grid-cols-3 xl:grid-cols-4'>
         {data.length > 0 ? (
           data.map((value, index) => <Product key={index} value={value} />)
