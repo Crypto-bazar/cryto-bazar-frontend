@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu/ui';
-import { Button } from 'shared/ui/button/ui';
+import { ConnectWallet } from 'widgets/connect-wallet/ui';
 
 const Header: FC = () => {
   return (
@@ -30,9 +30,7 @@ const Header: FC = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Button asChild className='bg-[#3c7a89] text-white hover:bg-[#2e4756]'>
-          <Link href='/login'>Войти</Link>
-        </Button>
+        <ConnectWallet />
       </div>
     </header>
   );

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import '../globals.css';
 import { ReactNode } from 'react';
-import { Header } from 'shared/ui/header/ui';
+import { Header } from 'widgets/header/ui';
 import localFont from 'next/font/local';
 import { QueryProvider } from '@/app/providers/api';
+import { WagmiProvider } from 'wagmi';
+import { config } from 'app/web3';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,11 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <QueryProvider>
-      <html lang='en'>
-        <body className={`${openRunder.className}`}>
-          <Header>{children}</Header>
-        </body>
-      </html>
+      <WagmiProvider config={config}>
+        <html lang='en'>
+          <body className={`${openRunder.className}`}>
+            <Header />
+            {children}
+          </body>
+        </html>
+      </WagmiProvider>
     </QueryProvider>
   );
 }
