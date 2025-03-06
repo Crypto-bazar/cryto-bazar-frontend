@@ -2,6 +2,8 @@
 
 import { FC } from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
+import Image from 'next/image';
+import { Button } from 'shared/ui/button/ui';
 
 const Account: FC = () => {
   const { address } = useAccount();
@@ -11,8 +13,8 @@ const Account: FC = () => {
 
   return (
     <div>
-      {ensAvatar && <img alt='ENS Avatar' src={ensAvatar} />}
-      <button onClick={() => disconnect()}>Disconnect</button>
+      {ensAvatar && <Image alt='ENS Avatar' src={ensAvatar} />}
+      <Button onClick={() => disconnect()}>Disconnect</Button>
     </div>
   );
 };
