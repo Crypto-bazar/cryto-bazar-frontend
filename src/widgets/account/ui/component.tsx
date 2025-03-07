@@ -14,7 +14,9 @@ const Account: FC = () => {
   return (
     <div>
       {ensAvatar && <Image alt='ENS Avatar' src={ensAvatar} />}
-      <Button onClick={() => disconnect()}>Disconnect</Button>
+      <Button className={'bg-[#3c7a89] hover:bg-[#90d3e3] hover:text-black'} onClick={() => disconnect()}>
+        Disconnect
+      </Button>
     </div>
   );
 };
