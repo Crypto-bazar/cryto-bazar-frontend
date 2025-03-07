@@ -1,0 +1,1 @@
+export { getNFTs } from './api';
