@@ -3,7 +3,9 @@ type CheckUserReq = {
 };
 
 type CreateUserReq = {
-  eth_address: string;
+  eth_address: `0x${string}` | undefined;
+  signature: string;
+  message: string;
 };
 
 export type { CheckUserReq, CreateUserReq };
