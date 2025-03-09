@@ -1,8 +1,8 @@
-import { AuthWidget } from '@/widgets/authWidget/ui';
+import { Authorization } from '@/widgets/authorization/ui';
 import { FC } from 'react';
 
 const AuthPage: FC = () => {
-  return <AuthWidget />;
+  return <Authorization />;
 };
 
 export default AuthPage;

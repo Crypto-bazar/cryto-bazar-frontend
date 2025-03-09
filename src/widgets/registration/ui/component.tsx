@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { RegistrationForm } from 'features/registration';
 
-const RegistrationWidget: FC = () => {
+const Registration: FC = () => {
   return (
     <div>
       <RegistrationForm />
@@ -9,4 +9,4 @@ const RegistrationWidget: FC = () => {
   );
 };
 
-export { RegistrationWidget };
+export { Registration };
