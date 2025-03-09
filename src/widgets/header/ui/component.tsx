@@ -14,8 +14,8 @@ const Header: FC = () => {
         <NavigationMenu>
           <NavigationMenuList className='hidden space-x-6 md:flex'>
             <NavigationMenuItem>
-              <Link href='/about' className='text-[#9fa2b2] transition hover:text-[#3c7a89]'>
-                О нас
+              <Link href='/nft' className='text-[#9fa2b2] transition hover:text-[#3c7a89]'>
+                NFT
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
