@@ -1,10 +1,10 @@
+import { Registration } from '@/widgets/registration/ui';
 import { FC } from 'react';
-import { RegistrationWidget } from 'widgets/registrationWidget/ui';
 
 const RegistrationPage: FC = () => {
   return (
     <div>
-      <RegistrationWidget />
+      <Registration />
     </div>
   );
 };
