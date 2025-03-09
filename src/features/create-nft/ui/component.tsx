@@ -1,5 +1,5 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'shared/ui/button/ui';
@@ -16,24 +16,13 @@ const CreateNFT: FC = () => {
   const { address } = useAccount();
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
-    defaultValues: {
-      name: '',
-      description: '',
-      price: '',
-      token_id: '',
-    },
   });
 
   const onSubmit = async (data: z.infer<typeof nftSchema>) => {
     const formData = { ...data, owner_address: address as string };
     await createNFTApi(formData);
-    console.log(address);
     setOpen(false);
   };
-
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
