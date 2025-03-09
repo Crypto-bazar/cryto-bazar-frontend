@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'shared/ui/button/ui';
@@ -9,9 +9,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createNFTApi } from '../api/api';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader } from '@/shared/ui/dialog/ui';
+import { useAccount } from 'wagmi';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
+  const { address } = useAccount();
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
     defaultValues: {
@@ -23,15 +25,20 @@ const CreateNFT: FC = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof nftSchema>) => {
-    const formData = { ...data, owner_address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266' };
+    const formData = { ...data, owner_address: address as string };
     await createNFTApi(formData);
+    console.log(address);
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='default'>Создать NFT</Button>
+        <Button variant='default'>Новая NFT</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>Создание NFT</DialogHeader>
@@ -108,7 +115,7 @@ const CreateNFT: FC = () => {
                 </FormItem>
               )}
             />
-            <Button type='submit'>Создать NFT</Button>
+            <Button type='submit'>Создать</Button>
           </form>
         </FormProvider>
       </DialogContent>
