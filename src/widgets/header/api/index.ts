@@ -1,1 +1,1 @@
-export { checkUser, createUser } from './authApi';
+export * from './authApi';

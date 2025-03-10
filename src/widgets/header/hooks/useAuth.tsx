@@ -1,8 +1,9 @@
 'use client';
 import { useEffect } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
-import { checkUser, createUser } from '../api';
+import { checkUser, createUser, verifySignatureRequest } from '../api';
 import { CreateUserReq } from '../model';
+import { SignatureRequest } from '@/entities/signature/model';
 
 const useAuth = () => {
   const { address, isConnected } = useAccount();
@@ -21,14 +22,16 @@ const useAuth = () => {
       const signature = await signMessageAsync({ message });
 
       const data: CreateUserReq = {
-        eth_address: address,
         message: message,
         signature: signature,
+        eth_address: address as `0x${string}`,
       };
 
-      await createUser(data);
+      const responseData = await createUser(data);
+      // const responseData = await verifySignatureRequest(data);
+      console.log(responseData);
     })();
-  }, [address]);
+  }, [address, signMessageAsync]);
 };
 
 export { useAuth };
