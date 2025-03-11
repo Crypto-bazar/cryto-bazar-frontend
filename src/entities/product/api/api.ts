@@ -4,10 +4,10 @@ import { axiosInstance } from 'shared/api/axios';
 const userApi = {
   getProducts: async (): Promise<ProductType[]> => {
     try {
-      const response = await axiosInstance.get<ProductType[]>('/advertisements');
-      return response.data;
-    } catch (e) {
-      console.error(e);
+      const { data } = await axiosInstance.get<ProductType[]>('/advertisements');
+      return data;
+    } catch (error) {
+      console.error('Error fetching products:', error);
       return [];
     }
   },
