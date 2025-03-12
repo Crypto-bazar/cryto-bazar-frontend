@@ -8,7 +8,7 @@ import { Input } from 'shared/ui/input/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createNFTApi } from '../api/api';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader } from '@/shared/ui/dialog/ui';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui/dialog/ui';
 import { useAccount } from 'wagmi';
 
 const CreateNFT: FC = () => {
@@ -30,7 +30,9 @@ const CreateNFT: FC = () => {
         <Button variant='default'>Новая NFT</Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>Создание NFT</DialogHeader>
+        <DialogHeader>
+          <DialogTitle>Создание NFT</DialogTitle>
+        </DialogHeader>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
             <FormField
