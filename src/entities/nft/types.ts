@@ -1,10 +1,11 @@
 type NFT = {
   id: number;
-  TokenID: string;
-  Name: string;
-  Description: string;
-  Price: string;
-  Owner: number;
+  token_id: string;
+  name: string;
+  symbol: string;
+  description: string;
+  price: string;
+  owner_id: number;
   image_path: string;
 };
 
