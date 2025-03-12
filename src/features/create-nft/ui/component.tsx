@@ -48,6 +48,19 @@ const CreateNFT: FC = () => {
             />
             <FormField
               control={form.control}
+              name='symbol'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Символ</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Введите символ' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='description'
               render={({ field }) => (
                 <FormItem>
