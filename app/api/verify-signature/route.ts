@@ -1,8 +1,8 @@
-import { verifySignature } from '@/entities/signature/lib/utils';
+import { verifySignature } from '@/entities/signature/lib';
 import { SignatureRequest, SignatureResponse } from '@/entities/signature/model';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request): Promise<NextResponse> {
+const POST = async (req: Request): Promise<NextResponse> => {
   try {
     const { message, signature, expectedAddress }: SignatureRequest = await req.json();
 
@@ -19,4 +19,6 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
     return NextResponse.json({ error: 'Неизвестная ошибка' }, { status: 500 });
   }
-}
+};
+
+export default POST;
