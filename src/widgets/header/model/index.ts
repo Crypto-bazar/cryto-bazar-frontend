@@ -1,1 +1,1 @@
-export type { CheckUserReq, CreateUserReq } from './types';
+export type * from './types';

@@ -1,1 +1,1 @@
-export { ConnectWallet } from './component';
+export * from './component';

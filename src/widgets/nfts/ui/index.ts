@@ -1,1 +1,1 @@
-export { NFTs } from './component';
+export * from './component';

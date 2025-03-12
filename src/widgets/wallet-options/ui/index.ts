@@ -1,1 +1,1 @@
-export { WalletOptions } from './component';
+export * from './component';
