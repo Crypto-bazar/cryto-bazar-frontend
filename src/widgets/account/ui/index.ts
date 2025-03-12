@@ -1,1 +1,1 @@
-export { Account } from './component';
+export * from './component';
