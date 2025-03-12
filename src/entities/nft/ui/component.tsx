@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NFT } from '../types';
+import { NFT } from '../models/types';
 import Image from 'next/image';
 
 type Props = {
