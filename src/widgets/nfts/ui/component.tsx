@@ -1,10 +1,22 @@
-import { FC } from 'react';
+'use client';
+import { FC, useEffect, useState } from 'react';
 import { NFTCard } from '@/entities/nft/ui';
 import { getNFTs } from '@/entities/nft/api';
 import { CreateNFT } from 'features/create-nft/ui';
+import { useCreateToken } from '@/features/create-nft/api';
+import { NFT } from '@/entities/nft/models';
 
-const NFTs: FC = async () => {
-  const nfts = await getNFTs();
+const NFTs: FC = () => {
+  const [nfts, setNfts] = useState<NFT[]>([]);
+  const createNFT = useCreateToken();
+
+  useEffect(() => {
+    (async () => {
+      const data = await getNFTs();
+      setNfts(data);
+    })();
+  }, []);
+
   return (
     <div>
       <CreateNFT />

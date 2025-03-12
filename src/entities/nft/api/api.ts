@@ -1,5 +1,5 @@
 import { axiosInstance } from '@/shared/api';
-import { NFT } from '../models';
+import { NFT } from '../models/types';
 
 const getNFTs = async () => {
   try {

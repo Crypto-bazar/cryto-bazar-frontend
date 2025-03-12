@@ -1,4 +1,4 @@
-import { abi } from './abi';
+import { abi } from '../../shared/api/abi';
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 

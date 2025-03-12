@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NFT } from '../types';
+import { NFT } from '../models/types';
 import Image from 'next/image';
 import { Button } from '@/shared/ui/button/ui';
 
@@ -10,7 +10,7 @@ type Props = {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const NFTCard: FC<Props> = ({ nft }) => {
+const NFTCard: FC<Props> = ({ nft, onCreate }) => {
   return (
     <div className='rounded-lg border p-4 shadow-lg'>
       <Image
