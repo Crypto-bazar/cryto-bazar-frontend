@@ -1,7 +1,7 @@
 import { ByteArray, recoverMessageAddress, Signature } from 'viem';
 import { SignatureResponse } from '../model';
 
-export const verifySignature = async (
+const verifySignature = async (
   message: string,
   signature: `0x${string}` | ByteArray | Signature,
   expectedAddress: string,
@@ -20,3 +20,5 @@ export const verifySignature = async (
     throw new Error('Ошибка проверки подписи');
   }
 };
+
+export { verifySignature };
