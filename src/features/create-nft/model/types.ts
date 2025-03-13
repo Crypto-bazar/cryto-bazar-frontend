@@ -8,7 +8,7 @@ type CreateNFTRequest = {
 };
 
 type SetNFTContractAddress = {
-  id: string;
+  id: number;
   contract_address: `0x${string}` | undefined;
 };
 

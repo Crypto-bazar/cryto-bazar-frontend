@@ -13,7 +13,7 @@ const useCreateToken = () => {
     (async () => {
       if (isSuccess && receipt && tokenId !== null) {
         const data: SetNFTContractAddress = {
-          id: String(tokenId),
+          id: tokenId,
           contract_address: receipt?.logs[0].address,
         };
         await setNFTContractAddress(data);
