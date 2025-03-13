@@ -8,9 +8,7 @@ import { NFT } from '@/entities/nft/models';
 
 const NFTs: FC = () => {
   const [nfts, setNfts] = useState<NFT[]>([]);
-  const { createToken, logs } = useCreateToken();
-
-  console.log(logs && logs[0].address);
+  const { createToken} = useCreateToken();
 
   const handleCreateToken = async (id: number, name: string, symb: string, uri: string) => {
     await createToken(id, name, symb, uri);

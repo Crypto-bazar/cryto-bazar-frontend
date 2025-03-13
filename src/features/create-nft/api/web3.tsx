@@ -16,9 +16,7 @@ const useCreateToken = () => {
           id: String(tokenId),
           contract_address: receipt?.logs[0].address,
         };
-        const response = await setNFTContractAddress(data);
-
-        console.log(response?.data);
+        await setNFTContractAddress(data);
       }
     })();
   }, [isSuccess, receipt, tokenId]);
@@ -35,9 +33,7 @@ const useCreateToken = () => {
     return txHash;
   };
 
-  const logs = receipt?.logs;
-
-  return { createToken, receipt, isLoading, isSuccess, logs };
+  return { createToken, receipt, isLoading, isSuccess };
 };
 
 export { useCreateToken };
