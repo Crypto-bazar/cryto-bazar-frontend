@@ -5,11 +5,12 @@ import { checkUser, createUser } from '../api';
 import { CreateUserReq } from '../model';
 
 const useAuth = () => {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
 
   useEffect(() => {
     (async () => {
+      if (!isConnected && !address) return;
       const response = await checkUser({ address: address as string });
       if (!response) return;
 
@@ -28,7 +29,7 @@ const useAuth = () => {
 
       await createUser(data);
     })();
-  }, [address, signMessageAsync]);
+  }, [address, signMessageAsync, isConnected]);
 };
 
 export { useAuth };
