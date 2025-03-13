@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/button/ui';
 
 type Props = {
   nft: NFT;
-  onCreate: (name: string, symb: string, uri: string) => void;
+  onCreate: (id: number, name: string, symb: string, uri: string) => void;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -23,7 +23,9 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
       <h2 className='mb-2 text-xl font-bold'>{nft.name}</h2>
       <p className='mb-2 text-gray-700'>{nft.description}</p>
       <p className='font-semibold text-gray-900'>Цена: {nft.price} ETH</p>
-      <Button onClick={() => onCreate(nft.name, nft.symbol, `${apiUrl}uploads/${nft.image_path}`)}>Токенезировать</Button>
+      <Button onClick={() => onCreate(nft.id, nft.name, nft.symbol, `${apiUrl}uploads/${nft.image_path}`)}>
+        Токенезировать
+      </Button>
     </div>
   );
 };

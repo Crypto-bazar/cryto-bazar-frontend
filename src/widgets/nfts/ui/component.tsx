@@ -8,7 +8,13 @@ import { NFT } from '@/entities/nft/models';
 
 const NFTs: FC = () => {
   const [nfts, setNfts] = useState<NFT[]>([]);
-  const createNFT = useCreateToken();
+  const { createToken, logs } = useCreateToken();
+
+  console.log(logs && logs[0].address);
+
+  const handleCreateToken = (id: number, name: string, symb: string, uri: string) => {
+    createToken(id, name, symb, uri);
+  };
 
   useEffect(() => {
     (async () => {
@@ -21,7 +27,7 @@ const NFTs: FC = () => {
     <div>
       <CreateNFT />
       <div className='grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3'>
-        {nfts && nfts.map((nft, index) => <NFTCard key={index} onCreate={createNFT} nft={nft} />)}
+        {nfts && nfts.map((nft, index) => <NFTCard key={index} onCreate={handleCreateToken} nft={nft} />)}
       </div>
     </div>
   );

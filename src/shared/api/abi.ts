@@ -1,5 +1,10 @@
 export const abi = [
   {
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
     inputs: [
       {
         internalType: 'string',
@@ -18,14 +23,15 @@ export const abi = [
       },
     ],
     name: 'createNFT',
-    outputs: [],
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
-  },
-  {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
   },
   {
     inputs: [
