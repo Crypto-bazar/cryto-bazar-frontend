@@ -12,8 +12,8 @@ const NFTs: FC = () => {
 
   console.log(logs && logs[0].address);
 
-  const handleCreateToken = (id: number, name: string, symb: string, uri: string) => {
-    createToken(id, name, symb, uri);
+  const handleCreateToken = async (id: number, name: string, symb: string, uri: string) => {
+    await createToken(id, name, symb, uri);
   };
 
   useEffect(() => {

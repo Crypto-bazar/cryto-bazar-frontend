@@ -106,19 +106,6 @@ const CreateNFT: FC = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='token_id'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Токен</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Введите адрес токена' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <Button type='submit'>Создать</Button>
           </form>
         </FormProvider>

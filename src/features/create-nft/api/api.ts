@@ -1,4 +1,4 @@
-import { CreateNFTRequest } from '../model/types';
+import { CreateNFTRequest, SetNFTContractAddress } from '../model';
 import { axiosInstance } from '@/shared/api';
 
 const createNFTApi = async (data: CreateNFTRequest) => {
@@ -9,4 +9,12 @@ const createNFTApi = async (data: CreateNFTRequest) => {
   }
 };
 
-export { createNFTApi };
+const setNFTContractAddress = async (data: SetNFTContractAddress) => {
+  try {
+    return await axiosInstance.put('/api/v1/nfts/', data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { createNFTApi, setNFTContractAddress };

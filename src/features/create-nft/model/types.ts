@@ -1,5 +1,4 @@
 type CreateNFTRequest = {
-  token_id: string;
   name: string;
   symbol: string;
   description: string;
@@ -8,4 +7,9 @@ type CreateNFTRequest = {
   image: File;
 };
 
-export type { CreateNFTRequest };
+type SetNFTContractAddress = {
+  id: string;
+  contract_address: `0x${string}` | undefined;
+};
+
+export type { CreateNFTRequest, SetNFTContractAddress };
