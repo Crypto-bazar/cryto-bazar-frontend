@@ -25,8 +25,8 @@ const Header: FC = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href='/contact' className='text-[#9fa2b2] transition hover:text-[#3c7a89]'>
-                Контакты
+              <Link href='/profile' className='text-[#9fa2b2] transition hover:text-[#3c7a89]'>
+                Личный кабинет
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
