@@ -13,7 +13,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const NFTCard: FC<Props> = ({ nft, onCreate }) => {
   return (
-    <Card className='shadow-lg'>
+    <Card className='border-2 border-[#2e4756] bg-[#16262e] text-[#9fa2b2] shadow-lg shadow-[#2e4756]'>
       <CardHeader>
         <Image
           width={200}
@@ -22,15 +22,15 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
           alt={nft.name}
           className='mb-4 h-48 w-full rounded object-cover'
         />
-        <CardTitle>{nft.name}</CardTitle>
+        <CardTitle className='text-[#3c7a89]'>{nft.name}</CardTitle>
         <CardDescription>{nft.token_id && 'Токенезирован'}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className='mb-2 text-gray-700'>{nft.description}</p>
-        <p className='font-semibold text-gray-900'>Цена: {parseFloat(nft.price)} ETH</p>
+        <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>
+        <p className='font-semibold text-[#3c7a89]'>Цена: {parseFloat(nft.price)} ETH</p>
         {nft.token_id === '' && (
           <Button
-            className='mt-2'
+            className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]'
             onClick={() => onCreate(nft.id, nft.name, nft.symbol, `${apiUrl}uploads/${nft.image_path}`)}
           >
             Токенезировать
