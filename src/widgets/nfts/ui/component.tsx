@@ -10,8 +10,8 @@ const NFTs: FC = () => {
   const [nfts, setNfts] = useState<NFT[]>([]);
   const { createToken } = useCreateToken();
 
-  const handleCreateToken = async (id: number, name: string, symb: string, uri: string) => {
-    await createToken(id, name, symb, uri);
+  const handleCreateToken = async (tokenUri: string) => {
+    await createToken(tokenUri);
   };
 
   useEffect(() => {

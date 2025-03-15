@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/sha
 
 type Props = {
   nft: NFT;
-  onCreate: (id: number, name: string, symb: string, uri: string) => void;
+  onCreate: (uri: string) => void;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -23,15 +23,15 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
           className='mb-4 h-48 w-full rounded object-cover'
         />
         <CardTitle className='text-[#3c7a89]'>{nft.name}</CardTitle>
-        <CardDescription>{nft.token_id && 'Токенезирован'}</CardDescription>
+        <CardDescription>{nft.token_id !== 0 ? 'Токенезирован' : 'Не токенезирован'}</CardDescription>
       </CardHeader>
       <CardContent>
         <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>
         <p className='font-semibold text-[#3c7a89]'>Цена: {parseFloat(nft.price)} ETH</p>
-        {nft.token_id === '' && (
+        {nft.token_id === 0 && (
           <Button
             className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]'
-            onClick={() => onCreate(nft.id, nft.name, nft.symbol, `${apiUrl}uploads/${nft.image_path}`)}
+            onClick={() => onCreate(nft.token_uri)}
           >
             Токенезировать
           </Button>
