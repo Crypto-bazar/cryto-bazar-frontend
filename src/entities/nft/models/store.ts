@@ -22,5 +22,8 @@ export const nftActions = {
   },
   clearSelection: () => {
     nftStore.setState((prev) => ({ ...prev, selectedNFT: null }))
+  },
+  addNFT: (nft: NFT) => {
+    nftStore.setState((prev) => ({ ...prev, items: [...prev.items, nft] }))
   }
 }

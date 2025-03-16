@@ -17,6 +17,7 @@ import {
   DialogDescription,
 } from '@/shared/ui/dialog/ui';
 import { useAccount } from 'wagmi';
+import { nftActions } from '@/entities/nft/models/store';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,12 @@ const CreateNFT: FC = () => {
 
   const onSubmit = async (data: z.infer<typeof nftSchema>) => {
     const formData = { ...data, owner_address: address as string };
-    await createNFTApi(formData);
+    const response = await createNFTApi(formData);
+
+    if (response?.status == 201) {
+      nftActions.addNFT(response.data)
+    }
+
     setOpen(false);
   };
 
