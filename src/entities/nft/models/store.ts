@@ -25,5 +25,13 @@ export const nftActions = {
   },
   addNFT: (nft: NFT) => {
     nftStore.setState((prev) => ({ ...prev, items: [...prev.items, nft] }))
-  }
+  },
+  changeTokenId: (tokenUri: string, tokenId: number) => {
+    nftStore.setState((prev) => ({
+      ...prev,
+      items: prev.items.map((nft) =>
+        nft.token_uri === tokenUri ? { ...nft, token_id: tokenId } : nft
+      ),
+    }));
+  },
 }

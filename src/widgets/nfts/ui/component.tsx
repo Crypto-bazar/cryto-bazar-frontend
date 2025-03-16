@@ -15,6 +15,7 @@ const NFTs: FC = () => {
     await createToken(tokenUri);
   };
 
+
   useEffect(() => {
     (async () => {
       const data = await getNFTs();
