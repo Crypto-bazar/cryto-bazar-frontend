@@ -4,7 +4,7 @@ import { NFTCard } from '@/entities/nft/ui';
 import { getNFTs } from '@/entities/nft/api';
 import { CreateNFT } from 'features/create-nft/ui';
 import { useCreateToken } from '@/features/create-nft/api';
-import { nftActions, nftStore } from '@/entities/nft/models/store';
+import { nftActions, nftStore } from '@/entities/nft/models';
 import { useStore } from '@tanstack/react-store';
 
 const NFTs: FC = () => {

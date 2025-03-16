@@ -17,7 +17,7 @@ import {
   DialogDescription,
 } from '@/shared/ui/dialog/ui';
 import { useAccount } from 'wagmi';
-import { nftActions } from '@/entities/nft/models/store';
+import { nftActions } from '@/entities/nft/models';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
