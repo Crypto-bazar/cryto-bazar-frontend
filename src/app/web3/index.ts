@@ -11,3 +11,6 @@ export const config = createConfig({
     [hardhat.id]: http(),
   },
 });
+
+
+export * from "./contract"

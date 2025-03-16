@@ -23,8 +23,8 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
           className='mb-4 h-48 w-full rounded object-cover'
         />
         <CardTitle className='text-[#3c7a89]'>{nft.name}</CardTitle>
-        <CardDescription>{nft.token_id !== 0 ? 'Токенезирован' : 'Не токенезирован'}</CardDescription>
-        <CardDescription>{nft.token_id}</CardDescription>
+        <CardDescription>{nft.token_id !== 0 ? 'Токенизировать' : 'Не токенизирован'}</CardDescription>
+        <CardDescription>Id токена: {nft.token_id}</CardDescription>
       </CardHeader>
       <CardContent>
         <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>

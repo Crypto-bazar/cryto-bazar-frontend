@@ -6,6 +6,7 @@ import { CreateNFT } from 'features/create-nft/ui';
 import { useCreateToken } from '@/features/create-nft/api';
 import { nftActions, nftStore } from '@/entities/nft/models';
 import { useStore } from '@tanstack/react-store';
+import { useEventListener } from '@/features/create-nft/hooks';
 
 const NFTs: FC = () => {
   const { createToken } = useCreateToken();
@@ -14,6 +15,12 @@ const NFTs: FC = () => {
   const handleCreateToken = async (tokenUri: string) => {
     await createToken(tokenUri);
   };
+
+  const { data } = useEventListener()
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
 
   useEffect(() => {

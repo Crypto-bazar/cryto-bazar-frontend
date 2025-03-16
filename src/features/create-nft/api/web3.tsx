@@ -13,10 +13,12 @@ const useCreateToken = () => {
       args: [uri],
     });
 
+
     return txHash;
   };
+
 
   return { createToken, receipt, isLoading, isSuccess };
 };
 
-export { useCreateToken };
+export { useCreateToken }; 
