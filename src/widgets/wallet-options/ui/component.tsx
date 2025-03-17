@@ -1,7 +1,7 @@
 'use client';
 import { FC } from 'react';
 import { useConnect } from 'wagmi';
-import { WalletOption } from 'entities/wallet-option/ui';
+import { WalletOption } from 'features/wallet-option/ui';
 
 const WalletOptions: FC = () => {
   const { connect, connectors } = useConnect();
