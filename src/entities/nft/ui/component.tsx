@@ -3,6 +3,7 @@ import { NFT } from '../models/types';
 import Image from 'next/image';
 import { Button } from '@/shared/ui/button/ui';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card/ui';
+import { SellNFT } from '@/features/sell-nft/ui';
 
 type Props = {
   nft: NFT;
@@ -37,6 +38,7 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
             Токенезировать
           </Button>
         )}
+        <SellNFT tokenId={nft.token_id} />
       </CardContent>
     </Card>
   );
