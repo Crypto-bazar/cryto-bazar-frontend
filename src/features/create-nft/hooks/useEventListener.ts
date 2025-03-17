@@ -1,10 +1,11 @@
 import { abi } from "@/shared/api";
 import { useState, useRef } from "react";
+import { Log } from "viem";
 import { useWatchContractEvent } from "wagmi";
 
 const useEventListener = () => {
-  const [data, setData] = useState<any>(null);
-  const prevDataRef = useRef<any[]>([]);
+  const [data, setData] = useState<Log[]>([]);
+  const prevDataRef = useRef<Log[]>([]);
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
@@ -23,4 +24,3 @@ const useEventListener = () => {
 };
 
 export { useEventListener };
-
