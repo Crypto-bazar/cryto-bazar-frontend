@@ -13,7 +13,6 @@ const useCreateToken = () => {
       args: [uri],
     });
 
-
     return txHash;
   };
 
