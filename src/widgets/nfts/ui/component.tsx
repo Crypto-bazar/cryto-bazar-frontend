@@ -19,7 +19,12 @@ const NFTs: FC = () => {
   const { data } = useEventListener()
 
   useEffect(() => {
-    console.log(data)
+    if (data) {
+      if (!data.tokenURI) {
+        return;
+      }
+      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId))
+    }
   }, [data])
 
 
@@ -30,7 +35,7 @@ const NFTs: FC = () => {
         nftActions.setNFTs(data)
       }
     })()
-  }, []);
+  }, [items]);
 
   return (
     <div>

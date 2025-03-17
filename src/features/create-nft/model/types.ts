@@ -11,4 +11,6 @@ type SetNFTContractAddress = {
   contract_address: `0x${string}` | undefined;
 };
 
-export type { CreateNFTRequest, SetNFTContractAddress };
+type EventMintedData = { tokenId: bigint | undefined; owner: string | undefined; tokenURI: string | undefined }
+
+export type { CreateNFTRequest, SetNFTContractAddress, EventMintedData };
