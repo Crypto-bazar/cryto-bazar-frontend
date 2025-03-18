@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'shared/ui/button/ui';
@@ -18,10 +18,23 @@ import {
 } from '@/shared/ui/dialog/ui';
 import { useAccount } from 'wagmi';
 import { nftActions } from '@/entities/nft/models';
+import { useEventListener } from '../hooks';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
+
+  const { data } = useEventListener()
+
+  useEffect(() => {
+    if (data) {
+      if (!data.tokenURI) {
+        return;
+      }
+      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId))
+    }
+  }, [data])
+
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
     defaultValues: {
