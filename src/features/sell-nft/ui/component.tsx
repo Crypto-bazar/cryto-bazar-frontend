@@ -32,12 +32,13 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
 
   const onSubmit = async (data: z.infer<typeof sellNFTSchema>) => {
     sellNFT(tokenId, Number(data.price));
+    setOpen(false)
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='default'>Продать</Button>
+        <Button className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]' variant='default'>Продать</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
