@@ -12,7 +12,9 @@ type Props = {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+
 const NFTCard: FC<Props> = ({ nft, onCreate }) => {
+
   return (
     <Card className='border-2 border-[#2e4756] bg-[#16262e] text-[#9fa2b2] shadow-lg shadow-[#2e4756]'>
       <CardHeader>
@@ -38,7 +40,7 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
             Токенезировать
           </Button>
         )}
-        {nft.token_id !== 0 && <SellNFT tokenId={nft.token_id} />}
+        {nft.token_id !== 0 && parseFloat(nft.price) === 0 && <SellNFT tokenId={nft.token_id} />}
       </CardContent>
     </Card>
   );
