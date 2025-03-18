@@ -28,7 +28,6 @@ const CreateNFT: FC = () => {
       description: '',
       image: undefined,
       name: '',
-      price: '',
     },
   });
 
@@ -76,19 +75,6 @@ const CreateNFT: FC = () => {
                   <FormLabel>Описание</FormLabel>
                   <FormControl>
                     <Input placeholder='Введите описание' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='price'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Цена</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Введите цену' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,7 +1,6 @@
 type CreateNFTRequest = {
   name: string;
   description: string;
-  price: string;
   owner_address: string;
   image: File;
 };
