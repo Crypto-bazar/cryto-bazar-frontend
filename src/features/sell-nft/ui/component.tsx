@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/button/ui';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Dialog,
   DialogTrigger,
@@ -15,6 +15,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSellNFT } from '../hooks';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form/ui';
 import { Input } from '@/shared/ui/input/ui';
+import { useListenSell } from '../hooks'
+import { nftActions } from '@/entities/nft/models';
 
 type Props = {
   tokenId: number;
@@ -23,6 +25,22 @@ type Props = {
 const SellNFT: FC<Props> = ({ tokenId }) => {
   const [open, setOpen] = useState(false);
   const { sellNFT } = useSellNFT();
+
+  const { data } = useListenSell()
+
+  useEffect(() => {
+    if (data) {
+      if (!data.tokenId) {
+        return;
+      }
+
+      if (!data.price) {
+        return;
+      }
+      nftActions.changeTokenPrice(data.tokenId, data.price)
+    }
+  }, [data])
+
   const form = useForm<z.infer<typeof sellNFTSchema>>({
     resolver: zodResolver(sellNFTSchema),
     defaultValues: {

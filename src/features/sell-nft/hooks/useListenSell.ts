@@ -26,10 +26,11 @@ const useListenSell = () => {
       setData(returnData)
       prevDataRef.current = logs;
 
-      return { data }
     }
 
   })
+
+  return { data }
 }
 
 export { useListenSell }

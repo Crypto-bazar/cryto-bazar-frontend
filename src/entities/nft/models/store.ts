@@ -34,4 +34,10 @@ export const nftActions = {
       ),
     }));
   },
+  changeTokenPrice: (tokenId: bigint, tokenPrice: bigint) => {
+    nftStore.setState((prev) => ({
+      ...prev,
+      items: prev.items.map((nft) => nft.price === String(tokenId) ? { ...nft, tokenPrice: tokenPrice } : nft)
+    }))
+  }
 }
