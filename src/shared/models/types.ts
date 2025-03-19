@@ -1,4 +1,4 @@
-import { abi } from '../api';
+import { abi } from './abi';
 
 type ContractFunctionNames = (typeof abi)[];
 

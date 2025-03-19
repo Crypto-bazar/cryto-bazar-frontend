@@ -1,8 +1,8 @@
-import { abi } from "@/shared/api";
 import { useState, useRef } from "react";
 import { Log } from "viem";
 import { useWatchContractEvent } from "wagmi";
 import { EventMintedData } from "../model";
+import { abi } from "@/shared/models";
 
 const useEventListener = () => {
   const [data, setData] = useState<EventMintedData | null>(null)
