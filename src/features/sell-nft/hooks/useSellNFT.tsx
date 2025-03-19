@@ -1,9 +1,9 @@
-import { abi } from "@/shared/api";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi"
+import { abi } from '@/shared/models';
+import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 const useSellNFT = () => {
   const { writeContractAsync, data: hash } = useWriteContract();
-  const { isLoading, isSuccess, data: receipt } = useWaitForTransactionReceipt({ hash })
+  const { isLoading, isSuccess, data: receipt } = useWaitForTransactionReceipt({ hash });
 
   const sellNFT = async (tokenId: number, price: number) => {
     const txHash = writeContractAsync({
@@ -11,12 +11,12 @@ const useSellNFT = () => {
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       functionName: 'listTokenForSale',
       args: [BigInt(tokenId), BigInt(price)],
-    })
+    });
 
-    return txHash
-  }
+    return txHash;
+  };
 
-  return { sellNFT, isLoading, isSuccess, receipt }
-}
+  return { sellNFT, isLoading, isSuccess, receipt };
+};
 
-export { useSellNFT }
+export { useSellNFT };

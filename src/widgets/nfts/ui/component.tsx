@@ -1,5 +1,5 @@
 'use client';
-import { FC, useEffect, } from 'react';
+import { FC, useEffect } from 'react';
 import { NFTCard } from '@/entities/nft/ui';
 import { getNFTs } from '@/entities/nft/api';
 import { CreateNFT } from 'features/create-nft/ui';
@@ -19,18 +19,18 @@ const NFTs: FC = () => {
     (async () => {
       const data = await getNFTs();
       if (JSON.stringify(items) !== JSON.stringify(data)) {
-        nftActions.setNFTs(data)
+        nftActions.setNFTs(data);
       }
-    })()
+    })();
   }, [items]);
 
   return (
     <div>
       <CreateNFT />
       <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
-        {items.map((nft, index) => (
-          <NFTCard key={index} onCreate={handleCreateToken} nft={nft} />
-        ))}
+        {items &&
+          items.length !== 0 &&
+          items.map((nft, index) => <NFTCard key={index} onCreate={handleCreateToken} nft={nft} />)}
       </div>
     </div>
   );

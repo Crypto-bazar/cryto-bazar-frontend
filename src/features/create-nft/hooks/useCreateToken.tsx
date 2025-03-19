@@ -1,4 +1,4 @@
-import { abi } from '@/shared/api';
+import { abi } from '@/shared/models';
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 const useCreateToken = () => {
@@ -16,8 +16,7 @@ const useCreateToken = () => {
     return txHash;
   };
 
-
   return { createToken, receipt, isLoading, isSuccess };
 };
 
-export { useCreateToken }; 
+export { useCreateToken };
