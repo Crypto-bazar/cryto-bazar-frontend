@@ -14,6 +14,7 @@ const useListenSell = () => {
     eventName: "TokenListedForSale",
     onLogs(logs) {
       if (prevDataRef.current.length > 0 && prevDataRef.current[0].blockHash === logs[0].blockHash) {
+        console.log(logs);
         return;
       }
       const returnData: EventSellData = {

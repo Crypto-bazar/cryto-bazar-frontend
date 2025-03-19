@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSellNFT } from '../hooks';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form/ui';
 import { Input } from '@/shared/ui/input/ui';
-import { useListenSell } from '../hooks'
+import { useListenSell } from '../hooks';
 import { nftActions } from '@/entities/nft/models';
 
 type Props = {
@@ -26,7 +26,7 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
   const [open, setOpen] = useState(false);
   const { sellNFT } = useSellNFT();
 
-  const { data } = useListenSell()
+  const { data } = useListenSell();
 
   useEffect(() => {
     if (data) {
@@ -37,9 +37,9 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
       if (!data.price) {
         return;
       }
-      nftActions.changeTokenPrice(data.tokenId, data.price)
+      nftActions.changeTokenPrice(data.tokenId, data.price);
     }
-  }, [data])
+  }, [data]);
 
   const form = useForm<z.infer<typeof sellNFTSchema>>({
     resolver: zodResolver(sellNFTSchema),
@@ -50,13 +50,15 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
 
   const onSubmit = async (data: z.infer<typeof sellNFTSchema>) => {
     sellNFT(tokenId, Number(data.price));
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]' variant='default'>Продать</Button>
+        <Button className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]' variant='default'>
+          Продать
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
