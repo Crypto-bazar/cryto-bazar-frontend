@@ -7,12 +7,13 @@ import { SellNFT } from '@/features/sell-nft/ui';
 
 type Props = {
   nft: NFT;
-  onCreate?: (uri: string) => void;
+  onCreate: (uri: string) => void;
+  mainPage: boolean;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const NFTCard: FC<Props> = ({ nft, onCreate }) => {
+const NFTCard: FC<Props> = ({ nft, onCreate, mainPage }) => {
   return (
     <Card className='border-2 border-[#2e4756] bg-[#16262e] text-[#9fa2b2] shadow-lg shadow-[#2e4756]'>
       <CardHeader>
@@ -29,10 +30,11 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
       </CardHeader>
       <CardContent>
         <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>
-        {parseFloat(nft.price) !== 0 && (
+
+        {!mainPage && parseFloat(nft.price) !== 0 && (
           <p className='font-semibold text-[#3c7a89]'>Цена: {parseFloat(nft.price)} ETH</p>
         )}
-        {nft.token_id === 0 && onCreate && (
+        {nft.token_id === 0 && mainPage === false && (
           <Button
             className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]'
             onClick={() => onCreate(nft.token_uri)}
@@ -40,7 +42,7 @@ const NFTCard: FC<Props> = ({ nft, onCreate }) => {
             Токенезировать
           </Button>
         )}
-        {nft.token_id !== 0 && parseFloat(nft.price) === 0 && <SellNFT tokenId={nft.token_id} />}
+        {mainPage === false && nft.token_id !== 0 && parseFloat(nft.price) === 0 && <SellNFT tokenId={nft.token_id} />}
       </CardContent>
     </Card>
   );
