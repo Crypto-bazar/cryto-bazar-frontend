@@ -1,1 +1,1 @@
-export { getNFTs } from './api';
+export * from './api';
