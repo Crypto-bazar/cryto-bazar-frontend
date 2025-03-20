@@ -30,7 +30,8 @@ const NFTs: FC = () => {
       <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
         {items &&
           items.length !== 0 &&
-          items.map((nft, index) => <NFTCard key={index} onCreate={handleCreateToken} nft={nft} />)}
+          //TODO Убрать handleCreateToken
+          items.map((nft, index) => <NFTCard mainPage={true} key={index} onCreate={handleCreateToken} nft={nft} />)}
       </div>
     </div>
   );
