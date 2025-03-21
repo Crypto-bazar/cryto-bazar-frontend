@@ -34,15 +34,15 @@ const NFTCard: FC<Props> = ({ nft, onCreate, mainPage }) => {
         {!mainPage && parseFloat(nft.price) !== 0 && (
           <p className='font-semibold text-[#3c7a89]'>Цена: {parseFloat(nft.price)} ETH</p>
         )}
-        {nft.token_id === 0 && mainPage === false && (
+        {nft.token_id === 0 && !mainPage && (
           <Button
             className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]'
             onClick={() => onCreate(nft.token_uri)}
           >
-            Токенезировать
+            Токенизировать
           </Button>
         )}
-        {mainPage === false && nft.token_id !== 0 && parseFloat(nft.price) === 0 && <SellNFT tokenId={nft.token_id} />}
+        {!mainPage && nft.token_id !== 0 && parseFloat(nft.price) === 0 && <SellNFT tokenId={nft.token_id} />}
       </CardContent>
     </Card>
   );
