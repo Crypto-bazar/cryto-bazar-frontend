@@ -3,9 +3,9 @@ import '../globals.css';
 import { ReactNode } from 'react';
 import { Header } from 'widgets/header/ui';
 import localFont from 'next/font/local';
-import { QueryProvider } from '@/app/providers/api';
 import { WagmiProvider } from 'wagmi';
 import { config } from 'app/web3';
+import { QueryProvider } from 'app/providers/api';
 
 export const metadata: Metadata = {
   title: 'Криптобазар',

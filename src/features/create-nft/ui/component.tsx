@@ -1,10 +1,10 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form/ui';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Button } from 'shared/ui/button/ui';
+import { Button } from 'shared/ui/button';
 import { nftSchema } from 'features/create-nft/model';
-import { Input } from 'shared/ui/input/ui';
+import { Input } from 'shared/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createNFTApi } from '../api/api';
@@ -24,16 +24,16 @@ const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
 
-  const { data } = useEventListener()
+  const { data } = useEventListener();
 
   useEffect(() => {
     if (data) {
       if (!data.tokenURI) {
         return;
       }
-      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId))
+      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId));
     }
-  }, [data])
+  }, [data]);
 
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
@@ -49,7 +49,7 @@ const CreateNFT: FC = () => {
     const response = await createNFTApi(formData);
 
     if (response?.status == 201) {
-      nftActions.addNFT(response.data)
+      nftActions.addNFT(response.data);
     }
 
     setOpen(false);

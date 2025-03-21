@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 import Image from 'next/image';
-import { Button } from 'shared/ui/button/ui';
+import { Button } from 'shared/ui/button';
 
 const Account: FC = () => {
   const { address } = useAccount();

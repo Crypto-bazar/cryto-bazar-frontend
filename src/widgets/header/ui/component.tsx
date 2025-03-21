@@ -1,8 +1,8 @@
-'use client'
+'use client';
 import { FC } from 'react';
 
 import Link from 'next/link';
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu/ui';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
 
 const Header: FC = () => {

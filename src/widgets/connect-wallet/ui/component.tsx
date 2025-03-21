@@ -1,9 +1,9 @@
 'use client';
 
-import { useAuth } from '@/widgets/header/hooks';
 import { FC } from 'react';
 import { useAccount } from 'wagmi';
 import { Account } from 'widgets/account/ui';
+import { useAuth } from 'widgets/header/hooks';
 import { WalletOptions } from 'widgets/wallet-options/ui';
 
 const ConnectWallet: FC = () => {

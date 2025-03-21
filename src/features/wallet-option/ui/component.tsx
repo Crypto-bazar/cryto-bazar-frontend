@@ -1,7 +1,7 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
 import { Connector } from '@wagmi/core';
-import { Button } from 'shared/ui/button/ui';
+import { Button } from 'shared/ui/button';
 
 type Props = {
   connector: Connector;
