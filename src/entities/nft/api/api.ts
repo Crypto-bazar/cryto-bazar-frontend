@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/api';
+import { axiosInstance } from 'shared/api';
 import { NFT } from '../models';
 
 const getNFTs = async () => {
