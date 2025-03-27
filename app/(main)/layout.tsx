@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 import { WagmiProvider } from 'wagmi';
 import { config } from 'app/web3';
 import { QueryProvider } from 'app/providers/api';
+import { MockServiceWorker } from 'app/providers/mocks/MockServiceWorker';
 
 export const metadata: Metadata = {
   title: 'Криптобазар',
@@ -26,6 +27,7 @@ export default function RootLayout({
         <html lang='en'>
           <body className={`${openRunder.className}`}>
             <Header />
+            {process.env.NEXT_PUBLIC_API_MOCKING === 'enabled' && <MockServiceWorker />}
             {children}
           </body>
         </html>
