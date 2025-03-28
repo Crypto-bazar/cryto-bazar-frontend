@@ -1,4 +1,4 @@
-import { abi } from '@/shared/models';
+import { abi } from 'shared/models';
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 const useCreateToken = () => {
@@ -6,14 +6,12 @@ const useCreateToken = () => {
   const { data: receipt, isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
 
   const createToken = async (uri: string) => {
-    const txHash = await writeContractAsync({
+    return await writeContractAsync({
       abi: abi,
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       functionName: 'mintToken',
       args: [uri],
     });
-
-    return txHash;
   };
 
   return { createToken, receipt, isLoading, isSuccess };

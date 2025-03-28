@@ -1,9 +1,9 @@
 'use client';
 
-import { getUserNFTs } from '@/entities/nft/api';
-import { nftStore, userNFTActions } from '@/entities/nft/models';
-import { NFTCard } from '@/entities/nft/ui';
-import { useCreateToken } from '@/features/create-nft/hooks';
+import { getUserNFTs } from 'entities/nft/api';
+import { nftStore, userNFTActions } from 'entities/nft/models';
+import { NFTCard } from 'entities/nft/ui';
+import { useCreateToken } from 'features/create-nft/hooks';
 import { useStore } from '@tanstack/react-store';
 import { FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
