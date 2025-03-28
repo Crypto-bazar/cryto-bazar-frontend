@@ -1,5 +1,5 @@
-import { verifySignature } from 'entities/signature/lib';
-import { SignatureRequest, SignatureResponse } from 'entities/signature/model';
+import { verifySignature } from '@/entities/signature/lib';
+import { SignatureRequest, SignatureResponse } from '@/entities/signature/model';
 import { NextResponse } from 'next/server';
 
 const POST = async (req: Request): Promise<NextResponse> => {

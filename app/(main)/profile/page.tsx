@@ -1,4 +1,4 @@
-import { UserNFTs } from 'widgets/user-nfts/ui';
+import { UserNFTs } from '@/widgets/user-nfts/ui';
 import { FC } from 'react';
 
 const Profile: FC = () => {

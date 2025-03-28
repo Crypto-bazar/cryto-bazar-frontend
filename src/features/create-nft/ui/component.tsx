@@ -8,9 +8,16 @@ import { Input } from 'shared/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createNFTApi } from '../api/api';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from 'shared/ui/dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/shared/ui/dialog/ui';
 import { useAccount } from 'wagmi';
-import { nftActions } from 'entities/nft/models';
+import { nftActions } from '@/entities/nft/models';
 import { useEventListener } from '../hooks';
 
 const CreateNFT: FC = () => {
