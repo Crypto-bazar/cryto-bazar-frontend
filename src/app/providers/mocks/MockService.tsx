@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { worker } from 'shared/mocks';
 
-const MockServiceWorker = () => {
+const MockService = () => {
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
       worker.start();
@@ -10,4 +10,4 @@ const MockServiceWorker = () => {
   return null;
 };
 
-export { MockServiceWorker };
+export { MockService };
