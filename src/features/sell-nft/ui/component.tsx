@@ -1,15 +1,22 @@
-import { Button } from 'shared/ui/button';
+import { Button } from '@/shared/ui/button/ui';
 import { FC, useEffect, useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from 'shared/ui/dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/shared/ui/dialog/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { sellNFTSchema } from '../model/sell-nft.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSellNFT } from '../hooks';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form';
-import { Input } from 'shared/ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form/ui';
+import { Input } from '@/shared/ui/input/ui';
 import { useListenSell } from '../hooks';
-import { nftActions } from 'entities/nft/models';
+import { nftActions } from '@/entities/nft/models';
 
 type Props = {
   tokenId: number;

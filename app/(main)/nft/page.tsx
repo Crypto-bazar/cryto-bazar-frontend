@@ -1,4 +1,4 @@
-import { NFTs } from 'widgets/nfts/ui';
+import { NFTs } from '@/widgets/nfts/ui';
 import { FC } from 'react';
 
 const NFTPage: FC = () => {
