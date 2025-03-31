@@ -321,6 +321,41 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'getProposeNFT',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'string',
+            name: 'tokenURI',
+            type: 'string',
+          },
+          {
+            internalType: 'address',
+            name: 'proposer',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'votes',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'minted',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct DAONFT.NFTProposal[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'governanceToken',
     outputs: [
       {
