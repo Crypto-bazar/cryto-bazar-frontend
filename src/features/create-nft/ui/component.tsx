@@ -35,7 +35,7 @@ const CreateNFT: FC = () => {
       image: undefined,
       name: '',
     },
-  });
+  })
 
   const onSubmit = async (data: z.infer<typeof nftSchema>) => {
     const formData = { ...data, owner_address: address as string };
@@ -51,7 +51,9 @@ const CreateNFT: FC = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='default'>Новая NFT</Button>
+        <Button className='bg-slate-400' variant='default'>
+          Новая NFT
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

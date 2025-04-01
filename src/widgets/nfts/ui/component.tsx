@@ -3,17 +3,11 @@ import { FC, useEffect } from 'react';
 import { NFTCard } from 'entities/nft/ui';
 import { getNFTs } from 'entities/nft/api';
 import { CreateNFT } from 'features/create-nft/ui';
-import { useCreateToken } from 'features/create-nft/hooks';
 import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
 
 const NFTs: FC = () => {
-  const { createToken } = useCreateToken();
   const items = useStore(nftStore, (state) => state.items);
-
-  const handleCreateToken = async (tokenUri: string) => {
-    await createToken(tokenUri);
-  };
 
   useEffect(() => {
     (async () => {
@@ -31,7 +25,7 @@ const NFTs: FC = () => {
         {items &&
           items.length !== 0 &&
           //TODO Убрать handleCreateToken
-          items.map((nft, index) => <NFTCard mainPage={true} key={index} onCreate={handleCreateToken} nft={nft} />)}
+          items.map((nft, index) => <NFTCard key={index} nft={nft} />)}
       </div>
     </div>
   );
