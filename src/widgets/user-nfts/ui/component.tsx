@@ -6,7 +6,7 @@ import { NFTCard } from 'entities/nft/ui';
 import { useStore } from '@tanstack/react-store';
 import { FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { StartVoting } from 'features/start-voting/ui';
+import { StartVoting } from 'features/propose-nft/ui';
 
 const UserNFTs: FC = () => {
   const { address } = useAccount();
