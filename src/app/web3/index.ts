@@ -1,6 +1,6 @@
 'use client';
 
-import { createConfig, http, injected } from '@wagmi/core';
+import { createConfig, webSocket, injected } from '@wagmi/core';
 import { hardhat } from '@wagmi/core/chains';
 
 export const config = createConfig({
@@ -8,9 +8,8 @@ export const config = createConfig({
   ssr: true,
   connectors: [injected()],
   transports: {
-    [hardhat.id]: http(),
+    [hardhat.id]: webSocket('http://127.0.0.1:8545'),
   },
 });
 
-
-export * from "./contract"
+export * from './contract';
