@@ -1,7 +1,7 @@
 type EventPropose = {
-  owner: `0x${string}` | undefined;
+  proposalId: bigint | undefined;
   tokenUri: string | undefined;
-  tokenId: bigint | undefined;
+  proposer: `0x${string}` | undefined;
 };
 
 export type { EventPropose };

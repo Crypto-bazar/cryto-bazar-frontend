@@ -4,14 +4,13 @@ import { NFT } from './types';
 type NFTState = {
   items: NFT[];
   selectedNFT: NFT | null;
-  userItems: NFT[]
-
+  userItems: NFT[];
 };
 
 const initialState: NFTState = {
   items: [],
   selectedNFT: null,
-  userItems: []
+  userItems: [],
 };
 
 export const nftStore = new Store<NFTState>(initialState);
@@ -40,11 +39,18 @@ export const nftActions = {
     }));
   },
 
+  updateProposedNFT: (tokenURI: string, proposed: boolean) => {
+    nftStore.setState((prev) => ({
+      ...prev,
+      items: prev.items.map((nft) => (nft.token_uri === tokenURI ? { ...nft, proposed: proposed } : nft)),
+    }));
+  },
+
   changeTokenPrice: (tokenId: bigint, tokenPrice: bigint) => {
     nftStore.setState((prev) => ({
       ...prev,
       items: prev.items.map((nft) =>
-        nft.token_id === Number(tokenId) ? { ...nft, price: tokenPrice.toString() } : nft
+        nft.token_id === Number(tokenId) ? { ...nft, price: tokenPrice.toString() } : nft,
       ),
     }));
   },
@@ -52,10 +58,10 @@ export const nftActions = {
 
 export const userNFTActions = {
   setNFTs: (nfts: NFT[]) => {
-    nftStore.setState((prev) => ({ ...prev, userItems: nfts }))
+    nftStore.setState((prev) => ({ ...prev, userItems: nfts }));
   },
-	
+
   addNFT: (nft: NFT) => {
-    nftStore.setState((prev) => ({ ...prev, userItems: [...prev.items, nft] }))
-  }
-}
+    nftStore.setState((prev) => ({ ...prev, userItems: [...prev.items, nft] }));
+  },
+};

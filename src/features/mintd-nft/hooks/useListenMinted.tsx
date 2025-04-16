@@ -1,27 +1,27 @@
 import { useState } from 'react';
-import { EventPropose } from '../models';
 import { useWatchContractEvent } from 'wagmi';
 import { abi } from 'shared/models';
+import { EventMinted } from '../models';
 
-const useListenPropose = () => {
-  const [data, setData] = useState<EventPropose | null>(null);
+const useListenMinted = () => {
+  const [data, setData] = useState<EventMinted | null>(null);
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     abi: abi,
-    eventName: 'NFTProposed',
+    eventName: 'NFTMinted',
     poll: false,
     onLogs(logs) {
-      const returnData: EventPropose = {
-        proposalId: logs[0].args.proposalId,
-        proposer: logs[0].args.proposer,
+      const returnData: EventMinted = {
+        owner: logs[0].args.owner,
         tokenUri: logs[0].args.tokenURI,
+        tokenId: logs[0].args.tokenId,
       };
-      console.table(returnData);
       setData(returnData);
     },
   });
+
   return { data };
 };
 
-export { useListenPropose };
+export { useListenMinted };

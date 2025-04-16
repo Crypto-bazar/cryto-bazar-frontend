@@ -7,6 +7,7 @@ type NFT = {
   price: string;
   owner_id: number;
   image_path: string;
+  proposed: boolean;
 };
 
 export type { NFT };
