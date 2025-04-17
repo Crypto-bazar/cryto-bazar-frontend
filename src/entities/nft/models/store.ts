@@ -15,6 +15,11 @@ const initialState: NFTState = {
 
 export const nftStore = new Store<NFTState>(initialState);
 
+//TODO add types
+if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+  (window as any).store = nftStore;
+}
+
 export const nftActions = {
   setNFTs: (nfts: NFT[]) => {
     nftStore.setState((prev) => ({ ...prev, items: nfts }));
