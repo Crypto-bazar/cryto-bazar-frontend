@@ -13,9 +13,7 @@ const NFTs: FC = () => {
   useEffect(() => {
     (async () => {
       const data = await getNFTs();
-      if (JSON.stringify(items) !== JSON.stringify(data)) {
-        nftActions.setNFTs(data);
-      }
+      nftActions.setNFTs(data);
     })();
   }, [items]);
 
