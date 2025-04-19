@@ -6,16 +6,25 @@ import { CreateNFT } from 'features/create-nft/ui';
 import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
 import { Vote } from 'features/vote-nft/ui';
+import { connectWS } from 'shared/api/ws';
 
 const NFTs: FC = () => {
   const items = useStore(nftStore, (state) => state.items);
+  const ws = connectWS();
 
   useEffect(() => {
+    if (!ws) return;
+
+    ws.onopen = () => console.log('Hello, websocket');
+    ws.onmessage = (ev) => {
+      console.log(ev);
+    };
+
     (async () => {
       const data = await getNFTs();
       nftActions.setNFTs(data);
     })();
-  }, [items]);
+  }, []);
 
   return (
     <div>
