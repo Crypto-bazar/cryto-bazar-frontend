@@ -31,7 +31,7 @@ const Header: FC = () => {
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
               <NavigationMenuItem>
-                <Link href='/nft' className='transition-all hover:text-[#3c7a89]'>
+                <Link href='/nfts' className='transition-all hover:text-[#3c7a89]'>
                   NFT
                 </Link>
               </NavigationMenuItem>

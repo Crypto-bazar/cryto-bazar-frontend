@@ -7,6 +7,7 @@ import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
 import { Vote } from 'features/vote-nft/ui';
 import { connectWS } from 'shared/api/ws';
+import Link from 'next/link';
 
 const NFTs: FC = () => {
   const items = useStore(nftStore, (state) => state.items);
@@ -33,9 +34,9 @@ const NFTs: FC = () => {
         {items &&
           items.length !== 0 &&
           items.map((nft, index) => (
-            <NFTCard key={index} nft={nft}>
-              {nft.proposed && nft.token_id === 0 && <Vote proposeId={nft.proposal_id} />}
-            </NFTCard>
+            <Link key={index} href={`/nft/${nft.id}`}>
+              <NFTCard nft={nft}>{nft.proposed && nft.token_id === 0 && <Vote proposeId={nft.proposal_id} />}</NFTCard>
+            </Link>
           ))}
       </div>
     </div>
