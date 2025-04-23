@@ -5,7 +5,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/u
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
 import { motion } from 'framer-motion';
 import { useAccount } from 'wagmi';
-import { useUser } from 'entities/user/hooks';
+import { useUser } from '../../../features/user/hooks';
 import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
