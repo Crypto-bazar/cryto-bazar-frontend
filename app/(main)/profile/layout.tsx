@@ -14,10 +14,10 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
       <AnimatePresence mode='wait' initial={false}>
         <motion.div
           key={pathname}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          initial={{ opacity: 0, scale: 0.95, y: 0 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
         >
           {children}
         </motion.div>
