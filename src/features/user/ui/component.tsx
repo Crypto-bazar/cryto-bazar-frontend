@@ -7,12 +7,28 @@ import { Button } from 'shared/ui/button';
 import { getCroppedImg } from 'features/user/lib';
 import Cropper from 'react-easy-crop';
 import { Slider } from 'shared/ui/slider';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
+import { getUser } from 'entities/user/api/api';
+import Image from 'next/image';
 
 export const UploadAvatarForm = () => {
-  const { file, setFile, isLoading, handleUploadBlob } = useUploadAvatar();
+  const { file, setFile, isLoading, handleUploadBlob, resetUpload } = useUploadAvatar();
   const cropper = useCropper();
 
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [currentAvatar, setCurrentAvatar] = useState<string | null>(null);
+  const { address } = useAccount();
+
+  useEffect(() => {
+    if (!address) return;
+    (async () => {
+      const user = await getUser(address);
+      if (!user) return;
+      setCurrentAvatar(`${process.env.NEXT_PUBLIC_API_URL}${user.avatar_url}`);
+    })();
+  }, [address]);
+
+  const onSelectFile = (e: ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
@@ -24,11 +40,23 @@ export const UploadAvatarForm = () => {
     if (!cropper.imageSrc || !cropper.croppedAreaPixels) return;
 
     const blob = await getCroppedImg(cropper.imageSrc, cropper.croppedAreaPixels);
-    handleUploadBlob(blob);
+    const success = await handleUploadBlob(blob);
+
+    if (success) {
+      resetUpload();
+      setCurrentAvatar(`${process.env.NEXT_PUBLIC_API_URL}${success}`);
+    }
   };
 
   return (
     <div className='space-y-4'>
+      {currentAvatar && (
+        <div>
+          <Label>Текущий аватар</Label>
+          <Image src={currentAvatar} alt='Current avatar' width={100} height={100} className='rounded-full' />
+        </div>
+      )}
+
       <div>
         <Label htmlFor='avatar'>Загрузить аватар</Label>
         <Input id='avatar' type='file' accept='image/*' onChange={onSelectFile} />

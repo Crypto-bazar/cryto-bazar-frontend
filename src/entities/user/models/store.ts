@@ -24,4 +24,13 @@ export const userActions = {
   clearUser: () => {
     userStore.setState(() => ({ item: null }));
   },
+
+  updateAvatar: (avatarUrl: string) => {
+    userStore.setState((prev) => ({
+      item: {
+        ...(prev.item as User),
+        avatar_url: avatarUrl,
+      },
+    }));
+  },
 };

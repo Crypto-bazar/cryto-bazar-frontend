@@ -1,11 +1,11 @@
 'use client';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
 import { motion } from 'framer-motion';
 import { useAccount } from 'wagmi';
-import { useUser } from '../../../features/user/hooks';
+import { useUser } from 'features/user/hooks';
 import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';

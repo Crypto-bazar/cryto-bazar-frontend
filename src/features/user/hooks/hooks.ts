@@ -24,22 +24,28 @@ const useUploadAvatar = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUploadBlob = async (blob: Blob) => {
-    if (!address) return;
+    if (!address) return false;
     const formData = new FormData();
     formData.append('avatar', blob, 'avatar.jpg');
 
     setIsLoading(true);
     try {
-      await axiosInstance.post(`/api/v1/users/${address}/avatar`, formData, {
+      const response = await axiosInstance.post<{ avatar_url: string }>(`/api/v1/users/${address}/avatar`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       toast.success('Аватар обновлён!');
+      userActions.updateAvatar(response.data.avatar_url);
+      return response.data.avatar_url;
     } catch (err) {
       toast.error('Ошибка загрузки');
+      return null;
     } finally {
       setIsLoading(false);
     }
   };
+
+  const resetUpload = () => setFile(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -72,7 +78,7 @@ const useUploadAvatar = () => {
     }
   };
 
-  return { file, isLoading, handleFileChange, handleUpload, handleUploadBlob, setFile };
+  return { file, isLoading, handleFileChange, handleUpload, handleUploadBlob, setFile, resetUpload };
 };
 
 const useCropper = () => {
