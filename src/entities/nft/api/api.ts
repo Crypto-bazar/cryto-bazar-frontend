@@ -21,4 +21,14 @@ const getUserNFTs = async (address: `0x${string}` | undefined) => {
   }
 };
 
-export { getNFTs, getUserNFTs };
+const getNFTById = async (id: string) => {
+  try {
+    const response = await axiosInstance.get<NFT>(`/api/v1/nfts/${id}`);
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+export { getNFTs, getUserNFTs, getNFTById };

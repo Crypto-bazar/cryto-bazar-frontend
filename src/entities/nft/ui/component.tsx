@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { NFT } from '../models/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui/card';
@@ -7,12 +7,11 @@ import { ThumbsUp, AlertCircle } from 'lucide-react';
 
 type Props = {
   nft: NFT;
-  children?: ReactNode;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const NFTCard: FC<Props> = ({ nft, children }) => {
+const NFTCard: FC<Props> = ({ nft }) => {
   const votes = BigInt(nft.votes_amount);
   const formattedVotes = formatUnits(votes, 18);
 
@@ -46,7 +45,6 @@ const NFTCard: FC<Props> = ({ nft, children }) => {
         </div>
 
         <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>
-        {children}
       </CardContent>
     </Card>
   );

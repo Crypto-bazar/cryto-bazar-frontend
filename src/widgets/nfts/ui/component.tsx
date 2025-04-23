@@ -35,7 +35,7 @@ const NFTs: FC = () => {
           items.length !== 0 &&
           items.map((nft, index) => (
             <Link key={index} href={`/nft/${nft.id}`}>
-              <NFTCard nft={nft}>{nft.proposed && nft.token_id === 0 && <Vote proposeId={nft.proposal_id} />}</NFTCard>
+              <NFTCard nft={nft} />
             </Link>
           ))}
       </div>
