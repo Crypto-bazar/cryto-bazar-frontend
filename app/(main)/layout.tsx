@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 import { WagmiProvider } from 'wagmi';
 import { config } from 'app/web3';
 import { QueryProvider } from 'app/providers/api';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'Криптобазар',
@@ -27,6 +28,7 @@ export default function RootLayout({
           <body className={`${openRunder.className}`}>
             <Header />
             {children}
+            <Toaster position='top-center' richColors />
           </body>
         </html>
       </WagmiProvider>

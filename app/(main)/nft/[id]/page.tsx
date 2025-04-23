@@ -1,3 +1,5 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 
 import { Share2, Heart } from 'lucide-react';
@@ -7,11 +9,23 @@ import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
 import { getNFTById } from 'entities/nft/api';
+import { Vote } from 'features/vote-nft/ui';
+import { useEffect, useState } from 'react';
+import { NFT } from 'entities/nft/models';
+import { StartVoting } from 'features/propose-nft/ui';
 
-export default async function NFTDetailPage({ params }: { params: { id: string } }) {
-  const nft = await getNFTById(params.id);
+export default function NFTDetailPage({ params }: { params: { id: string } }) {
+  const [nft, setNFT] = useState<NFT>();
 
-  if (!nft) return notFound();
+  useEffect(() => {
+    (async () => {
+      const data = await getNFTById(params.id);
+      if (!data) return notFound();
+      setNFT(data);
+    })();
+  }, [params.id]);
+
+  if (!nft) return null;
 
   const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
   const formattedVotes = nft.votes_amount ? `${Number(nft.votes_amount) / 1e18}` : '0';
@@ -57,6 +71,8 @@ export default async function NFTDetailPage({ params }: { params: { id: string }
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться
             </Button>
+            <Vote proposeId={nft.proposal_id} />
+            <StartVoting tokenUri={nft.token_uri} />
           </div>
         </div>
       </div>
