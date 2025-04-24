@@ -28,8 +28,16 @@ const NFTCard: FC<Props> = ({ nft }) => {
           className='mb-4 h-48 w-full rounded object-cover'
         />
         <CardTitle className='text-[#000000]'>{nft.name}</CardTitle>
-        <CardDescription className={nft.token_id !== 0 ? 'font-medium text-green-600' : 'font-medium text-red-600'}>
-          {nft.token_id !== 0 ? 'Выпущен' : 'Не токенизирован'}
+        <CardDescription
+          className={
+            nft.token_id !== 0
+              ? 'font-medium text-green-600'
+              : nft.proposed
+                ? 'font-medium text-blue-600'
+                : 'font-medium text-red-600'
+          }
+        >
+          {nft.token_id !== 0 ? 'Выпущен' : nft.proposed ? 'В голосовании' : 'Не токенизирован'}
         </CardDescription>
         <CardDescription>Id токена: {nft.token_id}</CardDescription>
       </CardHeader>
