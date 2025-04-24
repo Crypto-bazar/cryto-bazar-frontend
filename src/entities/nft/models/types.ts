@@ -6,7 +6,7 @@ type NFT = {
   name: string;
   description: string;
   price: string;
-  owner_id: number;
+  owner: string;
   image_path: string;
   proposed: boolean;
   votes_amount: string;

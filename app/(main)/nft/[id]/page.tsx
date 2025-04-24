@@ -59,7 +59,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className='space-y-6'>
-          <NFTInfo name={nft.name} ownerId={nft.owner_id} description={nft.description} />
+          <NFTInfo name={nft.name} owner={nft.owner} description={nft.description} />
 
           <NFTAttributes attributes={attributes} />
 
