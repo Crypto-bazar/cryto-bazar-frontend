@@ -71,8 +71,12 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться
             </Button>
-            <Vote proposeId={nft.proposal_id} />
-            <StartVoting tokenUri={nft.token_uri} />
+            {nft.token_id === 0 && (
+              <>
+                {nft.proposed && <Vote proposeId={nft.proposal_id} />}
+                {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
+              </>
+            )}
           </div>
         </div>
       </div>

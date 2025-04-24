@@ -6,9 +6,9 @@ import { NFTCard } from 'entities/nft/ui';
 import { useStore } from '@tanstack/react-store';
 import { FC, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { StartVoting } from 'features/propose-nft/ui';
 import { useListenMinted } from 'features/mintd-nft/hooks';
 import { useListenPropose } from 'features/propose-nft/hooks/useListenPropose';
+import Link from 'next/link';
 
 const UserNFTs: FC = () => {
   const { address } = useAccount();
@@ -20,24 +20,25 @@ const UserNFTs: FC = () => {
     (async () => {
       const data = await getUserNFTs(address);
       userNFTActions.setNFTs(data);
-      console.log(proposeData);
       if (proposeData && proposeData.tokenUri) {
         nftActions.updateProposedNFT(proposeData?.tokenUri, true);
-        // console.table(userNFTs);
       }
     })();
   }, [address, eventData, proposeData]);
 
   return (
-    <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
-      {userNFTs &&
-        userNFTs.length !== 0 &&
-        userNFTs.map((nft, index) => (
-          <NFTCard nft={nft} key={index}>
-            {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
-          </NFTCard>
-        ))}
-    </div>
+    <>
+      <h1>Ваши NFT</h1>
+      <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
+        {userNFTs &&
+          userNFTs.length !== 0 &&
+          userNFTs.map((nft, index) => (
+            <Link key={index} href={`/nft/${nft.id}`}>
+              <NFTCard nft={nft} />
+            </Link>
+          ))}
+      </div>
+    </>
   );
 };
 

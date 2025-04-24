@@ -8,7 +8,6 @@ import { FC } from 'react';
 const navItems = [
   { href: '/profile/nfts', label: 'Мои NFT' },
   { href: '/profile/settings', label: 'Настройки' },
-  { href: '/profile/avatar', label: 'Аватар' },
 ];
 
 const ProfileNav: FC = () => {
