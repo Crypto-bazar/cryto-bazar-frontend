@@ -33,7 +33,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const attributes = [
     { label: 'ID токена', value: nft.token_id },
     { label: 'ID предложения', value: nft.proposal_id || '—' },
-    { label: 'Статус', value: nft.proposed ? 'Предложен' : 'Не предложен' },
+    { label: 'Статус', value: nft.token_id !== 0 ? 'Выпущен' : nft.proposed ? 'Предложен' : 'Не предложен' },
     { label: 'Голоса', value: nft.votes_amount ? formattedVotes : '0' },
   ];
 

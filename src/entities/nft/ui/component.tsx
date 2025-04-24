@@ -18,7 +18,7 @@ const NFTCard: FC<Props> = ({ nft }) => {
   const hasVotes = votes > 0n;
 
   return (
-    <Card className='border-2 border-[#c1c1c1] bg-[#fff] text-[#9fa2b2] shadow-lg shadow-[#c1c1c1]'>
+    <Card className='h-[500px] border-2 border-[#c1c1c1] bg-[#fff] text-[#9fa2b2] shadow-lg shadow-[#c1c1c1]'>
       <CardHeader>
         <Image
           width={200}
@@ -35,14 +35,20 @@ const NFTCard: FC<Props> = ({ nft }) => {
       </CardHeader>
 
       <CardContent>
-        <div
-          className={`mb-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold shadow-sm ${
-            hasVotes ? 'bg-blue-50 text-blue-700' : 'border border-red-300 bg-red-50 text-red-700'
-          }`}
-        >
-          {hasVotes ? <ThumbsUp className='h-5 w-5 text-blue-500' /> : <AlertCircle className='h-5 w-5 text-red-500' />}
-          {hasVotes ? `Проголосовали: ${formattedVotes}` : 'Пока никто не голосовал'}
-        </div>
+        {nft.proposal_id !== 0 && (
+          <div
+            className={`mb-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold shadow-sm ${
+              hasVotes ? 'bg-blue-50 text-blue-700' : 'border border-red-300 bg-red-50 text-red-700'
+            }`}
+          >
+            {hasVotes ? (
+              <ThumbsUp className='h-5 w-5 text-blue-500' />
+            ) : (
+              <AlertCircle className='h-5 w-5 text-red-500' />
+            )}
+            {hasVotes ? `Проголосовали: ${formattedVotes}` : 'Пока никто не голосовал'}
+          </div>
+        )}
 
         <p className='mb-2 text-[#9fa2b2]'>{nft.description}</p>
       </CardContent>
