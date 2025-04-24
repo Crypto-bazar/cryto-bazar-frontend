@@ -9,6 +9,7 @@ import { useAccount } from 'wagmi';
 import { useListenMinted } from 'features/mintd-nft/hooks';
 import { useListenPropose } from 'features/propose-nft/hooks/useListenPropose';
 import Link from 'next/link';
+import { CreateNFT } from 'features/create-nft/ui';
 
 const UserNFTs: FC = () => {
   const { address } = useAccount();
@@ -29,6 +30,7 @@ const UserNFTs: FC = () => {
   return (
     <>
       <h1>Ваши NFT</h1>
+      <CreateNFT />
       <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
         {userNFTs &&
           userNFTs.length !== 0 &&

@@ -5,7 +5,6 @@ import { getNFTs } from 'entities/nft/api';
 import { CreateNFT } from 'features/create-nft/ui';
 import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
-import { Vote } from 'features/vote-nft/ui';
 import { connectWS } from 'shared/api/ws';
 import Link from 'next/link';
 
@@ -29,7 +28,6 @@ const NFTs: FC = () => {
 
   return (
     <div>
-      <CreateNFT />
       <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
         {items &&
           items.length !== 0 &&
