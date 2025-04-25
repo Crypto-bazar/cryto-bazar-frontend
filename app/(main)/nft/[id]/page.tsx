@@ -13,9 +13,11 @@ import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
 import { NFT } from 'entities/nft/models';
 import { StartVoting } from 'features/propose-nft/ui';
+import { useAccount } from 'wagmi';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [nft, setNFT] = useState<NFT>();
+  const { address } = useAccount();
 
   useEffect(() => {
     (async () => {
@@ -64,14 +66,16 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <NFTAttributes attributes={attributes} />
 
           <div className='flex gap-4'>
-            <Button variant='outline' size='sm'>
-              <Heart className='mr-2 h-4 w-4' />В избранное
-            </Button>
+            {address && (
+              <Button variant='outline' size='sm'>
+                <Heart className='mr-2 h-4 w-4' />В избранное
+              </Button>
+            )}
             <Button variant='outline' size='sm'>
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться
             </Button>
-            {nft.token_id === 0 && (
+            {nft.token_id === 0 && address && (
               <>
                 {nft.proposed && <Vote proposeId={nft.proposal_id} />}
                 {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
