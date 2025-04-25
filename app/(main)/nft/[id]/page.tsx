@@ -15,6 +15,7 @@ import { NFT } from 'entities/nft/models';
 import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
 import { SellNFT } from 'features/sell-nft/ui';
+import { BuyNFTButton } from 'features/buy-nft/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [nft, setNFT] = useState<NFT | null>(null);
@@ -83,6 +84,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
               </>
             )}
             {nft.token_id !== 0 && address && <SellNFT tokenId={nft.token_id} />}
+            {/* <BuyNFTButton tokenId={BigInt(nft.token_id)} price={BigInt(nft.price)}/> */}
           </div>
         </div>
       </div>

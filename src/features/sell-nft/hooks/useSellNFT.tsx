@@ -1,4 +1,4 @@
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 const useSellNFT = () => {
@@ -7,7 +7,7 @@ const useSellNFT = () => {
 
   const sellNFT = async (tokenId: number, price: number) => {
     return writeContractAsync({
-      abi: abi,
+      abi: DAOabi,
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       functionName: 'sellNFT',
       args: [BigInt(tokenId), BigInt(price)],
