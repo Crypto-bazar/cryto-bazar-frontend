@@ -61,7 +61,7 @@ const Header: FC = () => {
           className='flex items-center gap-4'
         >
           <ConnectWallet />
-          {user?.avatar_url && (
+          {user?.avatar_url && address && (
             <Link href='/profile'>
               <div className='h-10 w-10 overflow-hidden rounded-full border border-white transition-all duration-200 hover:ring-2 hover:ring-[#3c7a89]'>
                 <Image
