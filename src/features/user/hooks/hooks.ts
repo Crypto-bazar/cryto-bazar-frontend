@@ -8,6 +8,16 @@ import { toast } from 'sonner';
 import { axiosInstance } from 'shared/api';
 import type { Area } from 'react-easy-crop';
 
+const useWalletDisconnectHandler = () => {
+  const { isDisconnected } = useAccount();
+
+  useEffect(() => {
+    if (isDisconnected) {
+      userActions.clearUser();
+    }
+  }, [isDisconnected]);
+};
+
 const useUser = (address: string) => {
   useEffect(() => {
     (async () => {
@@ -108,4 +118,4 @@ const useCropper = () => {
   };
 };
 
-export { useUser, useUploadAvatar, useCropper };
+export { useUser, useUploadAvatar, useCropper, useWalletDisconnectHandler };

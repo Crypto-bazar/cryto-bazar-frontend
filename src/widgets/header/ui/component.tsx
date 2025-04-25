@@ -5,7 +5,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/u
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
-import { useUser } from 'features/user/hooks';
+import { useUser, useWalletDisconnectHandler } from 'features/user/hooks';
 import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
@@ -16,6 +16,8 @@ const Header: FC = () => {
   const user = useStore(userStore, (state) => state.item);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   useUser(address as string);
+
+  useWalletDisconnectHandler();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
