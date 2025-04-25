@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Log } from 'viem';
 import { useWatchContractEvent } from 'wagmi';
 import { EventMintedData } from '../model';
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 
 const useEventListener = () => {
   const [data, setData] = useState<EventMintedData | null>(null);
@@ -10,7 +10,7 @@ const useEventListener = () => {
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: abi,
+    abi: DAOabi,
     eventName: 'TokenMinted',
     onLogs(logs) {
       if (prevDataRef.current.length > 0 && prevDataRef.current[0].blockHash === logs[0].blockHash) {

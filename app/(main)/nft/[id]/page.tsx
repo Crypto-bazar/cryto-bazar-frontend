@@ -60,6 +60,12 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                   <span className='text-muted-foreground'>URI токена:</span>
                   <span className='font-mono text-sm'>{nft.token_uri}</span>
                 </div>
+                {nft.in_sales && (
+                  <div className='flex justify-between'>
+                    <span className='text-muted-foreground'>Цена продажи:</span>
+                    <span className='font-mono text-sm'>{formattedPrice}</span>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -86,7 +92,9 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                 {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
               </>
             )}
-            {nft.token_id !== 0 && !nft.in_sales && address && <SellNFT tokenId={nft.token_id} />}
+            {nft.token_id !== 0 && !nft.in_sales && address && nft.owner === address && (
+              <SellNFT tokenId={nft.token_id} />
+            )}
             {nft.in_sales && address && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
           </div>
         </div>
