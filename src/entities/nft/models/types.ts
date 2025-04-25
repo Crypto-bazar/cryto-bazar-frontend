@@ -1,6 +1,7 @@
 type NFT = {
   id: number;
   token_id: number;
+  in_sales: boolean;
   proposal_id: number;
   token_uri: string;
   name: string;

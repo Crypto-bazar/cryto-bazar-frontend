@@ -86,8 +86,8 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                 {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
               </>
             )}
-            {nft.token_id !== 0 && address && <SellNFT tokenId={nft.token_id} />}
-            <BuyNFTButton tokenId={tokenId} price={priceInWei} />
+            {nft.token_id !== 0 && !nft.in_sales && address && <SellNFT tokenId={nft.token_id} />}
+            {nft.in_sales && address && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
           </div>
         </div>
       </div>
