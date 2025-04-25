@@ -34,6 +34,9 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
   const formattedVotes = nft.votes_amount ? `${Number(nft.votes_amount) / 1e18}` : '0';
 
+  const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
+  const tokenId = BigInt(nft.token_id);
+
   const attributes = [
     { label: 'ID токена', value: nft.token_id },
     { label: 'ID предложения', value: nft.proposal_id || '—' },
@@ -84,7 +87,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
               </>
             )}
             {nft.token_id !== 0 && address && <SellNFT tokenId={nft.token_id} />}
-            {/* <BuyNFTButton tokenId={BigInt(nft.token_id)} price={BigInt(nft.price)}/> */}
+            <BuyNFTButton tokenId={tokenId} price={priceInWei} />
           </div>
         </div>
       </div>
