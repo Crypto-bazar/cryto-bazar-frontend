@@ -47,9 +47,8 @@ const useUploadAvatar = () => {
       toast.success('Аватар обновлён!');
       userActions.updateAvatar(response.data.avatar_url);
       return response.data.avatar_url;
-    } catch (err) {
+    } catch {
       toast.error('Ошибка загрузки');
-      return null;
     } finally {
       setIsLoading(false);
     }

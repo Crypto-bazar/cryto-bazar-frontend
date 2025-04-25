@@ -3,25 +3,12 @@ export const abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'to',
+        name: '_governanceToken',
         type: 'address',
       },
       {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'approve',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
-        name: '_governanceToken',
+        name: '_paymentToken',
         type: 'address',
       },
     ],
@@ -191,6 +178,31 @@ export const abi = [
         type: 'uint256',
       },
       {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
+    ],
+    name: 'NFTInSale',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
         indexed: false,
         internalType: 'string',
         name: 'tokenURI',
@@ -232,86 +244,29 @@ export const abi = [
     type: 'event',
   },
   {
+    anonymous: false,
     inputs: [
       {
-        internalType: 'string',
-        name: '_tokenURI',
-        type: 'string',
-      },
-    ],
-    name: 'proposeNFT',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
+        indexed: true,
         internalType: 'uint256',
         name: 'tokenId',
         type: 'uint256',
       },
       {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
+        indexed: true,
         internalType: 'address',
-        name: 'operator',
+        name: 'buyer',
         type: 'address',
       },
       {
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
+        indexed: false,
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
       },
     ],
-    name: 'setApprovalForAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    name: 'NFTSold',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -337,29 +292,6 @@ export const abi = [
     ],
     name: 'Transfer',
     type: 'event',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
     anonymous: false,
@@ -395,12 +327,17 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: 'proposalId',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
-    name: 'voteForNFT',
+    name: 'approve',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -422,6 +359,19 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyNFT',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -541,6 +491,13 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'mintNFT',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'name',
     outputs: [
       {
@@ -590,6 +547,40 @@ export const abi = [
     inputs: [
       {
         internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'nftSales',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'sold',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
         name: 'tokenId',
         type: 'uint256',
       },
@@ -598,6 +589,19 @@ export const abi = [
     outputs: [
       {
         internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'paymentToken',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
         name: '',
         type: 'address',
       },
@@ -619,6 +623,19 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_tokenURI',
+        type: 'string',
+      },
+    ],
+    name: 'proposeNFT',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'requiredVotes',
     outputs: [
@@ -629,6 +646,93 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
+    ],
+    name: 'sellNFT',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: 'approved',
+        type: 'bool',
+      },
+    ],
+    name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -680,6 +784,42 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'transferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'proposalId',
+        type: 'uint256',
+      },
+    ],
+    name: 'voteForNFT',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ] as const;

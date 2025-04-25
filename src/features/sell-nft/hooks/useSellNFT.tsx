@@ -9,7 +9,7 @@ const useSellNFT = () => {
     return writeContractAsync({
       abi: abi,
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-      functionName: 'listTokenForSale',
+      functionName: 'sellNFT',
       args: [BigInt(tokenId), BigInt(price)],
     });
   };

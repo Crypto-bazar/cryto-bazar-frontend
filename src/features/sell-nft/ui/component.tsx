@@ -49,9 +49,7 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 bg-[#3c7a89] text-[#16262e] hover:bg-[#2e4756]' variant='default'>
-          Продать
-        </Button>
+        <Button>Продать</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -65,9 +63,9 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
               name='price'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Название</FormLabel>
+                  <FormLabel>Цена</FormLabel>
                   <FormControl>
-                    <Input placeholder='Введите название' {...field} />
+                    <Input placeholder='Введите цену' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

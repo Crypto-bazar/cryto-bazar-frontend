@@ -14,9 +14,10 @@ import { useEffect, useState } from 'react';
 import { NFT } from 'entities/nft/models';
 import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
+import { SellNFT } from 'features/sell-nft/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
-  const [nft, setNFT] = useState<NFT>();
+  const [nft, setNFT] = useState<NFT | null>(null);
   const { address } = useAccount();
 
   useEffect(() => {
@@ -81,6 +82,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                 {!nft.proposed && <StartVoting tokenUri={nft.token_uri} />}
               </>
             )}
+            {nft.token_id !== 0 && address && <SellNFT tokenId={nft.token_id} />}
           </div>
         </div>
       </div>
