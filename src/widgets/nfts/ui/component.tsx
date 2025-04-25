@@ -2,7 +2,6 @@
 import { FC, useEffect } from 'react';
 import { NFTCard } from 'entities/nft/ui';
 import { getNFTs } from 'entities/nft/api';
-import { CreateNFT } from 'features/create-nft/ui';
 import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
 import { connectWS } from 'shared/api/ws';
