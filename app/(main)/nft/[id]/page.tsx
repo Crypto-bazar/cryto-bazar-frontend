@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
-import { getNFTById } from 'entities/nft/api';
+import { getNFTById, getNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
-import { NFT } from 'entities/nft/models';
+import { NFT, nftActions, nftStore } from 'entities/nft/models';
 import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
 import { SellNFT } from 'features/sell-nft/ui';
@@ -25,20 +25,21 @@ import { userStore } from 'entities/user/models/store';
 import Image from 'next/image';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
-  const [nft, setNFT] = useState<NFT | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
+  const nfts = useStore(nftStore, (state) => state.items);
+  const nft = nfts[Number(params.id) - 1];
 
   useEffect(() => {
     (async () => {
-      const data = await getNFTById(params.id);
+      const data = await getNFTs();
       if (!data) return notFound();
-      setNFT(data);
-      loadComments(data.token_id);
+      nftActions.setNFTs(data);
+      loadComments(nfts[Number(params.id) - 1].token_id);
     })();
   }, [params.id]);
 

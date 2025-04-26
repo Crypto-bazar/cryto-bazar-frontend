@@ -25,6 +25,13 @@ export const nftActions = {
     nftStore.setState((prev) => ({ ...prev, items: nfts }));
   },
 
+  updateNFT: (updatedNFT: NFT) => {
+    nftStore.setState((state) => ({
+      ...state,
+      items: state.items.map((nft) => (nft.id === updatedNFT.id ? updatedNFT : nft)),
+    }));
+  },
+
   selectNFT: (nft: NFT) => {
     nftStore.setState((prev) => ({ ...prev, selectedNFT: nft }));
   },

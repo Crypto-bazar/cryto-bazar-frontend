@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
@@ -9,12 +9,45 @@ import { useUser, useWalletDisconnectHandler } from 'features/user/hooks';
 import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
+import { connectWS } from 'shared/api/ws';
+import { nftActions, nftStore } from 'entities/nft/models';
 
 const Header: FC = () => {
   const { address } = useAccount();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const ws = connectWS();
+
+    if (!ws) return;
+
+    ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        console.log('WebSocket message received:', message);
+
+        if (message.type && message.nft) {
+          switch (message.type) {
+            case 'vote':
+            case 'proposed':
+            case 'minted':
+            case 'sale':
+            case 'sold':
+              nftActions.updateNFT(message.nft);
+              break;
+            default:
+              console.log('Unknown message type:', message.type);
+          }
+        }
+      } catch (error) {
+        console.error('Error processing WS message:', error);
+      }
+    };
+
+  }, []);
+
   useUser(address as string);
 
   useWalletDisconnectHandler();

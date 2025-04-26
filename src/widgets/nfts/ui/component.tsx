@@ -4,21 +4,12 @@ import { NFTCard } from 'entities/nft/ui';
 import { getNFTs } from 'entities/nft/api';
 import { nftActions, nftStore } from 'entities/nft/models';
 import { useStore } from '@tanstack/react-store';
-import { connectWS } from 'shared/api/ws';
 import Link from 'next/link';
 
 const NFTs: FC = () => {
   const items = useStore(nftStore, (state) => state.items);
-  const ws = connectWS();
 
   useEffect(() => {
-    if (!ws) return;
-
-    ws.onopen = () => console.log('Hello, websocket');
-    ws.onmessage = (ev) => {
-      console.log(ev);
-    };
-
     (async () => {
       const data = await getNFTs();
       nftActions.setNFTs(data);
