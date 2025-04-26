@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWatchContractEvent } from 'wagmi';
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 import { EventMinted } from '../models';
 
 const useListenMinted = () => {
@@ -8,7 +8,7 @@ const useListenMinted = () => {
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: abi,
+    abi: DAOabi,
     eventName: 'NFTMinted',
     poll: false,
     onLogs(logs) {

@@ -1,4 +1,4 @@
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 const useCreateToken = () => {
@@ -7,7 +7,7 @@ const useCreateToken = () => {
 
   const createToken = async (uri: string) => {
     return await writeContractAsync({
-      abi: abi,
+      abi: DAOabi,
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       functionName: 'mintToken',
       args: [uri],

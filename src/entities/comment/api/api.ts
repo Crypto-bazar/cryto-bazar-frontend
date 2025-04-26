@@ -1,5 +1,6 @@
 import { axiosInstance } from 'shared/api';
-import { Comment } from '../models';
+import { Comment, CommentCreate } from '../models';
+import { AxiosResponse } from 'axios';
 
 const getComments = async (tokenId: number): Promise<Comment[]> => {
   try {
@@ -11,4 +12,14 @@ const getComments = async (tokenId: number): Promise<Comment[]> => {
   }
 };
 
-export { getComments };
+const createComment = async (data: CommentCreate): Promise<Comment | null> => {
+  try {
+    const response = await axiosInstance.post<CommentCreate, AxiosResponse<Comment>>(`/api/v1/comments/`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating comment:', error);
+    return null;
+  }
+};
+
+export { getComments, createComment };

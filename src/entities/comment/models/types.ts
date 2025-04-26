@@ -6,4 +6,10 @@ type Comment = {
   created_at: string;
 };
 
-export type { Comment };
+type CommentCreate = {
+  content: string;
+  owner_address: string;
+  token_id: number;
+};
+
+export type { Comment, CommentCreate };

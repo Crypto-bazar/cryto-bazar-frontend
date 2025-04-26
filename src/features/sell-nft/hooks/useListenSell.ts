@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { EventSellData } from '../model';
 import { Log } from 'viem';
 import { useWatchContractEvent } from 'wagmi';
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 
 const useListenSell = () => {
   const [data, setData] = useState<EventSellData | null>(null);
@@ -10,7 +10,7 @@ const useListenSell = () => {
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: abi,
+    abi: DAOabi,
     eventName: 'TokenListedForSale',
     onLogs(logs) {
       if (prevDataRef.current.length > 0 && prevDataRef.current[0].blockHash === logs[0].blockHash) {

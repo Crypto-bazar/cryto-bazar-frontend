@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { EventPropose } from '../models';
 import { useWatchContractEvent } from 'wagmi';
-import { abi } from 'shared/models';
+import { DAOabi } from 'shared/models';
 
 const useListenPropose = () => {
   const [data, setData] = useState<EventPropose | null>(null);
 
   useWatchContractEvent({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    abi: abi,
+    abi: DAOabi,
     eventName: 'NFTProposed',
     poll: false,
     onLogs(logs) {

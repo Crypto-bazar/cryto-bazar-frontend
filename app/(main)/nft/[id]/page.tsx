@@ -1,8 +1,7 @@
 'use client';
 
 import { notFound } from 'next/navigation';
-
-import { Share2, Heart } from 'lucide-react';
+import { Share2, Heart, MessageSquare } from 'lucide-react';
 import { NFTImage } from 'entities/nft/ui';
 import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
@@ -16,9 +15,17 @@ import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
 import { SellNFT } from 'features/sell-nft/ui';
 import { BuyNFTButton } from 'features/buy-nft/ui';
+import { createComment, getComments } from 'entities/comment/api';
+import { Comment, CommentCreate } from 'entities/comment/models';
+import { Textarea } from 'shared/ui/textarea';
+import { formatDistanceToNow } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [nft, setNFT] = useState<NFT | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
 
   useEffect(() => {
@@ -26,8 +33,53 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       const data = await getNFTById(params.id);
       if (!data) return notFound();
       setNFT(data);
+      loadComments(data.token_id);
     })();
   }, [params.id]);
+
+  const loadComments = async (tokenId: number) => {
+    try {
+      const commentsData = await getComments(tokenId);
+      setComments(commentsData);
+    } catch (error) {
+      console.error('Failed to load comments:', error);
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!newComment.trim() || !address || !nft) return;
+
+    setIsLoading(true);
+    try {
+      const data: CommentCreate = {
+        content: newComment,
+        owner_address: address,
+        token_id: nft.token_id,
+      };
+
+      const response = await createComment(data);
+
+      if (!response) {
+        console.error('Failed to create comment');
+        return;
+      }
+      setComments([
+        {
+          id: response.id, 
+          nft_id: response.nft_id,
+          owner_address: response.owner_address,
+          content: response.content,
+          created_at: response.created_at,
+        },
+        ...comments,
+      ]);
+      setNewComment('');
+    } catch (error) {
+      console.error('Failed to add comment:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!nft) return null;
 
@@ -97,6 +149,53 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
             )}
             {nft.in_sales && address && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className='flex items-center gap-2'>
+                <MessageSquare className='h-5 w-5' />
+                Комментарии ({comments.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              {address && (
+                <div className='space-y-2'>
+                  <Textarea
+                    placeholder='Напишите ваш комментарий...'
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    disabled={isLoading}
+                  />
+                  <Button onClick={handleAddComment} disabled={!newComment.trim() || isLoading}>
+                    {isLoading ? 'Отправка...' : 'Отправить'}
+                  </Button>
+                </div>
+              )}
+
+              <div className='space-y-4'>
+                {comments.length === 0 ? (
+                  <p className='py-4 text-center text-muted-foreground'>Пока нет комментариев</p>
+                ) : (
+                  comments.map((comment) => (
+                    <div key={comment.id} className='border-b pb-4 last:border-b-0'>
+                      <div className='flex items-start justify-between'>
+                        <div className='font-medium'>
+                          {comment.owner_address.slice(0, 6)}...{comment.owner_address.slice(-4)}
+                        </div>
+                        <div className='text-sm text-muted-foreground'>
+                          {formatDistanceToNow(new Date(comment.created_at), {
+                            addSuffix: true,
+                            locale: ru,
+                          })}
+                        </div>
+                      </div>
+                      <p className='mt-1 text-sm'>{comment.content}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
