@@ -20,6 +20,9 @@ import { Comment, CommentCreate } from 'entities/comment/models';
 import { Textarea } from 'shared/ui/textarea';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { useStore } from '@tanstack/react-store';
+import { userStore } from 'entities/user/models/store';
+import Image from 'next/image';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [nft, setNFT] = useState<NFT | null>(null);
@@ -27,6 +30,8 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const user = useStore(userStore, (state) => state.item);
 
   useEffect(() => {
     (async () => {
@@ -65,11 +70,12 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       }
       setComments([
         {
-          id: response.id, 
+          id: response.id,
           nft_id: response.nft_id,
           owner_address: response.owner_address,
           content: response.content,
           created_at: response.created_at,
+          avatar_url: user?.avatar_url || '',
         },
         ...comments,
       ]);
@@ -180,7 +186,18 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                     <div key={comment.id} className='border-b pb-4 last:border-b-0'>
                       <div className='flex items-start justify-between'>
                         <div className='font-medium'>
-                          {comment.owner_address.slice(0, 6)}...{comment.owner_address.slice(-4)}
+                          <div className='flex items-center gap-2'>
+                            <div className='h-10 w-10 overflow-hidden rounded-full border border-white transition-all duration-200 hover:ring-2 hover:ring-[#3c7a89]'>
+                              <Image
+                                src={`${apiUrl}${comment.avatar_url}`}
+                                alt='Аватар'
+                                width={40}
+                                height={40}
+                                className='h-full w-full object-cover'
+                              />
+                            </div>
+                            {comment.owner_address.slice(0, 6)}...{comment.owner_address.slice(-4)}
+                          </div>
                         </div>
                         <div className='text-sm text-muted-foreground'>
                           {formatDistanceToNow(new Date(comment.created_at), {
