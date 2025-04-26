@@ -2,6 +2,9 @@ import { axiosInstance } from 'shared/api';
 import { User } from 'entities/user/models';
 
 const getUser = async (address: string) => {
+  if (!address) {
+    return;
+  }
   try {
     const response = await axiosInstance.get<User>(`/api/v1/users/${address}`);
     return response.data;
