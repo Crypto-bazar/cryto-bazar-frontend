@@ -1,3 +1,2 @@
-export type * from './types';
-export * from './abi';
+export * from './dao-abi';
 export * from './payment-abi';
