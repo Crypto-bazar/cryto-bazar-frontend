@@ -1,10 +1,14 @@
 import { axiosInstance } from 'shared/api';
 import { Comment, CommentCreate } from '../models';
 import { AxiosResponse } from 'axios';
+import { commentActions } from '../models/store';
 
 const getComments = async (tokenId: number): Promise<Comment[]> => {
   try {
     const response = await axiosInstance.get<Comment[]>(`/api/v1/comments/${tokenId}`);
+    if (response.status === 200) {
+      commentActions.setComments(response.data);
+    }
     return response.data;
   } catch (error) {
     console.error('Error fetching comments:', error);

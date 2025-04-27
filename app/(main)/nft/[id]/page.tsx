@@ -10,28 +10,29 @@ import { Button } from 'shared/ui/button';
 import { getNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
-import { nftActions, nftStore } from 'entities/nft/models';
+import { nftStore } from 'entities/nft/models';
 import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
 import { SellNFT } from 'features/sell-nft/ui';
 import { BuyNFTButton } from 'features/buy-nft/ui';
 import { createComment, getComments } from 'entities/comment/api';
-import { Comment, CommentCreate } from 'entities/comment/models';
+import { CommentCreate } from 'entities/comment/models';
 import { Textarea } from 'shared/ui/textarea';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { useStore } from '@tanstack/react-store';
 import { userStore } from 'entities/user/models/store';
 import Image from 'next/image';
+import { commentActions, commentStore } from 'entities/comment/models/store';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
-  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
   const nfts = useStore(nftStore, (state) => state.items);
+  const comments = useStore(commentStore, (state) => state.items);
   const nft = nfts[Number(params.id) - 1];
 
   useEffect(() => {
@@ -41,14 +42,13 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const nft = nfts[Number(params.id) - 1];
     if (nft) {
-      loadComments(nft.token_id);
+      loadComments(nft.id);
     }
   }, [nfts, params.id]);
 
   const loadComments = async (tokenId: number) => {
     try {
-      const commentsData = await getComments(tokenId);
-      setComments(commentsData);
+      getComments(tokenId);
     } catch (error) {
       console.error('Failed to load comments:', error);
     }
@@ -62,7 +62,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       const data: CommentCreate = {
         content: newComment,
         owner_address: address,
-        token_id: nft.token_id,
+        token_id: nft.id,
       };
 
       const response = await createComment(data);
@@ -71,17 +71,14 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         console.error('Failed to create comment');
         return;
       }
-      setComments([
-        {
-          id: response.id,
-          nft_id: response.nft_id,
-          owner_address: response.owner_address,
-          content: response.content,
-          created_at: response.created_at,
-          avatar_url: user?.avatar_url || '',
-        },
-        ...comments,
-      ]);
+      commentActions.addComment({
+        id: response.id,
+        nft_id: response.nft_id,
+        owner_address: response.owner_address,
+        content: response.content,
+        created_at: response.created_at,
+        avatar_url: user?.avatar_url || '',
+      });
       setNewComment('');
     } catch (error) {
       console.error('Failed to add comment:', error);
@@ -192,7 +189,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                           <div className='flex items-center gap-2'>
                             <div className='h-10 w-10 overflow-hidden rounded-full border border-white transition-all duration-200 hover:ring-2 hover:ring-[#3c7a89]'>
                               <Image
-                                src={`${apiUrl}${comment.avatar_url}`}
+                                src={comment.avatar_url ? `${apiUrl}${comment.avatar_url}` : '/default-avatar.png'}
                                 alt='Аватар'
                                 width={40}
                                 height={40}
