@@ -40,19 +40,10 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   }, []);
 
   useEffect(() => {
-    const nft = nfts[Number(params.id) - 1];
     if (nft) {
-      loadComments(nft.id);
+      getComments(nft.id);
     }
-  }, [nfts, params.id]);
-
-  const loadComments = async (tokenId: number) => {
-    try {
-      getComments(tokenId);
-    } catch (error) {
-      console.error('Failed to load comments:', error);
-    }
-  };
+  }, [nfts, nft, params.id]);
 
   const handleAddComment = async () => {
     if (!newComment.trim() || !address || !nft) return;
@@ -71,6 +62,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         console.error('Failed to create comment');
         return;
       }
+
       commentActions.addComment({
         id: response.id,
         nft_id: response.nft_id,
@@ -79,6 +71,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         created_at: response.created_at,
         avatar_url: user?.avatar_url || '',
       });
+
       setNewComment('');
     } catch (error) {
       console.error('Failed to add comment:', error);
@@ -91,7 +84,6 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
 
   const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
   const formattedVotes = nft.votes_amount ? `${Number(nft.votes_amount) / 1e18}` : '0';
-
   const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
   const tokenId = BigInt(nft.token_id);
 
