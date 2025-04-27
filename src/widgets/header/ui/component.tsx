@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { useNftWsUpdates } from 'features/nft/ws-updates';
 import { MobileMenu } from 'widgets/mobile-menu/ui';
 import { useNavItems } from 'features/header/hooks';
+import { Burger } from './burger';
 
 const Header: FC = () => {
   const { address } = useAccount();
@@ -77,28 +78,7 @@ const Header: FC = () => {
             </Link>
           )}
 
-          {/* Burger */}
-          <button
-            className='ml-4 flex flex-col items-center justify-center md:hidden'
-            onClick={toggleMobileMenu}
-            aria-label='Меню'
-          >
-            <span
-              className={`block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                isMobileMenuOpen ? 'translate-y-1 rotate-45' : '-translate-y-0.5'
-              }`}
-            ></span>
-            <span
-              className={`my-0.5 block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
-              }`}
-            ></span>
-            <span
-              className={`block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                isMobileMenuOpen ? '-translate-y-1 -rotate-45' : 'translate-y-0.5'
-              }`}
-            ></span>
-          </button>
+          <Burger isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
         </motion.div>
 
         <MobileMenu isOpen={isMobileMenuOpen} navItems={navItems} onClose={() => setIsMobileMenuOpen(false)} />
