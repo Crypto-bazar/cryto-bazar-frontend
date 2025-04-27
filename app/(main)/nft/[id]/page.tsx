@@ -35,13 +35,15 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const nft = nfts[Number(params.id) - 1];
 
   useEffect(() => {
-    (async () => {
-      const data = await getNFTs();
-      if (!data) return notFound();
-      nftActions.setNFTs(data);
-      loadComments(nfts[Number(params.id) - 1].token_id);
-    })();
-  }, [params.id]);
+    getNFTs().catch(() => notFound());
+  }, []);
+
+  useEffect(() => {
+    const nft = nfts[Number(params.id) - 1];
+    if (nft) {
+      loadComments(nft.token_id);
+    }
+  }, [nfts, params.id]);
 
   const loadComments = async (tokenId: number) => {
     try {

@@ -1,9 +1,12 @@
 import { axiosInstance } from 'shared/api';
-import { NFT } from '../models';
+import { NFT, nftActions } from '../models';
 
 const getNFTs = async () => {
   try {
     const response = await axiosInstance.get<NFT[]>('/api/v1/nfts/');
+    if (response.status == 200) {
+      nftActions.setNFTs(response.data);
+    }
     return response.data;
   } catch (e) {
     console.error(e);
