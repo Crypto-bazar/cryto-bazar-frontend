@@ -4,12 +4,14 @@ import { NFT } from './types';
 type NFTState = {
   items: NFT[];
   selectedNFT: NFT | null;
+  salesItems: NFT[];
   userItems: NFT[];
 };
 
 const initialState: NFTState = {
   items: [],
   selectedNFT: null,
+  salesItems: [],
   userItems: [],
 };
 
@@ -23,6 +25,10 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 export const nftActions = {
   setNFTs: (nfts: NFT[]) => {
     nftStore.setState((prev) => ({ ...prev, items: nfts }));
+  },
+
+  setSalesNFTs: (nfts: NFT[]) => {
+    nftStore.setState((prev) => ({ ...prev, salesItems: nfts }));
   },
 
   updateNFT: (updatedNFT: NFT) => {
@@ -77,3 +83,5 @@ export const userNFTActions = {
     nftStore.setState((prev) => ({ ...prev, userItems: [...prev.items, nft] }));
   },
 };
+
+export type { NFTState };

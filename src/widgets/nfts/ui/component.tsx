@@ -1,18 +1,21 @@
 'use client';
 import { FC, useEffect } from 'react';
 import { NFTCard } from 'entities/nft/ui';
-import { getNFTs } from 'entities/nft/api';
-import { nftActions, nftStore } from 'entities/nft/models';
-import { useStore } from '@tanstack/react-store';
+import { NFT, NFTState, nftStore } from 'entities/nft/models';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { useStore } from '@tanstack/react-store';
 
-const NFTs: FC = () => {
-  const items = useStore(nftStore, (state) => state.items);
+type Props = {
+  fetchData: () => Promise<NFT[]>;
+  state: (state: NFTState) => NFT[];
+};
 
+const NFTs: FC<Props> = ({ fetchData, state }) => {
+  const items = useStore(nftStore, state);
   useEffect(() => {
     (async () => {
-      const data = await getNFTs();
-      nftActions.setNFTs(data);
+      fetchData().catch(() => notFound());
     })();
   }, []);
 
