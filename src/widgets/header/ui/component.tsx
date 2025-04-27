@@ -10,7 +10,7 @@ import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
 import { connectWS } from 'shared/api/ws';
-import { nftActions, nftStore } from 'entities/nft/models';
+import { nftActions } from 'entities/nft/models';
 
 const Header: FC = () => {
   const { address } = useAccount();
@@ -26,8 +26,6 @@ const Header: FC = () => {
     ws.onmessage = (event) => {
       try {
         const message = JSON.parse(event.data);
-        console.log('WebSocket message received:', message);
-
         if (message.type && message.nft) {
           switch (message.type) {
             case 'vote':
