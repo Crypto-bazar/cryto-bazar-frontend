@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 type Props = {
@@ -5,7 +7,7 @@ type Props = {
   toggleMobileMenu: () => void;
 };
 
-const Burger: FC<Props> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
+const BurgerMenu: FC<Props> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
   return (
     <button
       className='ml-4 flex flex-col items-center justify-center md:hidden'
@@ -31,4 +33,4 @@ const Burger: FC<Props> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
   );
 };
 
-export { Burger };
+export { BurgerMenu };

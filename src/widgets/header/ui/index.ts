@@ -1,2 +1,3 @@
 export * from './component';
-export * from './burger';
+export * from './BurgerMenu';
+export * from './DesktopMenu';

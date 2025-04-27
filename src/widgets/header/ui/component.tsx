@@ -1,7 +1,6 @@
 'use client';
 import { FC, useState } from 'react';
 import Link from 'next/link';
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 import { ConnectWallet } from 'features/connect-wallet/ui';
 import { motion } from 'framer-motion';
 import { useAccount } from 'wagmi';
@@ -12,7 +11,8 @@ import Image from 'next/image';
 import { useNftWsUpdates } from 'features/nft/ws-updates';
 import { MobileMenu } from 'widgets/mobile-menu/ui';
 import { useNavItems } from 'features/header/hooks';
-import { Burger } from './burger';
+import { BurgerMenu } from './BurgerMenu';
+import { DesktopMenu } from './DesktopMenu';
 
 const Header: FC = () => {
   const { address } = useAccount();
@@ -37,25 +37,7 @@ const Header: FC = () => {
           Криптобазар
         </Link>
 
-        {/* Desktop */}
-        <NavigationMenu className='hidden md:block'>
-          <NavigationMenuList className='space-x-6'>
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.1 }}
-              >
-                <NavigationMenuItem>
-                  <Link href={item.href} className='transition-all hover:text-[#3c7a89]'>
-                    {item.label}
-                  </Link>
-                </NavigationMenuItem>
-              </motion.div>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <DesktopMenu navItems={navItems} />
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -78,7 +60,7 @@ const Header: FC = () => {
             </Link>
           )}
 
-          <Burger isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
+          <BurgerMenu isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
         </motion.div>
 
         <MobileMenu isOpen={isMobileMenuOpen} navItems={navItems} onClose={() => setIsMobileMenuOpen(false)} />
