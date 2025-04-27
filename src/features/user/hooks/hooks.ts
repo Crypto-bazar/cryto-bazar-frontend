@@ -18,9 +18,10 @@ const useWalletDisconnectHandler = () => {
   }, [isDisconnected]);
 };
 
-const useUser = (address: string) => {
+const useUser = (address: `0x${string}` | undefined) => {
   useEffect(() => {
     (async () => {
+      if (!address) return;
       const user = await getUser(address);
       if (!user) return;
       userActions.setUser(user);

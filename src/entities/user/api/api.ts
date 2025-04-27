@@ -1,7 +1,7 @@
 import { axiosInstance } from 'shared/api';
 import { User } from 'entities/user/models';
 
-const getUser = async (address: string) => {
+const getUser = async (address: `0x${string}`) => {
   if (!address) {
     return;
   }

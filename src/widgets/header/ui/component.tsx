@@ -1,16 +1,16 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 import { ConnectWallet } from 'widgets/connect-wallet/ui';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useAccount } from 'wagmi';
 import { useUser, useWalletDisconnectHandler } from 'features/user/hooks';
 import { userStore } from 'entities/user/models/store';
 import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
-import { connectWS } from 'shared/api/ws';
-import { nftActions } from 'entities/nft/models';
+import { useNftWsUpdates } from 'features/nft/ws-updates';
+import { MobileMenu } from 'widgets/mobile-menu/ui';
 
 const Header: FC = () => {
   const { address } = useAccount();
@@ -18,35 +18,9 @@ const Header: FC = () => {
   const user = useStore(userStore, (state) => state.item);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const ws = connectWS();
+  useNftWsUpdates();
 
-    if (!ws) return;
-
-    ws.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        if (message.type && message.nft) {
-          switch (message.type) {
-            case 'vote':
-            case 'proposed':
-            case 'minted':
-            case 'sale':
-            case 'sold':
-              nftActions.updateNFT(message.nft);
-              break;
-            default:
-              console.log('Unknown message type:', message.type);
-          }
-        }
-      } catch (error) {
-        console.error('Error processing WS message:', error);
-      }
-    };
-
-  }, []);
-
-  useUser(address as string);
+  useUser(address);
 
   useWalletDisconnectHandler();
 
@@ -132,39 +106,7 @@ const Header: FC = () => {
           </button>
         </motion.div>
 
-        {/* Mobile */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className='absolute left-0 top-[70px] z-50 w-full overflow-hidden bg-[#000000] shadow-lg md:hidden'
-            >
-              <div className='container mx-auto px-6 py-4'>
-                <ul className='flex flex-col space-y-4'>
-                  {navItems.map((item) => (
-                    <motion.li
-                      key={item.href}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Link
-                        href={item.href}
-                        className='block py-2 text-lg transition-all hover:text-[#3c7a89]'
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <MobileMenu isOpen={isMobileMenuOpen} navItems={navItems} onClose={() => setIsMobileMenuOpen(false)} />
       </div>
     </header>
   );
