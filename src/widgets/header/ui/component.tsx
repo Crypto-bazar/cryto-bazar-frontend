@@ -2,7 +2,7 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
-import { ConnectWallet } from 'widgets/connect-wallet/ui';
+import { ConnectWallet } from 'features/connect-wallet/ui';
 import { motion } from 'framer-motion';
 import { useAccount } from 'wagmi';
 import { useUser, useWalletDisconnectHandler } from 'features/user/hooks';
@@ -11,13 +11,14 @@ import { useStore } from '@tanstack/react-store';
 import Image from 'next/image';
 import { useNftWsUpdates } from 'features/nft/ws-updates';
 import { MobileMenu } from 'widgets/mobile-menu/ui';
+import { useNavItems } from 'features/header/hooks';
 
 const Header: FC = () => {
   const { address } = useAccount();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const navItems = useNavItems();
   useNftWsUpdates();
 
   useUser(address);
@@ -27,12 +28,6 @@ const Header: FC = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const navItems = [
-    { href: '/nfts', label: 'NFT коллекции' },
-    { href: '/market', label: 'Торговая площадка' },
-    ...(address ? [{ href: '/profile', label: 'Личный кабинет' }] : []),
-  ];
 
   return (
     <header className='w-full border-b border-[#c1c1c1] bg-[#000000] shadow-md'>

@@ -1,5 +1,5 @@
 import { axiosInstance } from 'shared/api';
-import { CheckUserReq, CreateUserReq } from '../model';
+import { CheckUserReq, CreateUserReq } from 'shared/api/types';
 import axios, { AxiosResponse } from 'axios';
 import { SignatureRequest, SignatureResponse } from 'entities/signature/model';
 

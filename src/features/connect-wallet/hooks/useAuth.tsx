@@ -1,8 +1,8 @@
 'use client';
 import { useEffect } from 'react';
+import { CreateUserReq } from 'shared/api';
 import { useAccount, useSignMessage } from 'wagmi';
-import { checkUser, createUser } from '../api';
-import { CreateUserReq } from '../model';
+import { checkUser, createUser } from 'features/header/api';
 
 const useAuth = () => {
   const { address, isConnected } = useAccount();
