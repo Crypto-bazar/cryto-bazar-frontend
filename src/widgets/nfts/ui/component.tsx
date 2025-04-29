@@ -17,7 +17,7 @@ const NFTs: FC<Props> = ({ fetchData, state }) => {
     (async () => {
       fetchData().catch(() => notFound());
     })();
-  }, []);
+  }, [fetchData]);
 
   return (
     <div>

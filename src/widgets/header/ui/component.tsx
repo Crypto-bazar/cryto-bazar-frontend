@@ -29,10 +29,6 @@ const Header: FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  if (!user) {
-    return;
-  }
-
   return (
     <header className='w-full border-b border-[#c1c1c1] bg-[#000000] shadow-md'>
       <div className='container mx-auto flex items-center justify-between px-6 py-4 text-white'>

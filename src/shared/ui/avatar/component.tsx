@@ -6,7 +6,7 @@ import { FC } from 'react';
 type Props = {
   width: number;
   height: number;
-  user: User;
+  user: User | null;
   address: string | undefined;
 };
 
