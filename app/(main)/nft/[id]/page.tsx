@@ -150,7 +150,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
             </Button>
             {nft.token_id === 0 && address && (
               <>
-                {nft.proposed && <Vote proposeId={nft.proposal_id} />}
+                {nft.proposed && <Vote address={address} tokenOwner={nft.owner} proposeId={nft.proposal_id} />}
                 {!nft.proposed && address === nft.owner && <StartVoting tokenUri={nft.token_uri} />}
               </>
             )}
