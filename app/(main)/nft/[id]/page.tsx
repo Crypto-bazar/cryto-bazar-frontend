@@ -1,13 +1,13 @@
 'use client';
 
 import { notFound } from 'next/navigation';
-import { Share2, Heart, MessageSquare } from 'lucide-react';
+import { Share2, MessageSquare } from 'lucide-react';
 import { NFTImage } from 'entities/nft/ui';
 import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
-import { addFavouriteNFT, getNFTs } from 'entities/nft/api';
+import { getFavouriteNFTs, getNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
 import { nftStore } from 'entities/nft/models';
@@ -24,20 +24,35 @@ import { useStore } from '@tanstack/react-store';
 import { userStore } from 'entities/user/models/store';
 import Image from 'next/image';
 import { commentActions, commentStore } from 'entities/comment/models/store';
+import { AddFavouriteButton } from 'features/add-favourite/ui';
+import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
   const { address } = useAccount();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
   const nfts = useStore(nftStore, (state) => state.items);
   const comments = useStore(commentStore, (state) => state.items);
+  const favourites = useStore(nftStore, (state) => state.favourites);
   const nft = nfts[Number(params.id) - 1];
 
   useEffect(() => {
     getNFTs().catch(() => notFound());
   }, []);
+
+  useEffect(() => {
+    getFavouriteNFTs(address);
+  }, [address]);
+
+  useEffect(() => {
+    if (!nft || !favourites) return;
+
+    const result = favourites.some((fav) => fav.id === nft.id);
+    setIsFavourite(result);
+  }, [favourites, nft]);
 
   useEffect(() => {
     if (nft) {
@@ -127,17 +142,8 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <NFTAttributes attributes={attributes} />
 
           <div className='flex gap-4'>
-            {address && (
-              <Button
-                variant='outline'
-                size='sm'
-                onClick={() => {
-                  addFavouriteNFT(address, nft.id);
-                }}
-              >
-                <Heart className='mr-2 h-4 w-4' />В избранное
-              </Button>
-            )}
+            <RemoveFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
+            <AddFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
             <Button variant='outline' size='sm'>
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться
