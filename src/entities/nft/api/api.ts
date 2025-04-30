@@ -68,7 +68,7 @@ const addFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenId: 
   try {
     const response = await axiosInstance.post<NFT>(`/api/v1/nfts/favourites`, {
       eth_address: eth_address,
-      token_id: String(tokenId),
+      nft_id: String(tokenId),
     });
     if (response.status === 200) {
       nftActions.addFavouriteNFT(response.data);
