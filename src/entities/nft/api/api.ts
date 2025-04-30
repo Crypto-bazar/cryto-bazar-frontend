@@ -49,4 +49,14 @@ const getSalesNFT = async (): Promise<NFT[]> => {
   }
 };
 
-export { getNFTs, getUserNFTs, getNFTById, getSalesNFT };
+const getFavourineNFTs = async (address: `0x${string}` | undefined) => {
+  try {
+    const response = await axiosInstance.get<NFT[]>(`/api/v1/nfts/favourites?address=${address}`);
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavourineNFTs };
