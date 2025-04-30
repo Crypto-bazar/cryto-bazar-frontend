@@ -6,6 +6,7 @@ type NFTState = {
   selectedNFT: NFT | null;
   salesItems: NFT[];
   userItems: NFT[];
+  favourites: NFT[];
 };
 
 const initialState: NFTState = {
@@ -13,6 +14,7 @@ const initialState: NFTState = {
   selectedNFT: null,
   salesItems: [],
   userItems: [],
+  favourites: [],
 };
 
 export const nftStore = new Store<NFTState>(initialState);
@@ -70,6 +72,18 @@ export const nftActions = {
       items: prev.items.map((nft) =>
         nft.token_id === Number(tokenId) ? { ...nft, price: tokenPrice.toString() } : nft,
       ),
+    }));
+  },
+  setFavourites: (favourites: NFT[]) => {
+    nftStore.setState((prev) => ({ ...prev, favourites }));
+  },
+  addFavouriteNFT: (nft: NFT) => {
+    nftStore.setState((prev) => ({ ...prev, favourites: [...prev.favourites, nft] }));
+  },
+  removeFavouriteNFT: (nft: NFT) => {
+    nftStore.setState((prev) => ({
+      ...prev,
+      favourites: prev.favourites.filter((item) => item.token_id !== nft.token_id),
     }));
   },
 };
