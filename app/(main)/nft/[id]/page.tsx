@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
-import { getNFTs } from 'entities/nft/api';
+import { addFavouriteNFT, getNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
 import { nftStore } from 'entities/nft/models';
@@ -128,7 +128,13 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
 
           <div className='flex gap-4'>
             {address && (
-              <Button variant='outline' size='sm'>
+              <Button
+                variant='outline'
+                size='sm'
+                onClick={() => {
+                  addFavouriteNFT(address, nft.id);
+                }}
+              >
                 <Heart className='mr-2 h-4 w-4' />В избранное
               </Button>
             )}

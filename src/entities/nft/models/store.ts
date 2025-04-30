@@ -77,10 +77,10 @@ export const nftActions = {
   setFavourites: (favourites: NFT[]) => {
     nftStore.setState((prev) => ({ ...prev, favourites }));
   },
-  addFavourineNFT: (nft: NFT) => {
+  addFavouriteNFT: (nft: NFT) => {
     nftStore.setState((prev) => ({ ...prev, favourites: [...prev.favourites, nft] }));
   },
-  removeFavourineNFT: (nft: NFT) => {
+  removeFavouriteNFT: (nft: NFT) => {
     nftStore.setState((prev) => ({
       ...prev,
       favourites: prev.favourites.filter((item) => item.token_id !== nft.token_id),

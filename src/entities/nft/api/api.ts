@@ -49,9 +49,14 @@ const getSalesNFT = async (): Promise<NFT[]> => {
   }
 };
 
-const getFavourineNFTs = async (address: `0x${string}` | undefined) => {
+const getFavouriteNFTs = async (address: `0x${string}` | undefined) => {
   try {
     const response = await axiosInstance.get<NFT[]>(`/api/v1/nfts/favourites?address=${address}`);
+
+    if (response.status === 200) {
+      nftActions.setFavourites(response.data);
+    }
+
     return response.data;
   } catch (e) {
     console.error(e);
@@ -59,14 +64,14 @@ const getFavourineNFTs = async (address: `0x${string}` | undefined) => {
   }
 };
 
-const addFavourineNFT = async (address: `0x${string}` | undefined, tokenId: number) => {
+const addFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenId: number) => {
   try {
     const response = await axiosInstance.post<NFT>(`/api/v1/nfts/favourites`, {
-      address,
-      token_id: tokenId,
+      eth_address: eth_address,
+      token_id: String(tokenId),
     });
     if (response.status === 200) {
-      nftActions.addFavourineNFT(response.data);
+      nftActions.addFavouriteNFT(response.data);
     }
     return response.data;
   } catch (e) {
@@ -75,4 +80,4 @@ const addFavourineNFT = async (address: `0x${string}` | undefined, tokenId: numb
   }
 };
 
-export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavourineNFTs, addFavourineNFT };
+export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavouriteNFTs, addFavouriteNFT };

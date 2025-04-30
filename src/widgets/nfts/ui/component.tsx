@@ -5,6 +5,7 @@ import { NFT, NFTState, nftStore } from 'entities/nft/models';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useStore } from '@tanstack/react-store';
+import { useAccount } from 'wagmi';
 
 type Props = {
   fetchData: () => Promise<NFT[]>;
@@ -13,11 +14,12 @@ type Props = {
 
 const NFTs: FC<Props> = ({ fetchData, state }) => {
   const items = useStore(nftStore, state);
+  const { address } = useAccount();
   useEffect(() => {
     (async () => {
       fetchData().catch(() => notFound());
     })();
-  }, [fetchData]);
+  }, [fetchData, address]);
 
   return (
     <div>
