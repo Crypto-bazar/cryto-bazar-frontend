@@ -25,6 +25,7 @@ import { userStore } from 'entities/user/models/store';
 import Image from 'next/image';
 import { commentActions, commentStore } from 'entities/comment/models/store';
 import { AddFavouriteButton } from 'features/add-favourite/ui';
+import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -141,6 +142,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <NFTAttributes attributes={attributes} />
 
           <div className='flex gap-4'>
+            <RemoveFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
             <AddFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
             <Button variant='outline' size='sm'>
               <Share2 className='mr-2 h-4 w-4' />

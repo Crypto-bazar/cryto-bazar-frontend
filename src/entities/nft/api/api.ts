@@ -1,5 +1,6 @@
 import { axiosInstance } from 'shared/api';
 import { NFT, nftActions } from '../models';
+import { AxiosResponse } from 'axios';
 
 const getNFTs = async () => {
   try {
@@ -80,4 +81,22 @@ const addFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenId: 
   }
 };
 
-export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavouriteNFTs, addFavouriteNFT };
+const removeFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenId: number) => {
+  try {
+    const response: AxiosResponse<NFT> = await axiosInstance.delete(`/api/v1/nfts/favourites`, {
+      data: {
+        eth_address: eth_address,
+        nft_id: String(tokenId),
+      },
+    });
+    if (response.status === 200) {
+      nftActions.removeFavouriteNFT(response.data);
+    }
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavouriteNFTs, addFavouriteNFT, removeFavouriteNFT };
