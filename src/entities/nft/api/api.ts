@@ -59,4 +59,20 @@ const getFavourineNFTs = async (address: `0x${string}` | undefined) => {
   }
 };
 
-export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavourineNFTs };
+const addFavourineNFT = async (address: `0x${string}` | undefined, tokenId: number) => {
+  try {
+    const response = await axiosInstance.post<NFT>(`/api/v1/nfts/favourites`, {
+      address,
+      token_id: tokenId,
+    });
+    if (response.status === 200) {
+      nftActions.addFavourineNFT(response.data);
+    }
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+export { getNFTs, getUserNFTs, getNFTById, getSalesNFT, getFavourineNFTs, addFavourineNFT };
