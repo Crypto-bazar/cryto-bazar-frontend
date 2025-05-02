@@ -1,5 +1,3 @@
-// entities/nft/ui/nft-image.tsx
-
 import Image from 'next/image';
 import { Card } from 'shared/ui/card';
 
