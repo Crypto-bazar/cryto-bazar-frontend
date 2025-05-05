@@ -57,7 +57,7 @@ const BuyDaoTokenPage: FC = () => {
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center p-4'>
+    <div className='flex justify-center p-4'>
       <Card className='w-full max-w-md'>
         <CardHeader>
           <CardTitle className='text-center text-2xl font-bold'>Покупка токенов</CardTitle>
