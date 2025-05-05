@@ -1,3 +1,5 @@
+'use client';
+
 import { Share2, Copy, Twitter, Send } from 'lucide-react';
 import { FC } from 'react';
 import { Button } from 'shared/ui/button';
@@ -40,7 +42,7 @@ const SharePopover: FC = () => {
           className='w-full justify-start transition-transform duration-150 active:scale-95'
           onClick={() => openShare('twitter')}
         >
-          <Twitter className='mr-2 h-4 w-4' /> X
+          <Twitter className='mr-2 h-4 w-4' /> Twitter
         </Button>
         <Button
           variant='ghost'

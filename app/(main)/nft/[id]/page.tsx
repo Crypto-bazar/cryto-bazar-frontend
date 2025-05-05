@@ -1,7 +1,7 @@
 'use client';
 
 import { notFound } from 'next/navigation';
-import { Share2, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { NFTImage } from 'entities/nft/ui';
 import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
@@ -26,6 +26,7 @@ import Image from 'next/image';
 import { commentActions, commentStore } from 'entities/comment/models/store';
 import { AddFavouriteButton } from 'features/add-favourite/ui';
 import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
+import { SharePopover } from 'features/share-button/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -144,10 +145,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <div className='flex gap-4'>
             <RemoveFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
             <AddFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
-            <Button variant='outline' size='sm'>
-              <Share2 className='mr-2 h-4 w-4' />
-              Поделиться
-            </Button>
+            <SharePopover />
             {nft.token_id === 0 && address && (
               <>
                 {nft.proposed && <Vote address={address} tokenOwner={nft.owner} proposeId={nft.proposal_id} />}
