@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { useBuyDaoToken } from 'features/buy-dao-token/hooks';
 import { formatEther } from 'viem';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from 'shared/ui/card';
@@ -24,7 +24,7 @@ const BuyDaoTokenPage: FC = () => {
     isLoading: isBalancesLoading,
   } = useTokenBalances(address);
 
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
   };
 
