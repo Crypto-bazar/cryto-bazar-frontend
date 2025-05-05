@@ -25,6 +25,18 @@ export const userActions = {
     userStore.setState(() => ({ item: null }));
   },
 
+  setDaoBalance: (balance: bigint) => {
+    userStore.setState((prev) => ({
+      item: prev.item ? { ...prev.item, daoBalance: balance } : null,
+    }));
+  },
+
+  setPaymentBalance: (balance: bigint) => {
+    userStore.setState((prev) => ({
+      item: prev.item ? { ...prev.item, paymentBalance: balance } : null,
+    }));
+  },
+
   updateAvatar: (avatarUrl: string) => {
     userStore.setState((prev) => ({
       item: {

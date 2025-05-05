@@ -8,11 +8,21 @@ import { Input } from 'shared/ui/input';
 import { Slider } from 'shared/ui/slider';
 import { Progress } from 'shared/ui/progress';
 import { BuyDaoToken } from 'features/buy-dao-token/ui';
+import { useTokenBalances } from 'features/token-balance/hooks';
+import { useAccount } from 'wagmi'; // Добавлен новый хук
 
 const BuyDaoTokenPage: FC = () => {
   const [amount, setAmount] = useState<string>('1');
   const [sliderValue, setSliderValue] = useState([25]);
   const { isLoading, isSuccess, tokenPrice } = useBuyDaoToken();
+  const { address } = useAccount();
+  const {
+    daoBalance,
+    paymentBalance,
+    daoSymbol,
+    paymentSymbol,
+    isLoading: isBalancesLoading,
+  } = useTokenBalances(address);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
@@ -36,6 +46,30 @@ const BuyDaoTokenPage: FC = () => {
         </CardHeader>
 
         <CardContent className='space-y-6'>
+          {/* Блок с балансами */}
+          <div className='space-y-2 rounded-lg bg-muted p-4'>
+            <h3 className='text-lg font-semibold'>Ваши балансы</h3>
+            {isBalancesLoading ? (
+              <div className='text-sm text-muted-foreground'>Загрузка балансов...</div>
+            ) : (
+              <div className='grid gap-2'>
+                <div className='flex items-center justify-between'>
+                  <span className='text-sm'>{daoSymbol} Balance:</span>
+                  <span className='font-medium'>
+                    {daoBalance ? formatEther(daoBalance) : '0'} {daoSymbol}
+                  </span>
+                </div>
+                <div className='flex items-center justify-between'>
+                  <span className='text-sm'>{paymentSymbol} Balance:</span>
+                  <span className='font-medium'>
+                    {paymentBalance ? formatEther(paymentBalance) : '0'} {paymentSymbol}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Остальной контент */}
           <div className='space-y-2'>
             <Label htmlFor='amount'>Количество токенов</Label>
             <div className='flex items-center gap-4'>
