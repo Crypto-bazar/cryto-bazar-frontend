@@ -27,6 +27,7 @@ import { commentActions, commentStore } from 'entities/comment/models/store';
 import { AddFavouriteButton } from 'features/add-favourite/ui';
 import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
 import { SharePopover } from 'features/share-button/ui';
+import { useGetRequiredVotes } from 'features/required-votes/hooks';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -39,6 +40,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const comments = useStore(commentStore, (state) => state.items);
   const favourites = useStore(nftStore, (state) => state.favourites);
   const nft = nfts[Number(params.id) - 1];
+  const { requiredVotes, isLoading: isLoadingVotes } = useGetRequiredVotes();
 
   useEffect(() => {
     getNFTs().catch(() => notFound());
@@ -108,6 +110,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
     { label: 'ID предложения', value: nft.proposal_id || '—' },
     { label: 'Статус', value: nft.token_id !== 0 ? 'Выпущен' : nft.proposed ? 'Предложен' : 'Не предложен' },
     { label: 'Голоса', value: nft.votes_amount ? formattedVotes : '0' },
+    { label: 'Необходимо голосов', value: `${formattedVotes} / ${isLoadingVotes ? '...' : requiredVotes}` },
   ];
 
   return (
