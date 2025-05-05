@@ -11,6 +11,16 @@ export const DAOabi = [
         name: '_paymentToken',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: '_tokenPrice',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_paymentTokenPrice',
+        type: 'uint256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -274,6 +284,31 @@ export const DAOabi = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'buyer',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'cost',
+        type: 'uint256',
+      },
+    ],
+    name: 'TokensPurchased',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'from',
         type: 'address',
       },
@@ -362,6 +397,32 @@ export const DAOabi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'baseRequiredVotes',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyGovernanceTokens',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -372,6 +433,32 @@ export const DAOabi = [
     name: 'buyNFT',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyPopTokens',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'difficultyDivider',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -430,10 +517,23 @@ export const DAOabi = [
   },
   {
     inputs: [],
+    name: 'getRequiredVotes',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'governanceToken',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'contract DAOToken',
         name: '',
         type: 'address',
       },
@@ -611,6 +711,19 @@ export const DAOabi = [
   },
   {
     inputs: [],
+    name: 'paymentTokenPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'proposalCounter',
     outputs: [
       {
@@ -633,19 +746,6 @@ export const DAOabi = [
     name: 'proposeNFT',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'requiredVotes',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -762,6 +862,19 @@ export const DAOabi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'tokenPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
