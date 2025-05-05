@@ -38,11 +38,9 @@ const getNFTById = async (id: string) => {
 const getSalesNFT = async (): Promise<NFT[]> => {
   try {
     const response = await axiosInstance.get<NFT[]>('/api/v1/nfts/sales');
-
     if (response.status === 200) {
       nftActions.setSalesNFTs(response.data);
     }
-
     return response.data;
   } catch (e) {
     console.error(e);

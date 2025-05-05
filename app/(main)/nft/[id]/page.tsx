@@ -100,7 +100,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
 
   if (!nft) return null;
 
-  const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
+  const formattedPrice = nft.price ? `${Number(nft.price)} POP` : 'Не указана';
   const formattedVotes = nft.votes_amount ? `${Number(nft.votes_amount) / 1e18}` : '0';
   const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
   const tokenId = BigInt(nft.token_id);
@@ -158,7 +158,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
             {nft.token_id !== 0 && !nft.in_sales && address && nft.owner === address && (
               <SellNFT tokenId={nft.token_id} />
             )}
-            {nft.in_sales && address && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
+            {nft.in_sales && address && address !== nft.owner && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
           </div>
 
           <Card>
