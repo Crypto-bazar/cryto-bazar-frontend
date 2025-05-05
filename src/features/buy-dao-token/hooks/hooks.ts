@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useAccount } from 'wagmi';
+import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { DAOabi, PaymentAbi } from 'shared/models';
 import { useTokenBalances } from 'features/token-balance/hooks';
 
@@ -49,14 +49,12 @@ const useBuyDaoToken = () => {
     setStep('buying');
 
     // Step 2: Buy tokens
-    const txHash = await writeBuy({
+    return await writeBuy({
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       abi: DAOabi,
       functionName: 'buyGovernanceTokens',
       args: [amount],
     });
-
-    return txHash;
   };
 
   // Эффект для обновления балансов после успешной покупки
