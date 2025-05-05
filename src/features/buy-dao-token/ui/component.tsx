@@ -16,7 +16,7 @@ const BuyDaoToken: FC<Props> = ({ amount }) => {
 
   return (
     <Button onClick={handleBuy} disabled={isLoading} className='w-full py-6 text-lg' size='lg'>
-      {isLoading ? 'Подтверждение транзакции...' : isSuccess ? 'Покупка завершена' : 'Купить NFT'}
+      {isLoading ? 'Подтверждение транзакции...' : isSuccess ? 'Покупка завершена' : 'Купить DAO токены'}
     </Button>
   );
 };
