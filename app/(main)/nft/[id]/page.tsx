@@ -24,7 +24,7 @@ import Image from 'next/image';
 import { commentActions, commentStore } from 'entities/comment/models/store';
 import { AddFavouriteButton } from 'features/add-favourite/ui';
 import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
-import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
+import { useGetAllNFTs, useGetFavouriteNFT } from 'entities/nft/hooks/hooks';
 import { useGetVoteNFT } from 'features/vote-nft/hooks';
 import { useGetRequiredVotes } from 'features/required-votes/hooks';
 
@@ -42,6 +42,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const comments = useStore(commentStore, (state) => state.items);
   const { data: voted } = useGetVoteNFT(BigInt(params.id));
   const { requiredVotes } = useGetRequiredVotes();
+  const { refetch: refetchFavourites } = useGetFavouriteNFT();
 
   const nft = useStore(nftStore, (state) => state.items[Number(params.id)]);
   const isNFTLoaded = Boolean(nft);
@@ -51,12 +52,6 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       setHasVoted(Boolean(voted));
     }
   }, [voted]);
-
-  useEffect(() => {
-    if (address) {
-      getFavouriteNFTs(address);
-    }
-  }, [address]);
 
   useEffect(() => {
     if (!nft || !favourites) return;
@@ -131,6 +126,10 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <Card>
             <CardHeader>
               <CardTitle>Метаданные токена</CardTitle>
+              <div className='flex justify-between'>
+                <span className='text-muted-foreground'>Название изображения:</span>
+                <span className='font-mono text-sm'>{nft.imagePath}</span>
+              </div>
             </CardHeader>
             <CardContent>
               <div className='space-y-2'>
@@ -151,8 +150,18 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <NFTAttributes attributes={attributes} />
 
           <div className='flex flex-wrap gap-4'>
-            <RemoveFavouriteButton address={address} id={Number(nft.id)} isFavourite={isFavourite} />
-            <AddFavouriteButton address={address} id={Number(nft.id)} isFavourite={isFavourite} />
+            <RemoveFavouriteButton
+              address={address}
+              id={Number(nft.id)}
+              isFavourite={isFavourite}
+              onChange={refetchFavourites}
+            />
+            <AddFavouriteButton
+              address={address}
+              id={Number(nft.id)}
+              isFavourite={isFavourite}
+              onChange={refetchFavourites}
+            />
             <Button variant='outline' size='sm'>
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться

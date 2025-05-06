@@ -722,6 +722,92 @@ export const DAOabi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'tokenIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getNFTsBatch',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'name',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'description',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'imagePath',
+            type: 'string',
+          },
+          {
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'forSale',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isProposal',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'votes',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'minted',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct DAONFT.NFT[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'getRequiredVotes',
     outputs: [
