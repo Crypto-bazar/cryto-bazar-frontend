@@ -26,6 +26,7 @@ import { AddFavouriteButton } from 'features/add-favourite/ui';
 import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
 import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
 import { useGetVoteNFT } from 'features/vote-nft/hooks';
+import { useGetRequiredVotes } from 'features/required-votes/hooks';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -40,6 +41,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const favourites = useStore(nftStore, (state) => state.favourites);
   const comments = useStore(commentStore, (state) => state.items);
   const { data: voted } = useGetVoteNFT(BigInt(params.id));
+  const { requiredVotes } = useGetRequiredVotes();
 
   const nft = useStore(nftStore, (state) => state.items[Number(params.id)]);
   const isNFTLoaded = Boolean(nft);
@@ -117,7 +119,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       label: 'Статус',
       value: nft.minted ? 'Выпущен' : 'В голосовании',
     },
-    { label: 'Голоса', value: nft.votes ? formattedVotes : '0' },
+    { label: `Голоса`, value: nft.votes ? `${formattedVotes} / ${requiredVotes}` : '0' },
   ];
 
   return (
