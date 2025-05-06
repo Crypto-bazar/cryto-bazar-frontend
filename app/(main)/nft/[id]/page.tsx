@@ -168,8 +168,8 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
               />
             )}
 
-            {nft.id !== 0n && !nft.forSale && address === nft.owner && <SellNFT tokenId={Number(nft.id)} />}
-            {nft.forSale && address && <BuyNFTButton tokenId={nft.id} price={priceInWei} />}
+            {nft.tokenId !== 0n && !nft.forSale && address === nft.owner && <SellNFT tokenId={Number(nft.id)} />}
+            {nft.forSale && address && nft.owner !== address && <BuyNFTButton tokenId={nft.id} price={priceInWei} />}
           </div>
 
           <Card>

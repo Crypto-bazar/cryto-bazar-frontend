@@ -43,6 +43,7 @@ const SellNFT: FC<Props> = ({ tokenId }) => {
 
   const onSubmit = async (data: z.infer<typeof sellNFTSchema>) => {
     sellNFT(tokenId, Number(data.price));
+
     setOpen(false);
   };
 
