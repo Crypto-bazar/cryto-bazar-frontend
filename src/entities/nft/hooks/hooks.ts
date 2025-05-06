@@ -68,7 +68,7 @@ const useGetFavouriteNFT = () => {
     if (data) {
       nftActions.setFavourites(data as NFT[]);
     }
-  }, [data]);
+  }, [data, address]);
 
   return { isLoading, error, data: data as NFT[] | undefined, refetch: fetch };
 };

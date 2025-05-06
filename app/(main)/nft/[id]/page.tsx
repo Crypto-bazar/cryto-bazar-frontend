@@ -26,6 +26,7 @@ import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
 import { useGetAllNFTs, useGetFavouriteNFT } from 'entities/nft/hooks/hooks';
 import { useGetVoteNFT } from 'features/vote-nft/hooks';
 import { useGetRequiredVotes } from 'features/required-votes/hooks';
+import { formatUnits } from 'viem';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -103,7 +104,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
     return <div className='container mx-auto py-8 text-center text-muted-foreground'>Загрузка токена...</div>;
   }
 
-  const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
+  const formattedPrice = nft.price ? `${formatUnits(nft.price, 18)} POP` : 'Не указана';
   const formattedVotes = nft.votes ? `${Number(nft.votes) / 1e18}` : '0';
   const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
 
