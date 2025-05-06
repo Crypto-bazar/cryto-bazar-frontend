@@ -1,7 +1,6 @@
 import { axiosInstance } from 'shared/api';
 import { NFT, nftActions } from '../models';
 import { AxiosResponse } from 'axios';
-import { useGetNFT } from 'entities/nft/hooks/hooks';
 
 const getNFTs = async () => {
   try {
@@ -83,6 +82,7 @@ const removeFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenI
         nft_id: String(tokenId),
       },
     });
+    console.log(response.data);
     if (response.status === 200) {
       nftActions.removeFavouriteNFT(response.data);
     }

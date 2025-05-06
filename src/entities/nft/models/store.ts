@@ -9,6 +9,12 @@ type NFTState = {
   favourites: NFT[];
 };
 
+declare global {
+  interface Window {
+    nftStore: Store<NFTState>;
+  }
+}
+
 const initialState: NFTState = {
   items: [],
   selectedNFT: null,
@@ -19,9 +25,8 @@ const initialState: NFTState = {
 
 export const nftStore = new Store<NFTState>(initialState);
 
-//TODO add types
 if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-  (window as any).store = nftStore;
+  window.nftStore = nftStore;
 }
 
 export const nftActions = {
@@ -40,40 +45,6 @@ export const nftActions = {
     }));
   },
 
-  selectNFT: (nft: NFT) => {
-    nftStore.setState((prev) => ({ ...prev, selectedNFT: nft }));
-  },
-
-  clearSelection: () => {
-    nftStore.setState((prev) => ({ ...prev, selectedNFT: null }));
-  },
-
-  addNFT: (nft: NFT) => {
-    nftStore.setState((prev) => ({ ...prev, items: [...prev.items, nft] }));
-  },
-
-  changeTokenId: (tokenUri: string, tokenId: number) => {
-    nftStore.setState((prev) => ({
-      ...prev,
-      items: prev.items.map((nft) => (nft.token_uri === tokenUri ? { ...nft, token_id: tokenId } : nft)),
-    }));
-  },
-
-  updateProposedNFT: (tokenURI: string, proposed: boolean) => {
-    nftStore.setState((prev) => ({
-      ...prev,
-      items: prev.items.map((nft) => (nft.token_uri === tokenURI ? { ...nft, proposed: proposed } : nft)),
-    }));
-  },
-
-  changeTokenPrice: (tokenId: bigint, tokenPrice: bigint) => {
-    nftStore.setState((prev) => ({
-      ...prev,
-      items: prev.items.map((nft) =>
-        nft.token_id === Number(tokenId) ? { ...nft, price: tokenPrice.toString() } : nft,
-      ),
-    }));
-  },
   setFavourites: (favourites: NFT[]) => {
     nftStore.setState((prev) => ({ ...prev, favourites }));
   },
@@ -85,16 +56,6 @@ export const nftActions = {
       ...prev,
       favourites: prev.favourites.filter((item) => item.token_id !== nft.token_id),
     }));
-  },
-};
-
-export const userNFTActions = {
-  setNFTs: (nfts: NFT[]) => {
-    nftStore.setState((prev) => ({ ...prev, userItems: nfts }));
-  },
-
-  addNFT: (nft: NFT) => {
-    nftStore.setState((prev) => ({ ...prev, userItems: [...prev.items, nft] }));
   },
 };
 

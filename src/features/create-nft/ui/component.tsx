@@ -8,23 +8,12 @@ import { Input } from 'shared/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from 'shared/ui/dialog';
-import { useAccount } from 'wagmi';
-import { nftActions } from 'entities/nft/models';
-import { useCreateToken, useEventListener } from '../hooks';
+import { useCreateToken } from '../hooks';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const { address } = useAccount();
-  const { createToken, isLoading, isSuccess } = useCreateToken();
-  const { data } = useEventListener();
-
-  useEffect(() => {
-    if (data) {
-      if (!data.tokenURI) return;
-      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId));
-    }
-  }, [data]);
+  const { createToken, isLoading } = useCreateToken();
 
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
