@@ -4,15 +4,16 @@ import { useEffect } from 'react';
 import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
 
 const useSellNFT = () => {
-  const { refetch, isSuccess: getNFTSuc } = useGetAllNFTs();
-  useEffect(() => {
-    if (getNFTSuc) {
-      refetch();
-    }
-  }, [getNFTSuc, refetch]);
+  const { refetch } = useGetAllNFTs();
 
   const { writeContractAsync, data: hash } = useWriteContract();
-  const { isLoading, isSuccess, data: receipt } = useWaitForTransactionReceipt({ hash });
+  const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
+
+  useEffect(() => {
+    if (isSuccess) {
+      refetch();
+    }
+  }, [isSuccess, refetch]);
 
   const sellNFT = async (tokenId: number, price: number) => {
     return writeContractAsync({
@@ -23,7 +24,6 @@ const useSellNFT = () => {
     });
   };
 
-  return { sellNFT, isLoading, isSuccess, receipt };
+  return { sellNFT, isLoading, isSuccess };
 };
-
 export { useSellNFT };
