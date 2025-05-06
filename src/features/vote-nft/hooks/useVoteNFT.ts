@@ -1,4 +1,4 @@
-import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
+import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { DAOabi } from 'shared/models';
 
 const useVoteNFT = () => {
@@ -16,4 +16,16 @@ const useVoteNFT = () => {
   return { vote, isLoading, isSuccess, receipt };
 };
 
-export { useVoteNFT };
+const useGetVoteNFT = (id: bigint) => {
+  const { address } = useAccount();
+  const { data, isLoading, error } = useReadContract({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+    abi: DAOabi,
+    functionName: 'hasVoted',
+    args: [id, address!],
+  });
+
+  return { isLoading, error, data };
+};
+
+export { useVoteNFT, useGetVoteNFT };

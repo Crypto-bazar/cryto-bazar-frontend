@@ -1,6 +1,7 @@
 import { axiosInstance } from 'shared/api';
 import { NFT, nftActions } from '../models';
 import { AxiosResponse } from 'axios';
+import { useGetNFT } from 'entities/nft/hooks/hooks';
 
 const getNFTs = async () => {
   try {

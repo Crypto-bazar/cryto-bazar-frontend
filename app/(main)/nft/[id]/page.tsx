@@ -1,17 +1,15 @@
 'use client';
 
-import { notFound } from 'next/navigation';
 import { Share2, MessageSquare } from 'lucide-react';
 import { NFTImage } from 'entities/nft/ui';
 import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
-import { getFavouriteNFTs, getNFTs } from 'entities/nft/api';
+import { getFavouriteNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
 import { nftStore } from 'entities/nft/models';
-import { StartVoting } from 'features/propose-nft/ui';
 import { useAccount } from 'wagmi';
 import { SellNFT } from 'features/sell-nft/ui';
 import { BuyNFTButton } from 'features/buy-nft/ui';
@@ -26,39 +24,49 @@ import Image from 'next/image';
 import { commentActions, commentStore } from 'entities/comment/models/store';
 import { AddFavouriteButton } from 'features/add-favourite/ui';
 import { RemoveFavouriteButton } from 'features/remove-favourite/ui';
+import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
+import { useGetVoteNFT } from 'features/vote-nft/hooks';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
+  const [hasVoted, setHasVoted] = useState(false);
+
   const { address } = useAccount();
+  const { refetch } = useGetAllNFTs();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const user = useStore(userStore, (state) => state.item);
-  const nfts = useStore(nftStore, (state) => state.items);
-  const comments = useStore(commentStore, (state) => state.items);
   const favourites = useStore(nftStore, (state) => state.favourites);
-  const nft = nfts[Number(params.id) - 1];
+  const comments = useStore(commentStore, (state) => state.items);
+  const { data: voted } = useGetVoteNFT(BigInt(params.id));
+
+  const nft = useStore(nftStore, (state) => state.items[Number(params.id)]);
+  const isNFTLoaded = Boolean(nft);
 
   useEffect(() => {
-    getNFTs().catch(() => notFound());
-  }, []);
+    if (voted !== undefined) {
+      setHasVoted(Boolean(voted));
+    }
+  }, [voted]);
 
   useEffect(() => {
-    getFavouriteNFTs(address);
+    if (address) {
+      getFavouriteNFTs(address);
+    }
   }, [address]);
 
   useEffect(() => {
     if (!nft || !favourites) return;
-
     const result = favourites.some((fav) => fav.id === nft.id);
     setIsFavourite(result);
-  }, [favourites, nft]);
+  }, [favourites, nft, nft?.id]);
 
   useEffect(() => {
-    if (nft) {
-      getComments(nft.id);
+    if (nft?.id !== undefined) {
+      getComments(Number(nft.id));
     }
-  }, [nfts, nft, params.id]);
+  }, [nft?.id]);
 
   const handleAddComment = async () => {
     if (!newComment.trim() || !address || !nft) return;
@@ -68,7 +76,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
       const data: CommentCreate = {
         content: newComment,
         owner_address: address,
-        token_id: nft.id,
+        token_id: Number(nft.id),
       };
 
       const response = await createComment(data);
@@ -95,25 +103,28 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
     }
   };
 
-  if (!nft) return null;
+  if (!isNFTLoaded) {
+    return <div className='container mx-auto py-8 text-center text-muted-foreground'>Загрузка токена...</div>;
+  }
 
   const formattedPrice = nft.price ? `${Number(nft.price) / 1e18} ETH` : 'Не указана';
-  const formattedVotes = nft.votes_amount ? `${Number(nft.votes_amount) / 1e18}` : '0';
+  const formattedVotes = nft.votes ? `${Number(nft.votes) / 1e18}` : '0';
   const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
-  const tokenId = BigInt(nft.token_id);
 
   const attributes = [
-    { label: 'ID токена', value: nft.token_id },
-    { label: 'ID предложения', value: nft.proposal_id || '—' },
-    { label: 'Статус', value: nft.token_id !== 0 ? 'Выпущен' : nft.proposed ? 'Предложен' : 'Не предложен' },
-    { label: 'Голоса', value: nft.votes_amount ? formattedVotes : '0' },
+    { label: 'ID токена', value: nft.tokenId !== 0n ? Number(nft.tokenId) : '—' },
+    {
+      label: 'Статус',
+      value: nft.minted ? 'Выпущен' : 'В голосовании',
+    },
+    { label: 'Голоса', value: nft.votes ? formattedVotes : '0' },
   ];
 
   return (
     <div className='container mx-auto py-8'>
       <div className='grid gap-8 md:grid-cols-2'>
         <div className='space-y-6'>
-          <NFTImage imageUrl={`${process.env.NEXT_PUBLIC_API_URL}uploads/${nft.image_path}`} name={nft.name} />
+          <NFTImage imageUrl={`/uploads/${nft.imagePath}`} name={nft.name} />
 
           <Card>
             <CardHeader>
@@ -121,11 +132,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
             </CardHeader>
             <CardContent>
               <div className='space-y-2'>
-                <div className='flex justify-between'>
-                  <span className='text-muted-foreground'>URI токена:</span>
-                  <span className='font-mono text-sm'>{nft.token_uri}</span>
-                </div>
-                {nft.in_sales && (
+                {nft.forSale && (
                   <div className='flex justify-between'>
                     <span className='text-muted-foreground'>Цена продажи:</span>
                     <span className='font-mono text-sm'>{formattedPrice}</span>
@@ -141,23 +148,28 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
 
           <NFTAttributes attributes={attributes} />
 
-          <div className='flex gap-4'>
-            <RemoveFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
-            <AddFavouriteButton address={address} id={nft.id} isFavourite={isFavourite} />
+          <div className='flex flex-wrap gap-4'>
+            <RemoveFavouriteButton address={address} id={Number(nft.id)} isFavourite={isFavourite} />
+            <AddFavouriteButton address={address} id={Number(nft.id)} isFavourite={isFavourite} />
             <Button variant='outline' size='sm'>
               <Share2 className='mr-2 h-4 w-4' />
               Поделиться
             </Button>
-            {nft.token_id === 0 && address && (
-              <>
-                {nft.proposed && <Vote address={address} tokenOwner={nft.owner} proposeId={nft.proposal_id} />}
-                {!nft.proposed && address === nft.owner && <StartVoting tokenUri={nft.token_uri} />}
-              </>
+
+            {address && !hasVoted && (
+              <Vote
+                address={address}
+                tokenOwner={nft.owner}
+                proposeId={Number(nft.proposalId)}
+                onSuccess={() => {
+                  refetch();
+                  setHasVoted(true);
+                }}
+              />
             )}
-            {nft.token_id !== 0 && !nft.in_sales && address && nft.owner === address && (
-              <SellNFT tokenId={nft.token_id} />
-            )}
-            {nft.in_sales && address && <BuyNFTButton tokenId={tokenId} price={priceInWei} />}
+
+            {nft.id !== 0n && !nft.forSale && address === nft.owner && <SellNFT tokenId={Number(nft.id)} />}
+            {nft.forSale && address && <BuyNFTButton tokenId={nft.id} price={priceInWei} />}
           </div>
 
           <Card>
