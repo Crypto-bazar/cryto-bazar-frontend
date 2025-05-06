@@ -5,27 +5,28 @@ import { readContract } from '@wagmi/core';
 import { config } from 'app/web3';
 import { NFT, nftActions } from '../models';
 import { getFavouriteNFTs } from 'entities/nft/api';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useGetAllNFTs = () => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['nfts'],
     queryFn: async () => {
-      const data = await readContract(config, {
+      return await readContract(config, {
         address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
         abi: DAOabi,
         functionName: 'getAllNFTs',
       });
-
-      // Handle the data immediately after fetching
-      if (Array.isArray(data)) {
-        nftActions.setNFTs(data);
-      }
-
-      return data;
     },
     staleTime: 10_000,
   });
+
+  useEffect(() => {
+    if (query.data && Array.isArray(query.data)) {
+      nftActions.setNFTs(query.data);
+    }
+  }, [query.data]);
+
+  return query;
 };
 
 const useGetNFT = (id: bigint) => {
@@ -63,9 +64,12 @@ const useGetFavouriteNFT = () => {
     },
   });
 
-  const mutableData = (data || []) as NFT[];
-  nftActions.setFavourites(mutableData);
+  useEffect(() => {
+    if (data) {
+      nftActions.setFavourites(data as NFT[]);
+    }
+  }, [data]);
 
-  return { isLoading, error, data: mutableData, refetch: fetch };
+  return { isLoading, error, data: data as NFT[] | undefined, refetch: fetch };
 };
 export { useGetAllNFTs, useGetNFT, useGetFavouriteNFT };

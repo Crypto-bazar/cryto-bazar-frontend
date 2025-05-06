@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
 import { NFTAttributes } from 'widgets/nft-attributes/ui';
 import { Button } from 'shared/ui/button';
-import { getFavouriteNFTs } from 'entities/nft/api';
 import { Vote } from 'features/vote-nft/ui';
 import { useEffect, useState } from 'react';
 import { nftStore } from 'entities/nft/models';
