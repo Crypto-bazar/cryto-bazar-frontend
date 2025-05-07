@@ -11,6 +11,16 @@ export const DAOabi = [
         name: '_paymentToken',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: '_tokenPrice',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_paymentTokenPrice',
+        type: 'uint256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -190,7 +200,7 @@ export const DAOabi = [
         type: 'uint256',
       },
     ],
-    name: 'NFTInSale',
+    name: 'NFTListed',
     type: 'event',
   },
   {
@@ -201,12 +211,6 @@ export const DAOabi = [
         internalType: 'uint256',
         name: 'tokenId',
         type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'tokenURI',
-        type: 'string',
       },
       {
         indexed: false,
@@ -226,12 +230,6 @@ export const DAOabi = [
         internalType: 'uint256',
         name: 'proposalId',
         type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'tokenURI',
-        type: 'string',
       },
       {
         indexed: false,
@@ -273,6 +271,44 @@ export const DAOabi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'NFTUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'buyer',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'cost',
+        type: 'uint256',
+      },
+    ],
+    name: 'TokensPurchased',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'address',
         name: 'from',
         type: 'address',
@@ -307,12 +343,6 @@ export const DAOabi = [
         internalType: 'address',
         name: 'voter',
         type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'tokenURI',
-        type: 'string',
       },
       {
         indexed: false,
@@ -362,6 +392,32 @@ export const DAOabi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'baseRequiredVotes',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyGovernanceTokens',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -372,6 +428,112 @@ export const DAOabi = [
     name: 'buyNFT',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'buyPopTokens',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'creationTimestamp',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getAllNFTs',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'name',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'description',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'imagePath',
+            type: 'string',
+          },
+          {
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'forSale',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isProposal',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'votes',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'minted',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct DAONFT.NFT[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -395,19 +557,54 @@ export const DAOabi = [
   },
   {
     inputs: [],
-    name: 'getProposeNFT',
+    name: 'getMintedProposals',
     outputs: [
       {
         components: [
           {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
             internalType: 'string',
-            name: 'tokenURI',
+            name: 'name',
             type: 'string',
           },
           {
+            internalType: 'string',
+            name: 'description',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'imagePath',
+            type: 'string',
+          },
+          {
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
             internalType: 'address',
-            name: 'proposer',
+            name: 'owner',
             type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'forSale',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isProposal',
+            type: 'bool',
           },
           {
             internalType: 'uint256',
@@ -415,14 +612,209 @@ export const DAOabi = [
             type: 'uint256',
           },
           {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
             internalType: 'bool',
             name: 'minted',
             type: 'bool',
           },
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
         ],
-        internalType: 'struct DAONFT.NFTProposal[]',
+        internalType: 'struct DAONFT.NFT[]',
         name: '',
         type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getNFT',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'name',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'description',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'imagePath',
+            type: 'string',
+          },
+          {
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'forSale',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isProposal',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'votes',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'minted',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct DAONFT.NFT',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'tokenIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getNFTsBatch',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'name',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'description',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'imagePath',
+            type: 'string',
+          },
+          {
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'forSale',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isProposal',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'votes',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'minted',
+            type: 'bool',
+          },
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct DAONFT.NFT[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getRequiredVotes',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -433,7 +825,7 @@ export const DAOabi = [
     name: 'governanceToken',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'contract DAOToken',
         name: '',
         type: 'address',
       },
@@ -490,8 +882,19 @@ export const DAOabi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'mintNFT',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
+    ],
+    name: 'listNFT',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -517,45 +920,31 @@ export const DAOabi = [
         type: 'uint256',
       },
     ],
-    name: 'nftProposals',
+    name: 'nfts',
     outputs: [
       {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+      {
         internalType: 'string',
-        name: 'tokenURI',
+        name: 'name',
         type: 'string',
       },
       {
-        internalType: 'address',
-        name: 'proposer',
-        type: 'address',
+        internalType: 'string',
+        name: 'description',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'imagePath',
+        type: 'string',
       },
       {
         internalType: 'uint256',
-        name: 'votes',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: 'minted',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'nftSales',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
+        name: 'price',
         type: 'uint256',
       },
       {
@@ -564,14 +953,39 @@ export const DAOabi = [
         type: 'address',
       },
       {
+        internalType: 'address',
+        name: 'creator',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: 'forSale',
+        type: 'bool',
+      },
+      {
+        internalType: 'bool',
+        name: 'isProposal',
+        type: 'bool',
+      },
+      {
         internalType: 'uint256',
-        name: 'price',
+        name: 'votes',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'proposalId',
         type: 'uint256',
       },
       {
         internalType: 'bool',
-        name: 'sold',
+        name: 'minted',
         type: 'bool',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -601,9 +1015,22 @@ export const DAOabi = [
     name: 'paymentToken',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'contract PaymentToken',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'paymentTokenPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -626,26 +1053,23 @@ export const DAOabi = [
     inputs: [
       {
         internalType: 'string',
-        name: '_tokenURI',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_description',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_imagePath',
         type: 'string',
       },
     ],
     name: 'proposeNFT',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'requiredVotes',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -702,24 +1126,6 @@ export const DAOabi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'price',
-        type: 'uint256',
-      },
-    ],
-    name: 'sellNFT',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
         name: 'operator',
         type: 'address',
@@ -768,6 +1174,19 @@ export const DAOabi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'tokenPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -805,6 +1224,34 @@ export const DAOabi = [
       },
     ],
     name: 'transferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_description',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_imagePath',
+        type: 'string',
+      },
+    ],
+    name: 'updateNFT',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

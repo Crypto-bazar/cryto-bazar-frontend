@@ -1,20 +1,33 @@
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { DAOabi } from 'shared/models';
 import { PaymentAbi } from 'shared/models';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
 
 const useBuyNFTWithApprove = () => {
   const [step, setStep] = useState<'idle' | 'approving' | 'buying'>('idle');
   const { writeContractAsync: writeApprove, data: approveHash } = useWriteContract();
   const { writeContractAsync: writeBuy, data: buyHash } = useWriteContract();
 
-  const { isLoading: isApproveLoading, data: approveReceipt } = useWaitForTransactionReceipt({
+  const { isLoading: isApproveLoading } = useWaitForTransactionReceipt({
     hash: approveHash,
   });
 
-  const { isLoading: isBuyLoading, data: buyReceipt } = useWaitForTransactionReceipt({
+  const {
+    isLoading: isBuyLoading,
+    isSuccess: isBuySuccess,
+    data: buyReceipt,
+  } = useWaitForTransactionReceipt({
     hash: buyHash,
   });
+
+  const { refetch } = useGetAllNFTs();
+
+  useEffect(() => {
+    if (isBuySuccess) {
+      refetch();
+    }
+  }, [isBuySuccess, refetch]);
 
   const buyNFTWithApprove = async (tokenId: bigint, price: bigint) => {
     setStep('approving');
@@ -36,8 +49,8 @@ const useBuyNFTWithApprove = () => {
   };
 
   const isLoading = isApproveLoading || isBuyLoading;
-  const isSuccess = !!buyReceipt && !isLoading;
-  const receipt = buyReceipt ?? approveReceipt;
+  const isSuccess = isBuySuccess && !isLoading;
+  const receipt = buyReceipt;
 
   return { buyNFTWithApprove, isLoading, isSuccess, receipt, step };
 };

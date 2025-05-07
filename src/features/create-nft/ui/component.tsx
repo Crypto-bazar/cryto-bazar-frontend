@@ -7,26 +7,13 @@ import { nftSchema } from 'features/create-nft/model';
 import { Input } from 'shared/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createNFTApi } from '../api/api';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from 'shared/ui/dialog';
-import { useAccount } from 'wagmi';
-import { nftActions } from 'entities/nft/models';
-import { useEventListener } from '../hooks';
+import { useCreateToken } from '../hooks';
 
 const CreateNFT: FC = () => {
   const [open, setOpen] = useState(false);
-  const { address } = useAccount();
-
-  const { data } = useEventListener();
-
-  useEffect(() => {
-    if (data) {
-      if (!data.tokenURI) {
-        return;
-      }
-      nftActions.changeTokenId(data.tokenURI, Number(data.tokenId));
-    }
-  }, [data]);
+  const [isUploading, setIsUploading] = useState(false);
+  const { createToken, isLoading } = useCreateToken();
 
   const form = useForm<z.infer<typeof nftSchema>>({
     resolver: zodResolver(nftSchema),
@@ -37,16 +24,52 @@ const CreateNFT: FC = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof nftSchema>) => {
-    const formData = { ...data, owner_address: address as string };
-    const response = await createNFTApi(formData);
+  const uploadImage = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-    if (response?.status == 201) {
-      nftActions.addNFT(response.data);
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to upload');
+
+      return data.url;
+    } finally {
+      setIsUploading(false);
     }
-
-    setOpen(false);
   };
+
+  const onSubmit = async (values: z.infer<typeof nftSchema>) => {
+    try {
+      if (!values.image) {
+        form.setError('image', { message: 'Image is required' });
+        return;
+      }
+
+      // Загружаем изображение
+      const imageUrl = await uploadImage(values.image);
+
+      // Создаем NFT с полученным URL изображения
+      await createToken(values.name, values.description, imageUrl);
+
+      setOpen(false);
+      form.reset();
+    } catch (error) {
+      console.error('Error creating NFT:', error);
+      form.setError('root', {
+        message: error instanceof Error ? error.message : 'Failed to create NFT',
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!open) form.reset();
+  }, [open, form]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -95,6 +118,7 @@ const CreateNFT: FC = () => {
                   <FormControl>
                     <Input
                       type='file'
+                      accept='image/*'
                       onChange={(e) => field.onChange(e.target.files?.[0])}
                       onBlur={field.onBlur}
                       name={field.name}
@@ -105,7 +129,10 @@ const CreateNFT: FC = () => {
                 </FormItem>
               )}
             />
-            <Button type='submit'>Создать</Button>
+            <Button type='submit' disabled={isLoading || isUploading}>
+              {isLoading || isUploading ? 'Загрузка...' : 'Создать'}
+            </Button>
+            {form.formState.errors.root && <p className='text-red-500'>{form.formState.errors.root.message}</p>}
           </form>
         </FormProvider>
       </DialogContent>

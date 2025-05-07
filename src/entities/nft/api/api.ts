@@ -38,11 +38,9 @@ const getNFTById = async (id: string) => {
 const getSalesNFT = async (): Promise<NFT[]> => {
   try {
     const response = await axiosInstance.get<NFT[]>('/api/v1/nfts/sales');
-
     if (response.status === 200) {
       nftActions.setSalesNFTs(response.data);
     }
-
     return response.data;
   } catch (e) {
     console.error(e);
@@ -52,16 +50,11 @@ const getSalesNFT = async (): Promise<NFT[]> => {
 
 const getFavouriteNFTs = async (address: `0x${string}` | undefined) => {
   try {
-    const response = await axiosInstance.get<NFT[]>(`/api/v1/nfts/favourites?address=${address}`);
-
-    if (response.status === 200) {
-      nftActions.setFavourites(response.data);
-    }
-
+    const response = await axiosInstance.get<{ nftIds: number[] }>(`/api/v1/nfts/favourites?address=${address}`);
     return response.data;
   } catch (e) {
     console.error(e);
-    return [];
+    return { nftIds: [] }; // Возвращаем объект с пустым массивом
   }
 };
 
@@ -89,6 +82,7 @@ const removeFavouriteNFT = async (eth_address: `0x${string}` | undefined, tokenI
         nft_id: String(tokenId),
       },
     });
+    console.log(response.data);
     if (response.status === 200) {
       nftActions.removeFavouriteNFT(response.data);
     }

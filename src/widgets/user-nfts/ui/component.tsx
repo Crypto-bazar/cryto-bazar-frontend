@@ -1,31 +1,18 @@
 'use client';
 
-import { getUserNFTs } from 'entities/nft/api';
-import { nftActions, nftStore, userNFTActions } from 'entities/nft/models';
+import { nftStore } from 'entities/nft/models';
 import { NFTCard } from 'entities/nft/ui';
 import { useStore } from '@tanstack/react-store';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useAccount } from 'wagmi';
-import { useListenMinted } from 'features/mintd-nft/hooks';
-import { useListenPropose } from 'features/propose-nft/hooks/useListenPropose';
 import Link from 'next/link';
 import { CreateNFT } from 'features/create-nft/ui';
+import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
 
 const UserNFTs: FC = () => {
   const { address } = useAccount();
-  const userNFTs = useStore(nftStore, (state) => state.userItems);
-  const { data: eventData } = useListenMinted();
-  const { data: proposeData } = useListenPropose();
-
-  useEffect(() => {
-    (async () => {
-      const data = await getUserNFTs(address);
-      userNFTActions.setNFTs(data);
-      if (proposeData && proposeData.tokenUri) {
-        nftActions.updateProposedNFT(proposeData?.tokenUri, true);
-      }
-    })();
-  }, [address, eventData, proposeData]);
+  useGetAllNFTs();
+  const userNFTs = useStore(nftStore, (state) => state.items.filter((value) => value.owner === address));
 
   return (
     <>

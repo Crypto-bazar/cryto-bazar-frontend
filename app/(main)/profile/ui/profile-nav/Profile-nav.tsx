@@ -9,6 +9,7 @@ const navItems = [
   { href: '/profile/nfts', label: 'Мои NFT' },
   { href: '/profile/settings', label: 'Настройки' },
   { href: '/profile/favourites', label: 'Избранные NFT' },
+  { href: '/profile/tokens', label: 'Токены' },
 ];
 
 const ProfileNav: FC = () => {

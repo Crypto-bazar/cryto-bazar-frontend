@@ -1,16 +1,17 @@
 type NFT = {
-  id: number;
-  token_id: number;
-  in_sales: boolean;
-  proposal_id: number;
-  token_uri: string;
+  id: bigint;
   name: string;
   description: string;
-  price: string;
-  owner: string;
-  image_path: string;
-  proposed: boolean;
-  votes_amount: string;
+  imagePath: string;
+  price: bigint;
+  owner: `0x${string}`;
+  creator: `0x${string}`;
+  forSale: boolean;
+  isProposal: boolean;
+  votes: bigint;
+  proposalId: bigint;
+  minted: boolean;
+  tokenId: bigint;
 };
 
 export type { NFT };
