@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { NFTImage } from 'entities/nft/ui';
 import { Card, CardContent, CardHeader, CardTitle } from 'shared/ui/card';
 import { NFTInfo } from 'entities/nft/ui/nft-info';
@@ -27,6 +27,7 @@ import { useGetAllNFTs, useGetFavouriteNFT } from 'entities/nft/hooks/hooks';
 import { useGetVoteNFT } from 'features/vote-nft/hooks';
 import { useGetRequiredVotes } from 'features/required-votes/hooks';
 import { formatUnits } from 'viem';
+import { SharePopover } from 'features/share-button/ui';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -162,10 +163,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
               isFavourite={isFavourite}
               onChange={refetchFavourites}
             />
-            <Button variant='outline' size='sm'>
-              <Share2 className='mr-2 h-4 w-4' />
-              Поделиться
-            </Button>
+            <SharePopover />
 
             {address && !hasVoted && (
               <Vote
