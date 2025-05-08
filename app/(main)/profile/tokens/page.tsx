@@ -47,9 +47,23 @@ const BuyDaoTokenPage: FC = () => {
     setAmount(value[0].toString());
   };
 
-  // Выбираем актуальную цену в зависимости от таба
   const currentTokenPrice = activeTab === 'dao' ? daoTokenPrice : popTokenPrice;
-  const totalPrice = currentTokenPrice ? Number(amount) * Number(formatEther(currentTokenPrice)) : 0;
+  const totalPrice = currentTokenPrice ? Number(amount) * 10 ** 18 * Number(formatEther(currentTokenPrice)) : 0;
+
+  const formatEth = (value: bigint | string | number) => {
+    let numericValue: number;
+
+    if (typeof value === 'bigint') {
+      numericValue = Number(formatEther(value));
+    } else if (typeof value === 'string') {
+      numericValue = parseFloat(value);
+    } else {
+      numericValue = value;
+    }
+
+    // Форматируем с 18 знаками после запятой, затем удаляем незначащие нули
+    return numericValue.toFixed(18).replace(/\.?0+$/, '');
+  };
 
   const handleBuyPopTokens = async () => {
     if (!currentTokenPrice) return;
@@ -65,7 +79,6 @@ const BuyDaoTokenPage: FC = () => {
         </CardHeader>
 
         <CardContent className='space-y-6'>
-          {/* Табы для выбора типа токена */}
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'dao' | 'pop')}>
             <TabsList className='grid w-full grid-cols-2'>
               <TabsTrigger value='dao'>DAO Tokens</TabsTrigger>
@@ -124,7 +137,7 @@ const BuyDaoTokenPage: FC = () => {
             </div>
             <div className='flex justify-between'>
               <span className='text-sm text-muted-foreground'>Общая стоимость</span>
-              <span className='font-medium'>{totalPrice.toFixed(6)} ETH</span>
+              <span className='font-medium'>{formatEth(totalPrice)} ETH</span>
             </div>
           </div>
 
