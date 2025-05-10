@@ -1,4 +1,4 @@
-import { Favourite } from 'widgets/favourite-nfts/ui';
+import { Favourite } from 'widgets/favourite/ui';
 
 export default function FavouritePage() {
   return (
