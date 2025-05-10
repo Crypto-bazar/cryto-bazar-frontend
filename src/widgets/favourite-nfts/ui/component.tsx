@@ -5,7 +5,7 @@ import { useStore } from '@tanstack/react-store';
 import { nftStore } from 'entities/nft/models';
 import { useGetFavouriteNFT } from 'entities/nft/hooks/hooks';
 
-const FavouriteNFTs = () => {
+const Favourite = () => {
   const items = useStore(nftStore, (state) => state.favourites);
   useGetFavouriteNFT();
 
@@ -25,4 +25,4 @@ const FavouriteNFTs = () => {
   );
 };
 
-export { FavouriteNFTs };
+export { Favourite };
