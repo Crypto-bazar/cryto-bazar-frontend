@@ -1,9 +1,9 @@
-import { FavouriteNFTs } from 'widgets/favourite-nfts/ui';
+import { Favourite } from 'widgets/favourite/ui';
 
-export default function FavouritesPage() {
+export default function FavouritePage() {
   return (
     <main>
-      <FavouriteNFTs />
+      <Favourite />
     </main>
   );
 }
