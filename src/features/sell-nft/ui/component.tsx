@@ -15,9 +15,9 @@ type Props = {
 };
 
 const ETH_UNITS = [
-  { value: 'eth', label: 'ETH' },
-  { value: 'gwei', label: 'Gwei' },
-  { value: 'wei', label: 'Wei' },
+  { value: 'eth', label: 'POP' },
+  { value: 'gwei', label: 'gPOP' },
+  { value: 'wei', label: 'wPOP' },
 ] as const;
 
 type EthUnit = (typeof ETH_UNITS)[number]['value'];
