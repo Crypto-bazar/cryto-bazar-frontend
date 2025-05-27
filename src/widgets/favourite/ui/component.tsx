@@ -13,7 +13,7 @@ const Favourite = () => {
     <main className='mx-auto max-w-7xl px-8 py-8 sm:px-4 sm:py-4 md:px-6 md:py-6'>
       {items && items.length !== 0 ? (
         <>
-          <h1>NFT в продаже</h1>
+          <h1>Избранные NFT</h1>
           <NFTs items={items} />
         </>
       ) : (

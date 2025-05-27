@@ -9,8 +9,6 @@ type Props = {
   nft: NFT;
 };
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
 const NFTCard: FC<Props> = ({ nft }) => {
   const formattedVotes = formatUnits(nft.votes, 18);
 

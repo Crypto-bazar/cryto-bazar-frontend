@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Badge } from 'shared/ui/badge';
 import { Button } from 'shared/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui/card';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Home: FC = () => {
   return (
@@ -187,6 +187,8 @@ const Home: FC = () => {
             <Card key={index} className='group overflow-hidden'>
               <div className='aspect-square overflow-hidden'>
                 <Image
+                  width={500}
+                  height={500}
                   src={`/uploads/${nft.image}`}
                   alt={nft.name}
                   className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
