@@ -7,6 +7,7 @@ type NFTState = {
   salesItems: NFT[];
   userItems: NFT[];
   favourites: NFT[];
+  searchQuery: string;
 };
 
 declare global {
@@ -21,6 +22,7 @@ const initialState: NFTState = {
   salesItems: [],
   userItems: [],
   favourites: [],
+  searchQuery: '',
 };
 
 export const nftStore = new Store<NFTState>(initialState);
@@ -43,6 +45,10 @@ export const nftActions = {
       ...state,
       items: state.items.map((nft) => (nft.id === updatedNFT.id ? updatedNFT : nft)),
     }));
+  },
+
+  setSearchQuery: (query: string) => {
+    nftStore.setState((prev) => ({ ...prev, searchQuery: query }));
   },
 
   setFavourites: (favourites: NFT[]) => {
