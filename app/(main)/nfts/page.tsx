@@ -6,6 +6,7 @@ import { useGetAllNFTs } from 'entities/nft/hooks/hooks';
 import { useStore } from '@tanstack/react-store';
 import { nftStore } from 'entities/nft/models';
 import { FindBar } from 'features/find-bar/ui';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const NFTPage: FC = () => {
   useGetAllNFTs();
@@ -26,9 +27,19 @@ const NFTPage: FC = () => {
           <NFTs items={filteredItems} />
         </>
       ) : (
-        <h1 className='animate-fade-in mt-12 rounded-2xl border border-dashed border-gray-300 bg-white/70 px-6 py-12 text-center text-2xl font-semibold text-gray-600 shadow-md backdrop-blur-sm transition-opacity'>
-          😢 В данный момент нет NFT в коллекции!
-        </h1>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            layout
+          >
+            <h1 className='animate-fade-in mt-12 rounded-2xl border border-dashed border-gray-300 bg-white/70 px-6 py-12 text-center text-2xl font-semibold text-gray-600 shadow-md backdrop-blur-sm transition-opacity'>
+              😢 В данный момент нет NFT в коллекции или неверное название / описание!
+            </h1>
+          </motion.div>
+        </AnimatePresence>
       )}
     </main>
   );
