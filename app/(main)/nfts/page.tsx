@@ -7,6 +7,7 @@ import { useStore } from '@tanstack/react-store';
 import { nftStore } from 'entities/nft/models';
 import { FindBar } from 'features/find-bar/ui';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Sort } from 'features/sort';
 
 const NFTPage: FC = () => {
   useGetAllNFTs();
@@ -21,6 +22,8 @@ const NFTPage: FC = () => {
   return (
     <main className='mx-auto max-w-7xl px-8 py-8 sm:px-4 sm:py-4 md:px-6 md:py-6'>
       <FindBar />
+      <Sort />
+
       {filteredItems && filteredItems.length !== 0 ? (
         <>
           <h1>NFT в продаже</h1>

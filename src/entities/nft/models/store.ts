@@ -8,6 +8,7 @@ type NFTState = {
   userItems: NFT[];
   favourites: NFT[];
   searchQuery: string;
+  sortItem: 'az' | 'za';
 };
 
 declare global {
@@ -23,6 +24,7 @@ const initialState: NFTState = {
   userItems: [],
   favourites: [],
   searchQuery: '',
+  sortItem: 'az',
 };
 
 export const nftStore = new Store<NFTState>(initialState);
@@ -49,6 +51,10 @@ export const nftActions = {
 
   setSearchQuery: (query: string) => {
     nftStore.setState((prev) => ({ ...prev, searchQuery: query }));
+  },
+
+  setSortItem: (sortItem: 'az' | 'za') => {
+    nftStore.setState((prev) => ({ ...prev, sortItem }));
   },
 
   setFavourites: (favourites: NFT[]) => {

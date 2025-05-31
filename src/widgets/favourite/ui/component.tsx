@@ -4,6 +4,8 @@ import { NFTs } from 'widgets/nfts/ui';
 import { useStore } from '@tanstack/react-store';
 import { nftStore } from 'entities/nft/models';
 import { useGetFavouriteNFT } from 'entities/nft/hooks/hooks';
+import { FindBar } from 'features/find-bar/ui';
+import { Sort } from 'features/sort';
 
 const Favourite = () => {
   const items = useStore(nftStore, (state) => state.favourites);
@@ -11,6 +13,8 @@ const Favourite = () => {
 
   return (
     <main className='mx-auto max-w-7xl px-8 py-8 sm:px-4 sm:py-4 md:px-6 md:py-6'>
+      <FindBar />
+      <Sort />
       {items && items.length !== 0 ? (
         <>
           <h1>Избранные NFT</h1>
