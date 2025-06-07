@@ -1,9 +1,29 @@
 import { FC } from 'react';
-import { Badge } from 'shared/ui/badge';
 import { Button } from 'shared/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui/card';
-import Link from 'next/link';
 import Image from 'next/image';
+import { LandingBanner } from 'widgets/landing-banner/ui';
+import { Decentralized } from 'shared/ui/decentralized';
+import { Collection } from 'shared/ui/collection';
+import { Safety } from 'shared/ui/safety';
+
+const pageData = [
+  {
+    name: 'Северное сияние',
+    creator: 'Артём Финский',
+    image: '65591643-f7bf-49a7-97fb-a290b1e50431-wp4442817-finland-4k-wallpapers.jpg',
+  },
+  {
+    name: 'Зимний лес',
+    creator: 'Наталья Снежная',
+    image: 'wp4442754-finland-4k-wallpapers.jpg',
+  },
+  {
+    name: 'Замёрзшее озеро',
+    creator: 'Максим Ледяной',
+    image: '67e629e5-342a-42a2-a891-08f5a5b71ea7-wp4442766-finland-4k-wallpapers.jpg',
+  },
+];
 
 const Home: FC = () => {
   return (
@@ -12,30 +32,9 @@ const Home: FC = () => {
         <div className='absolute inset-0 opacity-20'>
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-[size:100px_100px] opacity-10"></div>
         </div>
-        <div className='relative z-10'>
-          <Badge variant='secondary' className='mb-4 text-sm font-semibold'>
-            Новое поколение NFT
-          </Badge>
-          <h1 className='mb-6 text-5xl font-extrabold tracking-tight text-gray-900 md:text-6xl'>
-            <span className='bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent'>NFT</span>{' '}
-            Marketplace
-          </h1>
-          <p className='mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-gray-600'>
-            Децентрализованная платформа для цифрового искусства. Покупайте, продавайте и создавайте уникальные NFT
-            вместе с сообществом.
-          </p>
-          <div className='flex flex-col justify-center gap-4 sm:flex-row'>
-            <Button size='lg' className='px-8 py-6 text-base font-bold' asChild>
-              <a href='/nfts'>Исследовать коллекции</a>
-            </Button>
-            <Button size='lg' variant='outline' className='px-8 py-6 text-base font-bold' asChild>
-              <Link href='/profile/nfts'>Создать NFT</Link>
-            </Button>
-          </div>
-        </div>
+        <LandingBanner />
       </section>
 
-      {/* Статистика */}
       <section className='mb-16 grid grid-cols-2 gap-4 md:grid-cols-4'>
         <Card className='text-center'>
           <CardContent className='p-6'>
@@ -63,35 +62,12 @@ const Home: FC = () => {
         </Card>
       </section>
 
-      {/* Особенности */}
       <section className='mb-16'>
         <h2 className='mb-12 text-center text-3xl font-bold'>Почему выбирают нас</h2>
         <div className='grid gap-8 md:grid-cols-3'>
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <path d='M12 2v4'></path>
-                  <path d='m16 6 3-3'></path>
-                  <path d='M18 9h4'></path>
-                  <path d='m16 18 3 3'></path>
-                  <path d='M12 22v-4'></path>
-                  <path d='m8 18-3 3'></path>
-                  <path d='M6 15H2'></path>
-                  <path d='m8 6-3-3'></path>
-                  <circle cx='12' cy='12' r='4'></circle>
-                </svg>
-              </div>
+              <Decentralized />
               <CardTitle>Децентрализованная платформа</CardTitle>
             </CardHeader>
             <CardContent>
@@ -104,22 +80,7 @@ const Home: FC = () => {
 
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <path d='M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z'></path>
-                  <circle cx='12' cy='12' r='3'></circle>
-                </svg>
-              </div>
+              <Collection />
               <CardTitle>Эксклюзивные коллекции</CardTitle>
             </CardHeader>
             <CardContent>
@@ -132,22 +93,7 @@ const Home: FC = () => {
 
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <rect width='18' height='11' x='3' y='11' rx='2' ry='2'></rect>
-                  <path d='M7 11V7a5 5 0 0 1 10 0v4'></path>
-                </svg>
-              </div>
+              <Safety />
               <CardTitle>Безопасность</CardTitle>
             </CardHeader>
             <CardContent>
@@ -160,7 +106,6 @@ const Home: FC = () => {
         </div>
       </section>
 
-      {/* Популярные NFT */}
       <section className='mb-16'>
         <div className='mb-8 flex items-center justify-between'>
           <h2 className='text-3xl font-bold'>Популярные NFT</h2>
@@ -170,23 +115,7 @@ const Home: FC = () => {
         </div>
 
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {[
-            {
-              name: 'Северное сияние',
-              creator: 'Артём Финский',
-              image: '65591643-f7bf-49a7-97fb-a290b1e50431-wp4442817-finland-4k-wallpapers.jpg',
-            },
-            {
-              name: 'Зимний лес',
-              creator: 'Наталья Снежная',
-              image: 'wp4442754-finland-4k-wallpapers.jpg',
-            },
-            {
-              name: 'Замёрзшее озеро',
-              creator: 'Максим Ледяной',
-              image: '67e629e5-342a-42a2-a891-08f5a5b71ea7-wp4442766-finland-4k-wallpapers.jpg',
-            },
-          ].map((nft, index) => (
+          {pageData.map((nft, index) => (
             <Card key={index} className='group overflow-hidden'>
               <div className='aspect-square overflow-hidden'>
                 <Image
@@ -213,7 +142,6 @@ const Home: FC = () => {
         </div>
       </section>
 
-      {/* Призыв к действию */}
       <section className='rounded-3xl bg-gradient-to-r from-indigo-500 to-purple-600 py-16 text-center'>
         <h2 className='mb-4 text-3xl font-bold text-white md:text-4xl'>Готовы начать?</h2>
         <p className='mx-auto mb-8 max-w-2xl text-xl text-indigo-100'>
