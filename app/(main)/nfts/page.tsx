@@ -49,4 +49,3 @@ const NFTPage: FC = () => {
 };
 
 export default NFTPage;
-export { NFTPage };

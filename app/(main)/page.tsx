@@ -8,21 +8,21 @@ import Image from 'next/image';
 const Home: FC = () => {
   return (
     <main className='mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
-      <section className='relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-b from-black to-gray-900 py-20 text-center shadow-2xl'>
+      <section className='relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-b from-indigo-50 to-white py-20 text-center shadow-xl'>
         <div className='absolute inset-0 opacity-20'>
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-[size:100px_100px]"></div>
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-[size:100px_100px] opacity-10"></div>
         </div>
         <div className='relative z-10'>
           <Badge variant='secondary' className='mb-4 text-sm font-semibold'>
             Новое поколение NFT
           </Badge>
-          <h1 className='mb-6 text-5xl font-extrabold tracking-tight text-white md:text-6xl'>
-            <span className='bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent'>CryptoBazar</span>{' '}
+          <h1 className='mb-6 text-5xl font-extrabold tracking-tight text-gray-900 md:text-6xl'>
+            <span className='bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent'>NFT</span>{' '}
             Marketplace
           </h1>
-          <p className='mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-gray-300'>
-            Откройте для себя эксклюзивные цифровые активы. Покупайте, продавайте и создавайте уникальные NFT на нашей
-            платформе с передовой технологией Web3.
+          <p className='mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-gray-600'>
+            Децентрализованная платформа для цифрового искусства. Покупайте, продавайте и создавайте уникальные NFT
+            вместе с сообществом.
           </p>
           <div className='flex flex-col justify-center gap-4 sm:flex-row'>
             <Button size='lg' className='px-8 py-6 text-base font-bold' asChild>
@@ -35,6 +35,7 @@ const Home: FC = () => {
         </div>
       </section>
 
+      {/* Статистика */}
       <section className='mb-16 grid grid-cols-2 gap-4 md:grid-cols-4'>
         <Card className='text-center'>
           <CardContent className='p-6'>
@@ -62,20 +63,20 @@ const Home: FC = () => {
         </Card>
       </section>
 
-      {/* Features Section */}
+      {/* Особенности */}
       <section className='mb-16'>
-        <h2 className='mb-12 text-center text-3xl font-bold'>Почему выбирают CryptoBazar</h2>
+        <h2 className='mb-12 text-center text-3xl font-bold'>Почему выбирают нас</h2>
         <div className='grid gap-8 md:grid-cols-3'>
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-black'>
+              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
                   height='24'
                   viewBox='0 0 24 24'
                   fill='none'
-                  stroke='white'
+                  stroke='currentColor'
                   strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -95,22 +96,22 @@ const Home: FC = () => {
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Полный контроль над своими активами благодаря технологии блокчейн. Никаких посредников — только прямые
-                P2P-транзакции.
+                Сообщество управляет развитием платформы через систему голосований. Ваши активы полностью под вашим
+                контролем.
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-black'>
+              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
                   height='24'
                   viewBox='0 0 24 24'
                   fill='none'
-                  stroke='white'
+                  stroke='currentColor'
                   strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -123,22 +124,22 @@ const Home: FC = () => {
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Доступ к редким NFT от ведущих художников и брендов. Каждый токен верифицирован и имеет цифровой
-                сертификат подлинности.
+                Доступ к редким NFT от талантливых художников. Каждая работа верифицирована и имеет цифровой сертификат
+                подлинности.
               </CardDescription>
             </CardContent>
           </Card>
 
           <Card className='transition-shadow hover:shadow-xl'>
             <CardHeader>
-              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-black'>
+              <div className='mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
                   height='24'
                   viewBox='0 0 24 24'
                   fill='none'
-                  stroke='white'
+                  stroke='currentColor'
                   strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -151,13 +152,15 @@ const Home: FC = () => {
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Передовые методы шифрования и смарт-контракты обеспечивают безопасность ваших активов и данных.
+                Ваши активы защищены смарт-контрактами и криптографическими технологиями. Полная прозрачность всех
+                операций.
               </CardDescription>
             </CardContent>
           </Card>
         </div>
       </section>
 
+      {/* Популярные NFT */}
       <section className='mb-16'>
         <div className='mb-8 flex items-center justify-between'>
           <h2 className='text-3xl font-bold'>Популярные NFT</h2>
@@ -210,14 +213,12 @@ const Home: FC = () => {
         </div>
       </section>
 
-      <section className='rounded-3xl bg-gradient-to-r from-black to-gray-900 py-16 text-center'>
+      {/* Призыв к действию */}
+      <section className='rounded-3xl bg-gradient-to-r from-indigo-500 to-purple-600 py-16 text-center'>
         <h2 className='mb-4 text-3xl font-bold text-white md:text-4xl'>Готовы начать?</h2>
-        <p className='mx-auto mb-8 max-w-2xl text-xl text-gray-300'>
-          Присоединяйтесь к сообществу CryptoBazar сегодня и откройте мир цифровых коллекций.
+        <p className='mx-auto mb-8 max-w-2xl text-xl text-indigo-100'>
+          Присоединяйтесь к сообществу и станьте частью цифровой революции в искусстве.
         </p>
-        {/*<Button size='lg' className='px-8 py-6 text-base font-bold' asChild>*/}
-        {/*  <a href='/signup'>Создать аккаунт</a>*/}
-        {/*</Button>*/}
       </section>
     </main>
   );

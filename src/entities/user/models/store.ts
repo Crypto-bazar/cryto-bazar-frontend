@@ -12,9 +12,9 @@ const initialState: UserState = {
 export const userStore = new Store<UserState>(initialState);
 
 //TODO add types
-if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-  (window as any).userStore = userStore;
-}
+// if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+//   (window as any).userStore = userStore;
+// }
 
 export const userActions = {
   setUser: (data: User) => {
