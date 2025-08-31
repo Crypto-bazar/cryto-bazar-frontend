@@ -3,7 +3,7 @@ import { NFT } from '../models/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui/card';
 import { formatUnits } from 'viem';
-import { ThumbsUp, Info } from 'lucide-react';
+import { ThumbsUp, Info} from 'lucide-react';
 
 type Props = {
   nft: NFT;
@@ -15,7 +15,7 @@ const NFTCard: FC<Props> = ({ nft }) => {
   const hasVotes = nft.votes > 0n;
 
   return (
-    <Card className='h-[500px] border-2 border-[#c1c1c1] bg-[#fff] text-[#9fa2b2] shadow-lg shadow-[#c1c1c1]'>
+    <Card  className='h-[500px] border-2 border-[#c1c1c1] bg-[#fff] text-[#9fa2b2] shadow-lg shadow-[#c1c1c1]'>
       <CardHeader>
         <Image
           width={200}

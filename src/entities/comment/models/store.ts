@@ -11,10 +11,9 @@ const initialState: CommentState = {
 
 export const commentStore = new Store<CommentState>(initialState);
 
-//TODO add types
-// if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-//   (window as any).store = commentStore;
-// }
+if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+   (window as any).store = commentStore;
+ }
 
 export const commentActions = {
   setComments: (comments: Comment[]) => {
