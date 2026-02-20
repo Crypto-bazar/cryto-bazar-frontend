@@ -5,6 +5,12 @@ type CommentState = {
   items: Comment[];
 };
 
+declare global {
+  interface Window {
+    commentStore: Store<CommentState>;
+  }
+}
+
 const initialState: CommentState = {
   items: [],
 };
@@ -12,8 +18,8 @@ const initialState: CommentState = {
 export const commentStore = new Store<CommentState>(initialState);
 
 if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-   (window as any).store = commentStore;
- }
+  window.commentStore = commentStore;
+}
 
 export const commentActions = {
   setComments: (comments: Comment[]) => {

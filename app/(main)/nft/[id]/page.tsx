@@ -28,6 +28,7 @@ import { useGetVoteNFT } from 'features/vote-nft/hooks';
 import { useGetRequiredVotes } from 'features/required-votes/hooks';
 import { formatUnits } from 'viem';
 import { SharePopover } from 'features/share-button/ui';
+import { useMemo } from 'react';
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState('');
@@ -38,15 +39,24 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const { address } = useAccount();
   const { refetch } = useGetAllNFTs();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const nftId = useMemo(() => {
+    try {
+      return BigInt(params.id);
+    } catch {
+      return undefined;
+    }
+  }, [params.id]);
   const user = useStore(userStore, (state) => state.item);
   const favourites = useStore(nftStore, (state) => state.favourites);
   const comments = useStore(commentStore, (state) => state.items);
-  const { data: voted } = useGetVoteNFT(BigInt(params.id));
+  const { data: voted } = useGetVoteNFT(nftId);
   const { requiredVotes } = useGetRequiredVotes();
   const { refetch: refetchFavourites } = useGetFavouriteNFT();
 
-  const nft = useStore(nftStore, (state) => state.items[Number(params.id)]);
-  const isNFTLoaded = Boolean(nft);
+  const nft = useStore(nftStore, (state) => {
+    if (nftId === undefined) return undefined;
+    return state.items.find((item) => item.id === nftId);
+  });
 
   useEffect(() => {
     if (voted !== undefined) {
@@ -101,13 +111,13 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
     }
   };
 
-  if (!isNFTLoaded) {
+  if (!nft) {
     return <div className='container mx-auto py-8 text-center text-muted-foreground'>Загрузка токена...</div>;
   }
 
   const formattedPrice = nft.price ? `${formatUnits(nft.price, 18)} POP` : 'Не указана';
-  const formattedVotes = nft.votes ? `${Number(nft.votes) / 1e18}` : '0';
-  const priceInWei = nft.price ? BigInt(Math.floor(Number(nft.price) * 1e18)) : BigInt(0);
+  const formattedVotes = nft.votes ? formatUnits(nft.votes, 18) : '0';
+  const priceInWei = nft.price || 0n;
 
   const attributes = [
     { label: 'ID токена', value: nft.tokenId !== 0n ? Number(nft.tokenId) : '—' },

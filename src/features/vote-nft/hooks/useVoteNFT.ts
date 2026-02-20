@@ -16,13 +16,16 @@ const useVoteNFT = () => {
   return { vote, isLoading, isSuccess, receipt };
 };
 
-const useGetVoteNFT = (id: bigint) => {
+const useGetVoteNFT = (id?: bigint) => {
   const { address } = useAccount();
   const { data, isLoading, error } = useReadContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     abi: DAOabi,
     functionName: 'hasVoted',
-    args: [id, address!],
+    args: id && address ? [id, address] : undefined,
+    query: {
+      enabled: Boolean(id && address),
+    },
   });
 
   return { isLoading, error, data };

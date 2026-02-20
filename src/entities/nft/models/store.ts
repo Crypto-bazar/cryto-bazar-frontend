@@ -66,7 +66,7 @@ export const nftActions = {
   removeFavouriteNFT: (nft: NFT) => {
     nftStore.setState((prev) => ({
       ...prev,
-      favourites: prev.favourites.filter((item) => item.token_id !== nft.token_id),
+      favourites: prev.favourites.filter((item) => item.tokenId !== nft.tokenId),
     }));
   },
 };

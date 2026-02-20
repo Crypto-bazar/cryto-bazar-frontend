@@ -1,16 +1,17 @@
 'use client';
 
-import { createConfig, webSocket } from '@wagmi/core';
-import { hardhat } from '@wagmi/core/chains';
+import { createConfig, http } from 'wagmi';
+import { hardhat } from 'wagmi/chains';
+import { injected } from '@wagmi/core';
 
-const nodeUrl = process.env.NEXT_PUBLIC_HARDHAT_NODE;
+const nodeUrl = process.env.NEXT_PUBLIC_HARDHAT_NODE || 'http://127.0.0.1:8545';
 
 export const config = createConfig({
   chains: [hardhat],
   ssr: true,
-  connectors: [],
+  connectors: [injected()],
   transports: {
-    [hardhat.id]: webSocket(nodeUrl),
+    [hardhat.id]: http(nodeUrl),
   },
 });
 

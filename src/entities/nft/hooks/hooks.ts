@@ -45,9 +45,17 @@ const useGetFavouriteNFT = () => {
   const [favoriteIds, setFavoriteIds] = useState<bigint[]>([]);
 
   const fetch = useCallback(async () => {
-    if (!address) return;
+    if (!address) {
+      setFavoriteIds([]);
+      nftActions.setFavourites([]);
+      return;
+    }
     const { nftIds } = await getFavouriteNFTs(address);
-    setFavoriteIds(nftIds.map((id) => BigInt(id)));
+    const ids = nftIds.map((id) => BigInt(id));
+    setFavoriteIds(ids);
+    if (ids.length === 0) {
+      nftActions.setFavourites([]);
+    }
   }, [address]);
 
   useEffect(() => {
@@ -60,15 +68,17 @@ const useGetFavouriteNFT = () => {
     functionName: 'getNFTsBatch',
     args: [favoriteIds],
     query: {
-      enabled: favoriteIds.length > 0,
+      enabled: Boolean(address) && favoriteIds.length > 0,
     },
   });
 
   useEffect(() => {
     if (data) {
       nftActions.setFavourites(data as NFT[]);
+    } else if (favoriteIds.length === 0) {
+      nftActions.setFavourites([]);
     }
-  }, [data, address]);
+  }, [data, favoriteIds.length]);
 
   return { isLoading, error, data: data as NFT[] | undefined, refetch: fetch };
 };

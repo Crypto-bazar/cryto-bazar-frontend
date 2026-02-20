@@ -6,13 +6,20 @@ import { Button } from 'shared/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from 'shared/ui/popover/popover';
 
 const SharePopover: FC = () => {
-  const currentUrl = window.location.href;
+  const getCurrentUrl = () => {
+    if (typeof window === 'undefined') return '';
+    return window.location.href;
+  };
 
   const copyToClipboard = () => {
+    const currentUrl = getCurrentUrl();
+    if (!currentUrl) return;
     navigator.clipboard.writeText(currentUrl);
   };
 
   const openShare = (platform: 'twitter' | 'telegram') => {
+    const currentUrl = getCurrentUrl();
+    if (!currentUrl) return;
     const encoded = encodeURIComponent(currentUrl);
     const urls = {
       twitter: `https://twitter.com/intent/tweet?url=${encoded}`,
