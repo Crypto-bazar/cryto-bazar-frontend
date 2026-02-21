@@ -2,7 +2,9 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FC } from 'react';
+import { cn } from 'shared/lib';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from 'shared/ui/nav-menu';
 
 type Props = {
@@ -10,9 +12,11 @@ type Props = {
 };
 
 const DesktopMenu: FC<Props> = ({ navItems }) => {
+  const pathname = usePathname();
+
   return (
     <NavigationMenu className='hidden md:block'>
-      <NavigationMenuList className='space-x-6'>
+      <NavigationMenuList className='space-x-2'>
         {navItems.map((item, index) => (
           <motion.div
             key={item.href}
@@ -21,7 +25,15 @@ const DesktopMenu: FC<Props> = ({ navItems }) => {
             transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.1 }}
           >
             <NavigationMenuItem>
-              <Link href={item.href} className='transition-all hover:text-[#3c7a89]'>
+              <Link
+                href={item.href}
+                className={cn(
+                  'rounded-full px-3 py-2 text-sm font-medium transition-colors',
+                  pathname === item.href || pathname.startsWith(`${item.href}/`)
+                    ? 'bg-white/15 text-white'
+                    : 'text-white/80 hover:bg-white/10 hover:text-white',
+                )}
+              >
                 {item.label}
               </Link>
             </NavigationMenuItem>

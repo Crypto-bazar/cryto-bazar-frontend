@@ -5,23 +5,33 @@ import Link from 'next/link';
 
 const LandingBanner: FC = () => {
   return (
-    <div className='relative z-10'>
-      <Badge variant='secondary' className='mb-4 text-sm font-semibold'>
-        Новое поколение NFT
+    <div className='relative z-10 text-left md:text-center'>
+      <Badge
+        variant='secondary'
+        className='mb-5 rounded-full border border-indigo-200 bg-white/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-indigo-700'
+      >
+        Новое поколение NFT-платформ
       </Badge>
-      <h1 className='mb-6 text-5xl font-extrabold tracking-tight text-gray-900 md:text-6xl'>
-        <span className='bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent'>NFT</span>{' '}
-        Marketplace
+      <h1 className='mx-auto mb-6 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl'>
+        <span className='bg-gradient-to-r from-indigo-700 via-sky-600 to-cyan-600 bg-clip-text text-transparent'>
+          Криптобазар
+        </span>{' '}
+        для цифрового искусства
       </h1>
-      <p className='mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-gray-600'>
+      <p className='mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-slate-600 md:text-xl'>
         Децентрализованная платформа для цифрового искусства. Покупайте, продавайте и создавайте уникальные NFT вместе с
         сообществом.
       </p>
-      <div className='flex flex-col justify-center gap-4 sm:flex-row'>
-        <Button size='lg' className='px-8 py-6 text-base font-bold' asChild>
-          <a href='/nfts'>Исследовать коллекции</a>
+      <div className='flex flex-col justify-start gap-3 sm:flex-row sm:justify-center'>
+        <Button size='lg' className='h-12 rounded-full px-8 text-base font-semibold shadow-lg shadow-indigo-200/70' asChild>
+          <Link href='/nfts'>Исследовать коллекции</Link>
         </Button>
-        <Button size='lg' variant='outline' className='px-8 py-6 text-base font-bold' asChild>
+        <Button
+          size='lg'
+          variant='outline'
+          className='h-12 rounded-full border-indigo-200 bg-white/80 px-8 text-base font-semibold hover:bg-white'
+          asChild
+        >
           <Link href='/profile/nfts'>Создать NFT</Link>
         </Button>
       </div>

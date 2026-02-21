@@ -24,12 +24,12 @@ const Sort: FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline'>
+        <Button variant='outline' className='h-10 rounded-xl border-slate-200 bg-white text-slate-800 hover:bg-slate-50'>
           {value === 'az' ? <ArrowDownAZ className='mr-2 h-4 w-4' /> : <ArrowUpZA className='mr-2 h-4 w-4' />}
           {value === 'az' ? 'A–Z' : 'Z–A'}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className='rounded-xl border-slate-200 bg-white'>
         <DropdownMenuItem onClick={() => sortItems('az')}>
           <ArrowDownAZ className='mr-2 h-4 w-4' />
           По алфавиту (A–Z)

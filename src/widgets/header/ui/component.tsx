@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ConnectWallet } from 'features/connect-wallet/ui';
 import { motion } from 'framer-motion';
@@ -10,12 +10,14 @@ import { useStore } from '@tanstack/react-store';
 import { useNftWsUpdates } from 'features/nft/ws-updates';
 import { MobileMenu } from 'widgets/mobile-menu/ui';
 import { useNavItems } from 'features/header/hooks';
+import { usePathname } from 'next/navigation';
 import { BurgerMenu } from './BurgerMenu';
 import { DesktopMenu } from './DesktopMenu';
 import { Avatar } from 'shared/ui/avatar';
 
 const Header: FC = () => {
   const { address } = useAccount();
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const user = useStore(userStore, (state) => state.item);
   const navItems = useNavItems();
@@ -29,11 +31,18 @@ const Header: FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <header className='w-full border-b border-[#c1c1c1] bg-[#000000] shadow-md'>
-      <div className='container mx-auto flex items-center justify-between px-6 py-4 text-white'>
-        <Link href='/' className='text-xl font-bold'>
-          Криптобазар
+    <header className='sticky top-0 z-50 border-b border-white/10 bg-black/85 text-white backdrop-blur-md'>
+      <div className='mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8'>
+        <Link href='/' className='group inline-flex shrink-0 items-center gap-3'>
+          <span className='inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-xs font-black tracking-[0.12em] transition-colors group-hover:bg-white/20'>
+            CB
+          </span>
+          <span className='hidden text-lg font-semibold tracking-tight sm:inline'>Криптобазар</span>
         </Link>
 
         <DesktopMenu navItems={navItems} />
@@ -42,16 +51,14 @@ const Header: FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, ease: 'easeOut', delay: 0.3 }}
-          className='flex items-center gap-4'
+          className='ml-auto flex items-center gap-2 sm:gap-3'
         >
           <ConnectWallet />
           <Avatar address={address} height={10} width={10} user={user} />
-
           <BurgerMenu isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
         </motion.div>
-
-        <MobileMenu isOpen={isMobileMenuOpen} navItems={navItems} onClose={() => setIsMobileMenuOpen(false)} />
       </div>
+      <MobileMenu isOpen={isMobileMenuOpen} navItems={navItems} onClose={() => setIsMobileMenuOpen(false)} />
     </header>
   );
 };

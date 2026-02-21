@@ -11,12 +11,11 @@ type Props = {
 
 const NFTs: FC<Props> = ({ items }) => {
   return (
-    <div>
-      <div className='grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3'>
+    <div className='grid grid-cols-1 gap-5 py-4 md:grid-cols-2 lg:grid-cols-3'>
         <AnimatePresence>
           {items &&
             items.length !== 0 &&
-            items.map((nft, index) => (
+            items.map((nft) => (
               <motion.div
                 key={nft.id}
                 initial={{ opacity: 0, y: 10 }}
@@ -25,14 +24,13 @@ const NFTs: FC<Props> = ({ items }) => {
                 transition={{ duration: 0.25 }}
                 layout
               >
-                <Link key={index} href={`/nft/${nft.id}`}>
+                <Link href={`/nft/${nft.id}`} className='block h-full'>
                   <NFTCard nft={nft} />
                 </Link>
               </motion.div>
             ))}
         </AnimatePresence>
       </div>
-    </div>
   );
 };
 

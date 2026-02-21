@@ -19,7 +19,11 @@ const WalletOption: FC<Props> = ({ connector, onClick }) => {
   }, [connector]);
 
   return (
-    <Button className={'bg-[#ffffff] text-black hover:bg-[#c1c1c1]'} disabled={!ready} onClick={onClick}>
+    <Button
+      className='h-9 rounded-full bg-white px-4 text-sm font-semibold text-black shadow-sm hover:bg-slate-200'
+      disabled={!ready}
+      onClick={onClick}
+    >
       {connector.name}
     </Button>
   );

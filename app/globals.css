@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 body {
-  background: #ffffff;
+  background:
+    radial-gradient(900px 520px at 12% -8%, #e7eeff 0%, rgba(231, 238, 255, 0) 65%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
 @layer base {
